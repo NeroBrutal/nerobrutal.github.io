@@ -10,6 +10,7 @@ import {
 } from "react-icons/fa";
 import Profile from "../assets/profile_new.png";
 import data from "../data/data.json";
+import MotionPath from "./MotionPath";
 
 const name = data.name;
 const location = data.location;

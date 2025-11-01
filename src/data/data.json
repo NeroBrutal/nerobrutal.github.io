@@ -1,6 +1,7 @@
 {
   "name": "Mohamed Rashidh",
   "about_me": "Welcome to my portfolio! Here, I present my professional journey, technical expertise, and academic achievements in the fields of Artificial Intelligence and Software Engineering. With a strong foundation in Python backend development and hands-on experience in building AI-driven systems, I specialize in Generative AI, automation workflows, and scalable API solutions. My education at SLIIT City University strengthened my problem-solving, research, and software design capabilities, enabling me to bridge theory and real-world applications. Explore my projects to see how I apply modern technologies like LangChain, FastAPI, Docker, and n8n to deliver intelligent and automated solutions. Feel free to connect with me for collaborations or opportunities!",
+  "projectExplanation": "Welcome to my Project Page! Here, I'm excited to showcase a collection of hands-on projects that encapsulate my journey in the world of Computer Science and Software Engineering. These projects reflect my passion for problem-solving, creativity, and innovation. Each endeavor represents a blend of technical skills, critical thinking, and the drive to create meaningful solutions. Explore these projects to get a glimpse of my journey and the impact I aspire to make in the realm of technology. 🌐💻",
   "age": 25,
   "location": "Abu Dhabi, UAE",
   "programming_languages": [
@@ -310,5 +311,31 @@
         }
       ]
     }
-  }
+  },
+  "projects": [
+    {
+      "title": "Stand Alone Java App",
+      "description": "Developed a standalone Java application using NetBeans IDE and MySQL for database management. The application features a user-friendly interface and robust backend architecture.",
+      "technologies": ["Java", "NetBeans", "MySQL"],
+      "image": "../assets/Loading.png"
+    },
+    {
+      "title": "Android Fitness App",
+      "description": "Created a comprehensive Android fitness application using Android Studio and Java. The app includes workout tracking, exercise tutorials, and progress monitoring features.",
+      "technologies": ["Android Studio", "Java"],
+      "image": "../assets/EveryMove.png"
+    },
+    {
+      "title": "Portfolio Website",
+      "description": "Designed and developed a personal portfolio website to showcase projects and skills. Utilized modern web technologies for a responsive and visually appealing design.",
+      "technologies": ["HTML", "CSS", "JavaScript"],
+      "image": "../assets/Portfolio.png"
+    },
+    {
+      "title": "E-commerce Website",
+      "description": "Built a full-stack e-commerce website using React for the frontend and Node.js with Express for the backend. Implemented secure payment processing and user authentication.",
+      "technologies": ["React", "Node.js", "Express", "MongoDB"],
+      "image": "../assets/Dresses.png"
+    }
+  ]
 }

@@ -4,20 +4,24 @@ import { motion } from "framer-motion";
 const ProjectItem = ({ img, title, Usage }) => {
   return (
     <motion.div
-      className="relative flex items-center justify-center h-auto w-full shadow-xl shadow-gray-400 rounded-xl group hover:bg-gradient-to-r from-gray-200 to-blue-200"
-      whileHover={{ y: -10 }}
+      className="relative overflow-hidden rounded-3xl cursor-pointer group"
+      whileHover={{ scale: 1.02 }}
+      transition={{ duration: 0.4 }}
     >
-      <img src={img} alt="/" className="rounded-xl group-hover:opacity-10" />
-      <div className="hidden group-hover:block absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
-        <h3 className="text-2xl font-bold text-blue-500 tracking-wider text-center">
-          {title}
-        </h3>
-        <p className="pb-4 pt-2 text-blue-500 text-center">{Usage}</p>
-        <a href="https://github.com/NeroBrutal?tab=repositories">
-          <p className="text-center p-3 rounded-ld bg-white text-blue-500 font-bold cursor-pointer text-lg">
-            More info
-          </p>
-        </a>
+      {/* Full image */}
+      <motion.img
+        src={img}
+        alt={title}
+        className="w-full h-72 object-cover transition-transform duration-700 group-hover:scale-105"
+      />
+
+      {/* Dark overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+
+      {/* Text overlay */}
+      <div className="absolute bottom-6 left-6 text-white">
+        <p className="text-xs opacity-80 mb-1">{Usage}</p>
+        <h3 className="text-xl font-semibold">{title}</h3>
       </div>
     </motion.div>
   );

@@ -41,7 +41,7 @@ const Work = () => {
         transition={{ duration: 0.6 }}
       >
         <h1 className="text-4xl font-bold text-center text-blue-400 py-4">
-          p  🚀
+          About Me 🚀
         </h1>
       </motion.h1>
       <motion.p
