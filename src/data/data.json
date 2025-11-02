@@ -394,31 +394,31 @@
         "FFmpeg",
         "LangChain"
       ],
-      "image": "../assets/ArabyAI.png"
+      "image": "/assets/ArabyAI.png"
     },
     {
       "title": "Stand Alone Java App",
       "description": "Developed a standalone Java application using NetBeans IDE and MySQL for database management. The application features a user-friendly interface and robust backend architecture.",
       "technologies": ["Java", "NetBeans", "MySQL"],
-      "image": "../assets/Loading.png"
+      "image": "/assets/Loading.png"
     },
     {
       "title": "Android Fitness App",
       "description": "Created a comprehensive Android fitness application using Android Studio and Java. The app includes workout tracking, exercise tutorials, and progress monitoring features.",
       "technologies": ["Android Studio", "Java"],
-      "image": "../assets/EveryMove.png"
+      "image": "/assets/EveryMove.png"
     },
     {
       "title": "E-commerce Website",
       "description": "Built a full-stack e-commerce website using React for the frontend and Node.js with Express for the backend. Implemented secure payment processing and user authentication.",
       "technologies": ["React", "Node.js", "Express", "MongoDB"],
-      "image": "../assets/Dresses.png"
+      "image": "/assets/Dresses.png"
     },
     {
       "title": "Portfolio Website",
       "description": "Designed and developed a personal portfolio website to showcase projects and skills. Utilized modern web technologies for a responsive and visually appealing design.",
       "technologies": ["HTML", "CSS", "JavaScript"],
-      "image": "../assets/Portfolio.png"
+      "image": "/assets/Portfolio.png"
     }
   ]
 }

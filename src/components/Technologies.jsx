@@ -9,8 +9,6 @@ const Technologies = () => {
       imageSrc: tech.imageSrc,
     }))
   );
-  console.log(technologiesData);
-
   // Duplicate items to create an infinite seamless scroll
   const scrollingItems = [...technologiesData, ...technologiesData];
 
