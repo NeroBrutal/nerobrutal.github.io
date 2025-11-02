@@ -22,9 +22,12 @@ const iconMap = {
 //make this black
 const inactiveColor = "#000000"; // black
 const activeColor = "#3b82f6"; // blue-400
+const inactiveBoarderColor = "#e5e7eb"; // gray-200
+const activeBoarderColor = "#3b82f6"; // blue-400
 
 const Sidenav = () => {
   const [nav, setNav] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(null);
   const navbarItems = data.navbar;
 
   const handleNav = () => setNav(!nav);
@@ -68,8 +71,13 @@ const Sidenav = () => {
                 <motion.a
                   key={index}
                   href={item.href}
-                  onClick={handleNav}
-                  className="w-[75%] flex justify-center items-center rounded-xl bg-transparent m-3 p-4 cursor-pointer"
+                  onClick={() => {
+                    setActiveIndex(index);
+                    handleNav();
+                  }}
+                  className={`w-[75%] flex justify-center items-center rounded-xl m-3 p-4 cursor-pointer ${
+                    activeIndex === index ? "bg-blue-100" : "bg-transparent"
+                  }`}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
@@ -82,6 +90,10 @@ const Sidenav = () => {
                   {Icon && (
                     <motion.div
                       initial={{ color: inactiveColor }}
+                      animate={{
+                        color:
+                          activeIndex === index ? activeColor : inactiveColor,
+                      }}
                       whileHover={{
                         color: activeColor,
                         transition: { duration: 0.3 },
@@ -90,7 +102,12 @@ const Sidenav = () => {
                       <Icon size={22} />
                     </motion.div>
                   )}
-                  <span className="pl-4 font-semibold text-gray-900">
+                  <span
+                    className="pl-4 font-semibold"
+                    style={{
+                      color: activeIndex === index ? activeColor : "#1f2937",
+                    }}
+                  >
                     {item.name}
                   </span>
                 </motion.a>
@@ -113,7 +130,10 @@ const Sidenav = () => {
             <motion.a
               key={index}
               href={item.href}
-              className="rounded-xl bg-transparent m-2 p-3 cursor-pointer flex justify-center items-center"
+              onClick={() => setActiveIndex(index)}
+              className={`rounded-xl m-2 p-3 cursor-pointer flex justify-center items-center ${
+                activeIndex === index ? "bg-blue-100" : "bg-transparent"
+              }`}
               initial={{ opacity: 0, x: -10 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ delay: index * 0.1 }}
@@ -126,6 +146,9 @@ const Sidenav = () => {
               {Icon && (
                 <motion.div
                   initial={{ color: inactiveColor }}
+                  animate={{
+                    color: activeIndex === index ? activeColor : inactiveColor,
+                  }}
                   whileHover={{
                     color: activeColor,
                     scale: 1.1,
