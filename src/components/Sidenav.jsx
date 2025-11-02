@@ -1,121 +1,167 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
-import {
-  AiOutlineMenu,
-  AiOutlineHome,
-  AiOutlineProject,
-  AiOutlineMail,
-} from "react-icons/ai";
-import { GrProjects } from "react-icons/gr";
+import { motion, AnimatePresence } from "framer-motion";
+import data from "../data/data.json";
+
+// Import all possible icons you’ll use
+import { AiOutlineMail, AiOutlineProject } from "react-icons/ai";
 import { BsPerson } from "react-icons/bs";
 import { BiCodeAlt } from "react-icons/bi";
+import EngineeringIcon from "@mui/icons-material/Engineering";
+import AppsIcon from "@mui/icons-material/Apps";
+
+// Icon map so we can reference icons by name from JSON
+const iconMap = {
+  AiOutlineMail,
+  AiOutlineProject,
+  BsPerson,
+  BiCodeAlt,
+  EngineeringIcon,
+  AppsIcon,
+};
+//make this black
+const inactiveColor = "#000000"; // black
+const activeColor = "#3b82f6"; // blue-400
+const inactiveBoarderColor = "#e5e7eb"; // gray-200
+const activeBoarderColor = "#3b82f6"; // blue-400
 
 const Sidenav = () => {
   const [nav, setNav] = useState(false);
-  const handleNav = () => {
-    setNav(!nav);
-  };
+  const [activeIndex, setActiveIndex] = useState(null);
+  const navbarItems = data.navbar;
+
+  const handleNav = () => setNav(!nav);
+
   return (
     <div>
-      <AiOutlineMenu
-        onClick={handleNav}
-        className="absolute top-4 right-4 z-[99] md:hidden"
-      />
-      {nav ? (
-        <div className="fixed w-full h-screen bg-blue-100 flex flex-col justify-center items-center z-20">
-          <a
-            onClick={handleNav}
-            href="#main"
-            className="w-[75%] flex justify-center items-center rounded-full shadow-lg bg-blue-200 shadow-gray-400 m-3 p-4 cursor-pointer hover:scale-110 ease-in duration-200"
+      {/* Mobile Menu Button */}
+      <motion.div
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+      >
+        <motion.div
+          whileTap={{ scale: 0.9 }}
+          className="absolute top-4 right-4 z-[99] md:hidden cursor-pointer"
+          onClick={handleNav}
+        >
+          <motion.div
+            animate={{ rotate: nav ? 90 : 0 }}
+            transition={{ duration: 0.3 }}
           >
-            <AiOutlineHome size={20} />
-            <span className="pl-4">Home</span>
-          </a>
-          <a
-            onClick={handleNav}
-            href="#work"
-            className="w-[75%] flex justify-center items-center rounded-full shadow-lg bg-blue-200 shadow-gray-400 m-3 p-4 cursor-pointer hover:scale-110 ease-in duration-200"
-          >
-            <GrProjects size={20} />
-            <span className="pl-4">Work</span>
-          </a>
-          <a
-            onClick={handleNav}
-            href="#technologies" // Add the href for Technologies
-            className="w-[75%] flex justify-center items-center rounded-full shadow-lg bg-blue-200 shadow-gray-400 m-3 p-4 cursor-pointer hover:scale-110 ease-in duration-200"
-          >
-            <BiCodeAlt size={20} /> {/* Use the new icon */}
-            <span className="pl-4">Technologies</span>
-          </a>
-          <a
-            onClick={handleNav}
-            href="#projects"
-            className="w-[75%] flex justify-center items-center rounded-full shadow-lg bg-blue-200 shadow-gray-400 m-3 p-4 cursor-pointer hover:scale-110 ease-in duration-200"
-          >
-            <AiOutlineProject size={20} />
-            <span className="pl-3">Projects</span>
-          </a>
-          <a
-            onClick={handleNav}
-            href="https://drive.google.com/file/d/1MqwLGnLaUDohIegpI6AleBdI8IWqXUYe/view?usp=sharing"
-            className="w-[75%] flex justify-center items-center rounded-full shadow-lg bg-blue-200 shadow-gray-400 m-3 p-4 cursor-pointer hover:scale-110 ease-in duration-200"
-          >
-            <BsPerson size={20} />
-            <span className="pl-4">Resume</span>
-          </a>
-          <a
-            onClick={handleNav}
-            href="#contact"
-            className="w-[75%] flex justify-center items-center rounded-full shadow-lg bg-blue-200 shadow-gray-400 m-3 p-4 cursor-pointer hover:scale-110 ease-in duration-200"
-          >
-            <AiOutlineMail size={20} />
-            <span className="pl-4">Contact</span>
-          </a>
-        </div>
-      ) : (
-        ""
-      )}
+            <AppsIcon style={{ color: inactiveColor }} fontSize="large" />
+          </motion.div>
+        </motion.div>
+      </motion.div>
 
-      <div className="md:block hidden fixed top-[25%] z-10">
-        <div className="flex flex-col">
-          <a
-            href="#main"
-            className="rounded-full shadow-lg bg-blue-200 shadow-gray-500 m-2 p-4 cursor-pointer hover:scale-110 ease-in duration-300"
+      {/* Mobile Navigation Menu */}
+      <AnimatePresence>
+        {nav && (
+          <motion.div
+            key="mobile-nav"
+            initial={{ opacity: 0, y: "-100%" }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: "-100%" }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+            className="fixed w-full h-screen bg-white flex flex-col justify-center items-center z-20"
           >
-            <AiOutlineHome size={20} />
-          </a>
-          <a
-            href="#work"
-            className="rounded-full shadow-lg bg-blue-200 shadow-gray-400 m-2 p-4 cursor-pointer hover:scale-110 ease-in duration-300"
-          >
-            <GrProjects size={20} />
-          </a>
-          <a
-            href="#technologies" // Add the href for Technologies
-            className="rounded-full shadow-lg bg-blue-200 shadow-gray-400 m-2 p-4 cursor-pointer hover:scale-110 ease-in duration-300"
-          >
-            <BiCodeAlt size={20} /> {/* Use the new icon */}
-          </a>
-          <a
-            href="#projects"
-            className="rounded-full shadow-lg bg-blue-200 shadow-gray-400 m-2 p-4 cursor-pointer hover:scale-110 ease-in duration-300"
-          >
-            <AiOutlineProject size={20} />
-          </a>
-          <a
-            href="https://drive.google.com/file/d/1HWcRpKXmnTnul3fu6iiMOM8DD9tNzGBG/view?usp=sharing"
-            className="rounded-full shadow-lg bg-blue-200 shadow-gray-400 m-2 p-4 cursor-pointer hover:scale-110 ease-in duration-300"
-          >
-            <BsPerson size={20} />
-          </a>
-          <a
-            href="#contact"
-            className="rounded-full shadow-lg bg-blue-200 shadow-gray-400 m-2 p-4 cursor-pointer hover:scale-110 ease-in duration-300"
-          >
-            <AiOutlineMail size={20} />
-          </a>
-        </div>
-      </div>
+            {navbarItems.map((item, index) => {
+              const Icon = iconMap[item.icon];
+              return (
+                <motion.a
+                  key={index}
+                  href={item.href}
+                  onClick={() => {
+                    setActiveIndex(index);
+                    handleNav();
+                  }}
+                  className={`w-[75%] flex justify-center items-center rounded-xl m-3 p-4 cursor-pointer ${
+                    activeIndex === index ? "bg-blue-100" : "bg-transparent"
+                  }`}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  whileHover={{
+                    scale: 1.1,
+                    backgroundColor: "#f5f3f0",
+                    transition: { duration: 0.3 },
+                  }}
+                >
+                  {Icon && (
+                    <motion.div
+                      initial={{ color: inactiveColor }}
+                      animate={{
+                        color:
+                          activeIndex === index ? activeColor : inactiveColor,
+                      }}
+                      whileHover={{
+                        color: activeColor,
+                        transition: { duration: 0.3 },
+                      }}
+                    >
+                      <Icon size={22} />
+                    </motion.div>
+                  )}
+                  <span
+                    className="pl-4 font-semibold"
+                    style={{
+                      color: activeIndex === index ? activeColor : "#1f2937",
+                    }}
+                  >
+                    {item.name}
+                  </span>
+                </motion.a>
+              );
+            })}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Desktop Side Navigation */}
+      <motion.div
+        initial={{ x: -50, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="hidden md:flex flex-col fixed top-[32%] left-4 transform -translate-y-[40%] z-10 bg-transparent"
+      >
+        {navbarItems.map((item, index) => {
+          const Icon = iconMap[item.icon];
+          return (
+            <motion.a
+              key={index}
+              href={item.href}
+              onClick={() => setActiveIndex(index)}
+              className={`rounded-xl m-2 p-3 cursor-pointer flex justify-center items-center ${
+                activeIndex === index ? "bg-blue-100" : "bg-transparent"
+              }`}
+              initial={{ opacity: 0, x: -10 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ delay: index * 0.1 }}
+              whileHover={{
+                scale: 1.1,
+                backgroundColor: "#f5f3f0",
+                transition: { duration: 0.3 },
+              }}
+            >
+              {Icon && (
+                <motion.div
+                  initial={{ color: inactiveColor }}
+                  animate={{
+                    color: activeIndex === index ? activeColor : inactiveColor,
+                  }}
+                  whileHover={{
+                    color: activeColor,
+                    scale: 1.1,
+                    transition: { duration: 0.3 },
+                  }}
+                >
+                  <Icon size={24} />
+                </motion.div>
+              )}
+            </motion.a>
+          );
+        })}
+      </motion.div>
     </div>
   );
 };
