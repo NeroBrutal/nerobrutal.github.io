@@ -11,7 +11,6 @@ function App() {
   return (
     <div>
       <Sidenav />
-      {/* <FollowCursor /> */}
       <Main />
       <Work />
       <Technologies />
