@@ -8,6 +8,7 @@ import {
 } from "react-icons/fa";
 import { HiOutlineLocationMarker, HiOutlinePaperAirplane } from "react-icons/hi";
 import data from "../data/data.json";
+import MagneticButton from "./MagneticButton";
 
 const inputClass =
   "w-full rounded-lg bg-surface border border-border px-4 py-3 text-sm text-text placeholder:text-muted outline-none transition-colors focus:border-accent/60";
@@ -126,10 +127,12 @@ const Contact = () => {
               />
             </div>
 
-            <button type="submit" className="btn-cosmic w-full mt-6">
-              Send Message
-              <HiOutlinePaperAirplane className="rotate-90" size={16} />
-            </button>
+            <MagneticButton className="w-full mt-6" strength={0.15}>
+              <button type="submit" className="btn-cosmic w-full">
+                Send Message
+                <HiOutlinePaperAirplane className="rotate-90" size={16} />
+              </button>
+            </MagneticButton>
           </form>
         </motion.div>
       </div>

@@ -2,6 +2,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import { HiOutlineX } from "react-icons/hi";
 import data from "../data/data.json";
+import TiltCard from "./TiltCard";
 
 function Projects() {
   const projects = data.projects;
@@ -58,7 +59,7 @@ function Projects() {
             whileHover={{ y: -4 }}
             onClick={(e) => handleCardClick(e, project)}
           >
-            <div className="relative w-full h-full rounded-[28px] overflow-hidden">
+            <TiltCard className="relative w-full h-full rounded-[28px] overflow-hidden">
               <motion.img
                 src={project.image.replace("../assets/", "/src/assets/")}
                 alt={project.title}
@@ -78,7 +79,7 @@ function Projects() {
                   {project.title}
                 </h2>
               </div>
-            </div>
+            </TiltCard>
           </motion.div>
         ))}
       </div>

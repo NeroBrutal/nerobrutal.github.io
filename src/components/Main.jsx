@@ -1,5 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { TypeAnimation } from "react-type-animation";
 import {
   FaTwitter,
@@ -12,6 +13,7 @@ import { HiOutlineLocationMarker } from "react-icons/hi";
 import { HiOutlineChevronDown } from "react-icons/hi2";
 import Profile from "../assets/profile.jpg";
 import RainGlass from "./RainGlass";
+import MagneticButton from "./MagneticButton";
 import data from "../data/data.json";
 
 const name = data.name;
@@ -40,10 +42,35 @@ const item = {
   show: { opacity: 1, y: 0, transition: { duration: 0.6 } },
 };
 
+const nameContainer = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.04, delayChildren: 0.45 } },
+};
+
+const letter = {
+  hidden: { opacity: 0, y: 28, rotateX: -70 },
+  show: {
+    opacity: 1,
+    y: 0,
+    rotateX: 0,
+    transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] },
+  },
+};
+
 function Main() {
+  const heroRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
+  const profileY = useTransform(scrollYProgress, [0, 1], [0, 120]);
+  const profileScale = useTransform(scrollYProgress, [0, 1], [1, 0.85]);
+  const profileOpacity = useTransform(scrollYProgress, [0, 1], [1, 0.3]);
+
   return (
     <motion.div
       id="main"
+      ref={heroRef}
       className="relative isolate flex flex-col items-center justify-center min-h-screen text-center px-4 pt-28 pb-16"
       variants={container}
       initial="hidden"
@@ -61,9 +88,10 @@ function Main() {
         Open to new missions
       </motion.div>
 
-      {/* Profile with orbit ring */}
+      {/* Profile with orbit ring — drifts and fades with scroll */}
       <motion.div
         variants={item}
+        style={{ y: profileY, scale: profileScale, opacity: profileOpacity }}
         className="relative w-52 h-52 sm:w-60 sm:h-60 mb-8"
       >
         <div className="absolute -inset-6 rounded-full bg-accent/10 blur-2xl" />
@@ -81,7 +109,26 @@ function Main() {
         className="text-4xl sm:text-6xl font-display font-bold mb-3"
       >
         <span className="text-text">{`Hi, I'm `}</span>
-        <span className="text-gradient">{name}</span>
+        <motion.span
+          className="inline-block text-gradient"
+          style={{ perspective: 500 }}
+          variants={nameContainer}
+          initial="hidden"
+          animate="show"
+          aria-label={name}
+        >
+          {name.split("").map((char, i) => (
+            <motion.span
+              key={i}
+              variants={letter}
+              className="inline-block"
+              style={{ transformStyle: "preserve-3d" }}
+              aria-hidden="true"
+            >
+              {char === " " ? " " : char}
+            </motion.span>
+          ))}
+        </motion.span>
       </motion.h1>
 
       <motion.h2
@@ -102,32 +149,37 @@ function Main() {
         variants={item}
         className="flex flex-wrap items-center justify-center gap-4 mb-10"
       >
-        <a href="#projects" className="btn-cosmic">
-          View My Work
-        </a>
-        {resumeHref && (
-          <a
-            href={resumeHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-outline-cosmic"
-          >
-            Download Resume
+        <MagneticButton>
+          <a href="#projects" className="btn-cosmic">
+            View My Work
           </a>
+        </MagneticButton>
+        {resumeHref && (
+          <MagneticButton>
+            <a
+              href={resumeHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-outline-cosmic"
+            >
+              Download Resume
+            </a>
+          </MagneticButton>
         )}
       </motion.div>
 
       <motion.div variants={item} className="flex justify-center gap-5">
         {socials.map(({ Icon, href }, i) => (
-          <a
-            key={i}
-            href={href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="glass-pill w-11 h-11 flex items-center justify-center text-muted transition-all duration-300 hover:-translate-y-1 hover:text-accent"
-          >
-            <Icon size={18} />
-          </a>
+          <MagneticButton key={i} strength={0.5}>
+            <a
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="glass-pill w-11 h-11 flex items-center justify-center text-muted transition-all duration-300 hover:-translate-y-1 hover:text-accent"
+            >
+              <Icon size={18} />
+            </a>
+          </MagneticButton>
         ))}
       </motion.div>
 

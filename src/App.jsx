@@ -9,6 +9,7 @@ import CosmicBackground from "./components/CosmicBackground";
 import LoadingOverlay from "./components/LoadingOverlay";
 import ScrollProgress from "./components/ScrollProgress";
 import CommandPalette from "./components/CommandPalette";
+import AgentBot from "./components/AgentBot";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
       <MotionCursor />
       <Projects />
       <Contact />
+      <AgentBot />
     </div>
   );
 }
