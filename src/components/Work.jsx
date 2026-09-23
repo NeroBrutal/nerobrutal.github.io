@@ -2,9 +2,10 @@
 import { motion } from "framer-motion";
 import data from "../data/data.json";
 import TimelineItem from "./TimelineItem";
+import SplitChapter from "./SplitChapter";
 
 const Work = () => {
-  const aboutMe = data.about_me;
+  const production = data.editorial?.production;
   const sections = data.sections;
   const languages = data.programming_languages;
 
@@ -34,29 +35,46 @@ const Work = () => {
   };
 
   return (
-    <div id="work" className="relative max-w-screen-lg m-auto px-4 md:px-8 py-24">
-      {/* Section title */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-        className="text-center mb-6"
-      >
-        <span className="eyebrow">🛰️ The journey so far</span>
-        <h1 className="section-title">About Me</h1>
-      </motion.div>
+    <div id="work" className="relative max-w-screen-lg m-auto px-4 md:px-8 pb-24">
+      <SplitChapter
+        eyebrow="On the ground"
+        line1="IN"
+        line2="PRODUCTION"
+        subtitle="Generative platforms, government chatbots, sales copilots, WhatsApp agents, and the rest of the AI stack—live in production."
+      />
 
-      {/* About me paragraph */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-        className="glass-panel p-6 sm:p-8 max-w-3xl mx-auto mt-8"
-      >
-        <p className="text-center text-muted leading-relaxed">{aboutMe}</p>
-      </motion.div>
+      {production && (
+        <div className="max-w-4xl mx-auto mt-4 mb-4">
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="text-center text-muted leading-relaxed px-2"
+          >
+            {production.intro}
+          </motion.p>
+          <ul className="mt-10 grid gap-4 sm:grid-cols-2">
+            {production.highlights.map((item, i) => (
+              <motion.li
+                key={item.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.45, delay: i * 0.06 }}
+                className="glass-panel p-5 sm:p-6 text-left list-none"
+              >
+                <h3 className="font-display font-semibold text-text mb-2">
+                  {item.title}
+                </h3>
+                <p className="text-sm text-muted leading-relaxed">
+                  {item.description}
+                </p>
+              </motion.li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       {/* Scrolling Technology Icons */}
       <div className="overflow-hidden py-14 relative [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">

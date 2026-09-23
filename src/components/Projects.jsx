@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { HiOutlineX } from "react-icons/hi";
 import data from "../data/data.json";
 import TiltCard from "./TiltCard";
+import SplitChapter from "./SplitChapter";
 
 function Projects() {
   const projects = data.projects;
@@ -38,11 +39,13 @@ function Projects() {
   }, [selectedProject]);
 
   return (
-    <div id="projects" className="relative max-w-[1100px] mx-auto px-4 py-24">
-      <div className="text-center mb-14">
-        <span className="eyebrow">🚀 Selected launches</span>
-        <h1 className="section-title">Projects</h1>
-      </div>
+    <div id="projects" className="relative max-w-[1100px] mx-auto px-4 pb-24">
+      <SplitChapter
+        eyebrow="Builds hall of fame"
+        line1="IN"
+        line2="THE LAB"
+        subtitle="Agents, generative products, and automation—experiments that became real launches."
+      />
 
       {/* Bento grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[260px]">

@@ -34,6 +34,9 @@ export default function LoadingOverlay() {
           <p className="mt-6 text-sm tracking-[0.3em] uppercase text-muted opacity-80">
             Entering orbit
           </p>
+          <p className="mt-2 text-[10px] tracking-[0.35em] uppercase text-muted/50">
+            Load Rashid
+          </p>
         </motion.div>
       )}
     </AnimatePresence>

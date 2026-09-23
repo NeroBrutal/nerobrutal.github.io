@@ -1,5 +1,6 @@
 import Navbar from "./components/Navbar";
 import Main from "./components/Main";
+import MessageBlock from "./components/MessageBlock";
 import Work from "./components/Work";
 import Projects from "./components/Projects";
 import Contact from "./components/Contact";
@@ -24,6 +25,7 @@ function App() {
       <Navbar />
       <CommandPalette />
       <Main />
+      <MessageBlock />
       <Work />
       <Technologies />
       <MotionCursor />

@@ -21,6 +21,7 @@ const location = data.location;
 const roles = data.roles;
 const socialLinks = data.socialLinks;
 const resumeHref = data.navbar.find((item) => item.name === "Resume")?.href;
+const editorial = data.editorial ?? {};
 
 const socials = [
   { Icon: FaGithub, href: socialLinks.github },
@@ -85,7 +86,7 @@ function Main() {
         <HiOutlineLocationMarker className="text-accent" />
         {location}
         <span className="w-1.5 h-1.5 rounded-full bg-success animate-pulse-glow" />
-        Open to new missions
+        {editorial.nextMission ?? "Open to new missions"}
       </motion.div>
 
       {/* Profile with orbit ring — drifts and fades with scroll */}
@@ -110,9 +111,16 @@ function Main() {
         />
       </motion.div>
 
+      <motion.p
+        variants={item}
+        className="text-xs sm:text-sm tracking-[0.28em] uppercase text-muted/90 mb-4"
+      >
+        {editorial.sinceLine ?? `${roles[0]} · ${location}`}
+      </motion.p>
+
       <motion.h1
         variants={item}
-        className="text-4xl sm:text-6xl font-display font-bold mb-3"
+        className="text-4xl sm:text-6xl lg:text-7xl font-display font-bold mb-2"
       >
         <span className="text-text">{`Hi, I'm `}</span>
         <motion.span
@@ -137,9 +145,16 @@ function Main() {
         </motion.span>
       </motion.h1>
 
+      <motion.p
+        variants={item}
+        className="text-sm sm:text-base tracking-wide text-accent/90 font-semibold mb-6"
+      >
+        {roles[0]}
+      </motion.p>
+
       <motion.h2
         variants={item}
-        className="text-xl sm:text-2xl text-muted mb-10 flex flex-wrap justify-center gap-x-2 font-medium"
+        className="text-lg sm:text-xl text-muted mb-10 flex flex-wrap justify-center gap-x-2 font-medium"
       >
         <span>I'm a</span>
         <TypeAnimation
@@ -190,8 +205,8 @@ function Main() {
       </motion.div>
 
       <motion.a
-        href="#work"
-        aria-label="Scroll to About Me"
+        href="#message"
+        aria-label="Scroll to message"
         className="absolute bottom-6 text-muted hover:text-accent transition-colors animate-bounce-slow"
         variants={item}
       >

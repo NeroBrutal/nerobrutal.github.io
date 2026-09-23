@@ -77,6 +77,51 @@
     "Generative AI Specialist",
     "Automation Engineer (n8n)"
   ],
+  "editorial": {
+    "sinceLine": "AI engineer · Dubai, UAE",
+    "nextMission": "Open to new missions",
+    "message": {
+      "eyebrow": "Message from Mohamed",
+      "parts": [
+        { "text": "Redefining ", "bold": true },
+        { "text": "how teams ship with AI—building " },
+        { "text": "agents, automation, and APIs", "bold": true },
+        { "text": " that run in production, not just in demos. Defining a " },
+        { "text": "legacy", "bold": true },
+        { "text": " in engineering on and off the keyboard." }
+      ],
+      "quote": "It doesn't matter where you start—it's how you progress from there."
+    },
+    "production": {
+      "intro": "Systems I've designed, built, and run in production—generative platforms, enterprise chatbots, and agents that talk to customers on the channels they already use.",
+      "highlights": [
+        {
+          "title": "Araby.AI",
+          "description": "Python/FastAPI backends for generative AI—image, video, and text pipelines, real-time sockets, and multi-model orchestration at scale."
+        },
+        {
+          "title": "Government chatbots",
+          "description": "Conversational assistants for government entities—guided flows, policy-safe answers, and integrations with existing service channels."
+        },
+        {
+          "title": "Sales agent assistants",
+          "description": "AI copilots for sales teams—context from CRM and product data, draft replies, follow-ups, and faster qualification."
+        },
+        {
+          "title": "WhatsApp chat agents",
+          "description": "Business messaging bots on WhatsApp—24/7 triage, FAQs, handoff to humans, and automation wired into backend workflows."
+        },
+        {
+          "title": "ERP & internal AI",
+          "description": "Odoo GPT and in-house tools—live ERP data, automated reports, and skills teams can configure without redeploying code."
+        },
+        {
+          "title": "Support & automation",
+          "description": "AI support desks, email agents, and n8n workflows that route tickets, draft responses, and keep ops in sync."
+        }
+      ]
+    }
+  },
   "socialLinks": {
     "linkedin": "https://www.linkedin.com/in/mohamed-rashidh-bb948121b",
     "github": "https://github.com/NeroBrutal",
@@ -98,7 +143,7 @@
     {
       "name": "Work",
       "icon": "AppsIcon",
-      "href": "#work_experience"
+      "href": "#work"
     },
     {
       "name": "Technologies",
@@ -342,11 +387,13 @@
           "title": "AI and Automation Engineer",
           "company": "Ghori Holdings",
           "location": "Dubai, United Arab Emirates",
-          "summary": "Building AI-powered automation and intelligent assistants for Ghori Holdings, including Odoo GPT — an AI assistant embedded directly into the company's Odoo ERP.",
+          "summary": "Building production AI for Ghori Holdings—ERP assistants, WhatsApp and web chat agents, sales copilots, and automation across the business.",
           "details": [
             "Developed Odoo GPT, an AI assistant embedded in Odoo ERP for live data queries and automated Excel/PDF/presentation report generation.",
-            "Designing and building AI-powered automation workflows across the organization's systems.",
-            "Working on process automation to improve operational efficiency across teams."
+            "Shipped conversational chatbots for government-facing and internal use cases with controlled, auditable responses.",
+            "Built AI assistants for sales agents—CRM-aware drafting, follow-ups, and faster lead handling.",
+            "Deployed WhatsApp chat agents for customer messaging, triage, and handoff to human teams.",
+            "Designed n8n and API automation workflows that connect LLMs to email, ticketing, and operational systems."
           ]
         },
         {

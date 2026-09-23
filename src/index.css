@@ -80,6 +80,11 @@ h6 {
     @apply text-accent;
   }
 
+  .chapter-split {
+    font-size: clamp(2.75rem, 11vw, 6.5rem);
+    @apply font-display font-bold leading-[0.92] tracking-tight;
+  }
+
   .eyebrow {
     @apply inline-block text-xs sm:text-sm tracking-[0.3em] uppercase text-accent/80 font-semibold mb-3;
   }

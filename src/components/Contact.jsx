@@ -136,6 +136,16 @@ const Contact = () => {
           </form>
         </motion.div>
       </div>
+
+      <motion.p
+        className="mt-20 text-center font-display text-xl sm:text-2xl text-text tracking-tight"
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+      >
+        Always building the <span className="text-gradient">next agent</span>.
+      </motion.p>
     </div>
   );
 };

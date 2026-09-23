@@ -1,6 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import data from "../data/data.json";
+import SplitChapter from "./SplitChapter";
 
 const Row = ({ items, duration, reverse }) => (
   <div className="relative w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
@@ -41,13 +42,16 @@ const Technologies = () => {
   const rowTwo = technologiesData.slice(midpoint);
 
   return (
-    <section id="technologies" className="relative py-24 overflow-hidden">
-      <div className="text-center mb-14">
-        <span className="eyebrow">⚙️ My toolkit</span>
-        <h1 className="section-title">Technologies</h1>
-      </div>
+    <section id="technologies" className="relative pb-24 overflow-hidden">
+      <SplitChapter
+        eyebrow="Partners & stack"
+        line1="TOOLS"
+        line2="I SHIP WITH"
+        subtitle="Frameworks, models, and infrastructure behind the agents and products on this site."
+        className="py-12 sm:py-16"
+      />
 
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-6 max-w-[1200px] mx-auto px-4">
         <Row items={rowOne} duration={40} />
         <Row items={rowTwo} duration={46} reverse />
       </div>
