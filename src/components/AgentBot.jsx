@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useMotionValue, useReducedMotion } from "framer-motion";
 import { HiOutlineX, HiOutlinePaperAirplane } from "react-icons/hi";
 import {
   getMascotPosition,
@@ -21,6 +21,7 @@ import { findPerch, perchInView, perchPosition } from "../lib/mascotPerches";
 import RobotMascot from "./RobotMascot";
 import MascotBubble from "./MascotBubble";
 import { FLYBY_EVENT } from "./SpaceshipFlyby";
+import { LOADER_MS } from "./LoadingOverlay";
 import data from "../data/data.json";
 
 // The model, system prompt and OpenRouter key live in the proxy (worker/).
@@ -42,6 +43,12 @@ const FLY_DISTANCE = 260;
 const PERCH_CHANCE = 0.85;
 const THINK_MS = 1000;
 const FIRST_GREETING_MS = 2500;
+
+// Just off the right edge, so he can jetpack in once the loader clears.
+function offstagePosition() {
+  if (typeof window === "undefined") return getMascotPosition("main");
+  return { x: window.innerWidth + 90, y: window.innerHeight * 0.3, edge: "right" };
+}
 
 function travelDurationMs(distance) {
   return Math.min(2200, Math.max(850, distance * 2.4));
@@ -76,7 +83,7 @@ export default function AgentBot() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const [pos, setPos] = useState(() => getMascotPosition("main"));
+  const [pos, setPos] = useState(offstagePosition);
   const [edge, setEdge] = useState("right");
   const [sectionId, setSectionId] = useState("main");
   const [walking, setWalking] = useState(false);
@@ -99,9 +106,20 @@ export default function AgentBot() {
   const queuedSectionRef = useRef(null);
   const announceRef = useRef(true);
   const greetedRef = useRef(false);
+  const enteredRef = useRef(false);
   const bubbleTimersRef = useRef([]);
+  // While perched, the mascot's frame is pinned to the page so it scrolls
+  // natively with the element he sits on (a fixed box re-positioned from JS
+  // always trails the compositor's scroll by a frame and looks jittery).
+  const frameRef = useRef(null);
+  const pinnedRef = useRef(false);
+  const [pin, setPin] = useState(null);
+  const mx = useMotionValue(pos.x);
+  const my = useMotionValue(pos.y);
 
-  posRef.current = pos;
+  // posRef always holds his live on-screen position; while pinned it's kept
+  // current by the perch scroll listener instead.
+  if (!pinnedRef.current) posRef.current = pos;
   sectionRef.current = sectionId;
   openRef.current = open;
   walkingRef.current = walking;
@@ -109,6 +127,26 @@ export default function AgentBot() {
   flightRef.current = flightPath;
   bubbleRef.current = bubble;
   perchRef.current = perch;
+
+  const pinToPage = () => {
+    const frame = frameRef.current;
+    const box = frame?.parentElement?.getBoundingClientRect();
+    if (!box) return;
+    const next = { top: -box.top, left: -box.left };
+    Object.assign(frame.style, { position: "absolute", top: `${next.top}px`, left: `${next.left}px` });
+    pinnedRef.current = true;
+    setPin(next);
+  };
+
+  const unpin = () => {
+    if (!pinnedRef.current) return;
+    pinnedRef.current = false;
+    const frame = frameRef.current;
+    if (frame) Object.assign(frame.style, { position: "fixed", top: "0px", left: "0px" });
+    mx.jump(posRef.current.x);
+    my.jump(posRef.current.y);
+    setPin(null);
+  };
 
   const clearBubble = () => {
     bubbleTimersRef.current.forEach(clearTimeout);
@@ -137,6 +175,7 @@ export default function AgentBot() {
   // options.stunt === false → plain walk (no flight, no arrival stunt).
   // options.perch → sit on that perch on arrival instead of an arrival stunt.
   const goTo = (nextSection, nextPos, options = {}) => {
+    unpin();
     const from = posRef.current;
     const dist = travelDistance(from, nextPos);
     if (nextSection !== sectionRef.current) announceRef.current = true;
@@ -195,6 +234,10 @@ export default function AgentBot() {
     setEdge(spot.edge);
     setPos({ x: spot.x, y: spot.y });
     setPerch(target);
+    mx.jump(spot.x);
+    my.jump(spot.y);
+    posRef.current = { x: spot.x, y: spot.y };
+    pinToPage();
   };
 
   const finishMove = () => {
@@ -206,27 +249,45 @@ export default function AgentBot() {
     arrive();
   };
 
-  // Stay glued to the perch while the page scrolls; hop off if it leaves view.
+  // Framer skips onAnimationComplete when there's nothing to animate (e.g. the
+  // mascot remounted after the chat closed), which would leave him walking forever.
+  useEffect(() => {
+    if (!walking) return;
+    const t = setTimeout(finishMove, moveMs + 400);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [walking, moveMs, pos]);
+
+  // The pinned frame scrolls with the page on its own; just track where he is
+  // on screen, re-seat him if layout shifts, and hop off if the perch leaves view.
   useEffect(() => {
     if (!perch) return;
     let frame = null;
-    const update = () => {
+    const update = (relayout) => {
       frame = null;
+      if (!pinnedRef.current) return;
       const spot = perchPosition(perch);
       if (!perch.el.isConnected || !perchInView(spot.rect)) {
         goToAnchor();
         return;
       }
-      setPos({ x: spot.x, y: spot.y });
+      posRef.current = { x: spot.x, y: spot.y };
+      if (relayout) {
+        mx.jump(spot.x);
+        my.jump(spot.y);
+        setPos({ x: spot.x, y: spot.y });
+        pinToPage();
+      }
     };
     const onScroll = () => {
-      if (frame === null) frame = requestAnimationFrame(update);
+      if (frame === null) frame = requestAnimationFrame(() => update(false));
     };
+    const onResize = () => update(true);
     window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
+    window.addEventListener("resize", onResize);
     return () => {
       window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
+      window.removeEventListener("resize", onResize);
       if (frame !== null) cancelAnimationFrame(frame);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -304,6 +365,10 @@ export default function AgentBot() {
         if (!mostVisible) return;
         const id = mostVisible.target.id;
         if (!SECTION_ANCHORS[id]) return;
+        if (!enteredRef.current) {
+          setSectionId(id);
+          return;
+        }
         if (flightRef.current) {
           queuedSectionRef.current = id;
           return;
@@ -318,10 +383,28 @@ export default function AgentBot() {
     // eslint-disable-next-line react-hooks/exhaustive-deps -- goTo is stable helpers + refs
   }, []);
 
+  // Entrance: once "Entering orbit" fades, fly in to wherever the page is.
+  useEffect(() => {
+    const t = setTimeout(() => {
+      enteredRef.current = true;
+      if (reduceMotion) {
+        const spot = getMascotPosition(sectionRef.current);
+        mx.jump(spot.x);
+        my.jump(spot.y);
+        setEdge(spot.edge);
+        setPos({ x: spot.x, y: spot.y });
+      } else {
+        arriveAtSection(sectionRef.current);
+      }
+    }, LOADER_MS + 250);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   // Keep anchors aligned on resize.
   useEffect(() => {
     const onResize = () => {
-      if (perchRef.current || flightRef.current) return;
+      if (!enteredRef.current || perchRef.current || flightRef.current) return;
       const next = getMascotPosition(sectionRef.current);
       setPos({ x: next.x, y: next.y });
       setEdge(next.edge);
@@ -337,6 +420,7 @@ export default function AgentBot() {
     const tick = () => {
       timer = setTimeout(() => {
         const busy =
+          !enteredRef.current ||
           openRef.current ||
           walkingRef.current ||
           stuntRef.current ||
@@ -433,111 +517,121 @@ export default function AgentBot() {
     }
   };
 
-  const sitting = !!perch && !walking && !flightPath;
-  return (
+  const sitting = !!perch && !walking && !flightPath;  return (
     <>
       {/* Roaming mascot — scroll anchors + idle patrol stunts */}
-      {!open && (
-        <motion.div
-          className="fixed left-0 top-0 z-50 pointer-events-none"
-          animate={flightPath ? { x: flightPath.x, y: flightPath.y } : { x: pos.x, y: pos.y }}
-          transition={
-            flightPath
-              ? { duration: flightPath.duration, times: flightPath.times, ease: "easeInOut" }
-              : perch
-                ? { duration: 0 }
-                : { duration: moveMs / 1000, ease: "easeInOut" }
-          }
-          onAnimationComplete={finishMove}
-        >
-          {flightPath &&
-            [-4, 4].map((dy) => (
-              <motion.span
-                key={dy}
-                className="absolute h-1.5 w-52 rounded-full bg-gradient-to-r from-white/90 via-accent/60 to-transparent blur-[1.5px]"
-                style={{
-                  left: flightPath.trailOrigin.x,
-                  top: flightPath.trailOrigin.y + dy,
-                  originX: 0,
-                  rotate: flightPath.trailAngle,
-                }}
-                initial={{ opacity: 0, scaleX: 0 }}
-                {...partMotion(stunt, "trail", { opacity: 0, scaleX: 0 })}
-              />
-            ))}
-
-          <AnimatePresence>
-            {bubble && !flightPath && (
-              <MascotBubble
-                key="bubble"
-                phase={bubble.phase}
-                text={bubble.text}
-                edge={edge}
-                below={pos.y < 140}
-                beside={!!perch}
-                onClick={openChat}
-              />
-            )}
-          </AnimatePresence>
-
-          <button
-            onClick={openChat}
-            onMouseEnter={() => {
-              if (!walkingRef.current) playStunt("wave");
-            }}
-            aria-label="Open AI assistant"
-            className={`relative w-14 h-[88px] ${sitting ? "pointer-events-none" : "pointer-events-auto"}`}
+      <div
+        ref={frameRef}
+        className="z-50 pointer-events-none"
+        style={pin ? { position: "absolute", top: pin.top, left: pin.left } : { position: "fixed", top: 0, left: 0 }}
+      >
+        {!open && (
+          <motion.div
+            className="absolute left-0 top-0 pointer-events-none will-change-transform"
+            style={{ x: mx, y: my }}
+            animate={flightPath ? { x: flightPath.x, y: flightPath.y } : { x: pos.x, y: pos.y }}
+            transition={
+              flightPath
+                ? { duration: flightPath.duration, times: flightPath.times, ease: "easeInOut" }
+                : perch
+                  ? { duration: 0 }
+                  : { duration: moveMs / 1000, ease: "easeInOut" }
+            }
+            onAnimationComplete={finishMove}
           >
-            {/* While sitting, only his upper body is clickable so his dangling
-                legs don't block the button/card he's perched on. */}
-            {sitting && <span className="absolute inset-x-0 top-0 h-[64%] pointer-events-auto" />}
-            <div
-              className="relative w-full h-full"
-              style={{ transform: edge === "left" ? "scaleX(-1)" : undefined }}
+            {flightPath &&
+              [-4, 4].map((dy) => (
+                <motion.span
+                  key={dy}
+                  className="absolute h-1.5 w-52 rounded-full bg-gradient-to-r from-white/90 via-accent/60 to-transparent"
+                  style={{
+                    left: flightPath.trailOrigin.x,
+                    top: flightPath.trailOrigin.y + dy,
+                    originX: 0,
+                    rotate: flightPath.trailAngle,
+                  }}
+                  initial={{ opacity: 0, scaleX: 0 }}
+                  {...partMotion(stunt, "trail", { opacity: 0, scaleX: 0 })}
+                />
+              ))}
+
+            <AnimatePresence>
+              {bubble && !flightPath && (
+                <MascotBubble
+                  key="bubble"
+                  phase={bubble.phase}
+                  text={bubble.text}
+                  edge={edge}
+                  below={pos.y < 140}
+                  beside={!!perch}
+                  onClick={openChat}
+                />
+              )}
+            </AnimatePresence>
+
+            <button
+              onClick={openChat}
+              onMouseEnter={() => {
+                if (!walkingRef.current) playStunt("wave");
+              }}
+              aria-label="Open AI assistant"
+              className={`relative w-14 h-[88px] ${sitting ? "pointer-events-none" : "pointer-events-auto"}`}
             >
-              <motion.span
-                className="absolute left-1/2 -bottom-1 -ml-5 h-2.5 w-10 rounded-full bg-black/70 blur-[3px]"
-                {...(sitting
-                  ? { animate: { opacity: 0 }, transition: { duration: 0.2 } }
-                  : shadowMotion(stunt))}
-              />
-              <motion.span
-                className="absolute left-1/2 -bottom-1 -ml-7 h-4 w-14 rounded-full border-2 border-accent/50 blur-[1px]"
-                initial={{ opacity: 0, scale: 0.4 }}
-                {...partMotion(stunt, "dust", { opacity: 0, scale: 0.4 })}
-              />
-              <motion.div
+              {/* While sitting, only his upper body is clickable so his dangling
+                  legs don't block the button/card he's perched on. */}
+              {sitting && <span className="absolute inset-x-0 top-0 h-[64%] pointer-events-auto" />}
+              <div
                 className="relative w-full h-full"
-                animate={
-                  stunt || sitting
-                    ? { y: 0 }
-                    : walking
-                      ? { y: [0, -4, 0, -4, 0] }
-                      : { y: [0, -6, 0] }
-                }
-                transition={
-                  stunt || sitting
-                    ? { duration: 0.2 }
-                    : walking
-                      ? { duration: 0.5, repeat: Infinity, ease: "easeInOut" }
-                      : { duration: 3, repeat: Infinity, ease: "easeInOut" }
-                }
+                style={{ transform: edge === "left" ? "scaleX(-1)" : undefined }}
               >
-                <motion.div className="relative w-full h-full" {...airMotion(stunt)}>
-                  <motion.div
-                    className="relative w-full h-full"
-                    style={{ originY: 1 }}
-                    {...partMotion(stunt, "squash", SQUASH_REST)}
-                  >
-                    <span className="absolute inset-x-0 -inset-y-2 rounded-full bg-accent/20 blur-xl" />
-                    <RobotMascot walking={walking} stunt={stunt} sitting={sitting} />
+                <motion.span
+                  className="absolute left-1/2 -bottom-1 -ml-5 h-2.5 w-10 rounded-full"
+                  style={{ background: "radial-gradient(closest-side, rgb(0 0 0 / 0.7), transparent)" }}
+                  {...(sitting
+                    ? { animate: { opacity: 0 }, transition: { duration: 0.2 } }
+                    : shadowMotion(stunt))}
+                />
+                <motion.span
+                  className="absolute left-1/2 -bottom-1 -ml-7 h-4 w-14 rounded-full border-2 border-accent/40"
+                  initial={{ opacity: 0, scale: 0.4 }}
+                  {...partMotion(stunt, "dust", { opacity: 0, scale: 0.4 })}
+                />
+                <motion.div
+                  className="relative w-full h-full"
+                  animate={
+                    stunt || sitting
+                      ? { y: 0 }
+                      : walking
+                        ? { y: [0, -4, 0, -4, 0] }
+                        : { y: [0, -6, 0] }
+                  }
+                  transition={
+                    stunt || sitting
+                      ? { duration: 0.2 }
+                      : walking
+                        ? { duration: 0.5, repeat: Infinity, ease: "easeInOut" }
+                        : { duration: 3, repeat: Infinity, ease: "easeInOut" }
+                  }
+                >
+                  <motion.div className="relative w-full h-full" {...airMotion(stunt)}>
+                    <motion.div
+                      className="relative w-full h-full"
+                      style={{ originY: 1 }}
+                      {...partMotion(stunt, "squash", SQUASH_REST)}
+                    >
+                      <span
+                        className="absolute -inset-x-4 -inset-y-4"
+                        style={{ background: "radial-gradient(closest-side, rgb(var(--color-accent-rgb) / 0.2), transparent)" }}
+                      />
+                      <RobotMascot walking={walking} stunt={stunt} sitting={sitting} />
+                    </motion.div>
                   </motion.div>
                 </motion.div>
-              </motion.div>
-            </div>
-          </button>
-        </motion.div>
-      )}
+              </div>
+            </button>
+          </motion.div>
+        )}
+      </div>
 
       {/* Chat panel */}
       <AnimatePresence>

@@ -11,12 +11,14 @@ import ScrollProgress from "./components/ScrollProgress";
 import CommandPalette from "./components/CommandPalette";
 import AgentBot from "./components/AgentBot";
 import SpaceshipFlyby from "./components/SpaceshipFlyby";
+import PlanetSystems from "./components/PlanetSystems";
 
 function App() {
   return (
     <div className="relative">
       <LoadingOverlay />
       <CosmicBackground />
+      <PlanetSystems />
       <SpaceshipFlyby />
       <ScrollProgress />
       <Navbar />

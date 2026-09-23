@@ -9,7 +9,7 @@ export default function RobotMascot({ walking = false, stunt = null, sitting = f
       walking={walking}
       stunt={stunt}
       sitting={sitting}
-      className="relative w-full h-full drop-shadow-[0_6px_18px_rgba(0,0,0,0.45)]"
+      className="relative w-full h-full"
     />
   );
 }

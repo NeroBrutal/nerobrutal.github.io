@@ -115,8 +115,23 @@ function Ship() {
   );
 }
 
-// A big cruiser that dives from the top-right corner to the bottom-left every
-// minute or so, growing as it "approaches". Rendered right after the cosmic
+// Where a pass enters and leaves the screen. The top-right → bottom-left dive
+// is the signature route; the others keep it from feeling like a loop.
+const ROUTES = [
+  { weight: 5, route: (vw, vh, w, h) => ({ start: { x: vw + 80, y: -h - random(40, 120) }, end: { x: -w - 160, y: vh * random(0.6, 0.9) } }) },
+  { weight: 2, route: (vw, vh, w, h) => ({ start: { x: -w - 80, y: -h - random(40, 120) }, end: { x: vw + 160, y: vh * random(0.6, 0.9) } }) },
+  { weight: 2, route: (vw, vh, w) => ({ start: { x: vw + 80, y: vh * random(0.1, 0.3) }, end: { x: -w - 160, y: vh * random(0.25, 0.45) } }) },
+  { weight: 1, route: (vw, vh, w) => ({ start: { x: -w - 80, y: vh * random(0.55, 0.75) }, end: { x: vw + 160, y: vh * random(0.05, 0.2) } }) },
+];
+
+function pickRoute(vw, vh, width, height) {
+  let roll = Math.random() * ROUTES.reduce((sum, r) => sum + r.weight, 0);
+  const pick = ROUTES.find((r) => (roll -= r.weight) <= 0) ?? ROUTES[0];
+  return pick.route(vw, vh, width, height);
+}
+
+// A big cruiser that crosses the screen every minute or so, growing as it
+// "approaches". Rendered right after the cosmic
 // background, so it passes behind the content.
 export default function SpaceshipFlyby() {
   const reduceMotion = useReducedMotion();
@@ -130,16 +145,18 @@ export default function SpaceshipFlyby() {
       const vh = window.innerHeight;
       const width = Math.min(640, Math.max(360, vw * 0.42));
       const height = width / 3;
-      const start = { x: vw + 80, y: -height - random(40, 120) };
-      const end = { x: -width - 160, y: vh * random(0.6, 0.9) };
+      const { start, end } = pickRoute(vw, vh, width, height);
       const angle = (Math.atan2(end.y - start.y, end.x - start.x) * 180) / Math.PI;
+      const leftward = end.x < start.x;
       setPass({
         id: Date.now(),
         width,
         start,
         end,
-        // The ship's nose points left (-x, 180°); turn it to face its path.
-        rotate: angle - 180,
+        // The art's nose points right; mirror it for leftward passes, then
+        // turn it to face along its path.
+        flip: leftward,
+        rotate: leftward ? angle - 180 : angle,
       });
     }, ms);
   };
@@ -166,7 +183,7 @@ export default function SpaceshipFlyby() {
     <motion.div
       key={pass.id}
       aria-hidden
-      className="fixed left-0 top-0 z-0 pointer-events-none"
+      className="fixed left-0 top-0 z-0 pointer-events-none will-change-transform"
       style={{ width: pass.width }}
       initial={{ x: pass.start.x, y: pass.start.y, scale: 0.6 }}
       animate={{ x: pass.end.x, y: pass.end.y, scale: 1.25 }}
@@ -178,10 +195,9 @@ export default function SpaceshipFlyby() {
     >
       <div style={{ transform: `rotate(${pass.rotate}deg)` }}>
         <motion.div
-          style={{ scaleX: -1 }}
+          style={{ scaleX: pass.flip ? -1 : 1 }}
           animate={{ y: [0, -6, 0], rotate: [0, -0.6, 0] }}
           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-          className="drop-shadow-[0_20px_40px_rgba(0,0,0,0.6)]"
         >
           <Ship />
         </motion.div>

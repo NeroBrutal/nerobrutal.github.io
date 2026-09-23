@@ -3,11 +3,13 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
+export const LOADER_MS = 1800;
+
 export default function LoadingOverlay() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 1800);
+    const timer = setTimeout(() => setLoading(false), LOADER_MS);
     return () => clearTimeout(timer);
   }, []);
 

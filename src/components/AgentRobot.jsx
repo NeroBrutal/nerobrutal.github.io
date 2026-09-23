@@ -21,16 +21,16 @@ function Joint({ px, py, reach = 40, motionProps, children }) {
   );
 }
 
-function LitEye({ x, y, w = 5.5, h = 13, accent, glow, filter }) {
+function LitEye({ x, y, w = 5.5, h = 13, accent, glow }) {
   return (
-    <g filter={filter}>
+    <g>
       <rect x={x - 2} y={y - 1} width={w + 4} height={h + 2} rx={(w + 4) / 2} fill={glow} opacity="0.85" />
       <rect x={x} y={y} width={w} height={h} rx={w / 2} fill={accent} />
     </g>
   );
 }
 
-function Head({ id, cx, cy, shell, visor, glow, accent, eyeFilter }) {
+function Head({ id, cx, cy, shell, visor, glow, accent }) {
   const x = cx - 26;
   const y = cy - 22;
   return (
@@ -57,8 +57,8 @@ function Head({ id, cx, cy, shell, visor, glow, accent, eyeFilter }) {
       <rect x={x + 8} y={y + 10} width="36" height="24" rx="10" fill={visor} />
       <rect x={x + 10} y={y + 12} width="14" height="6" rx="3" fill="#ffffff" opacity="0.07" />
 
-      <LitEye x={x + 15} y={y + 14} accent={accent} glow={glow} filter={eyeFilter} />
-      <LitEye x={x + 30} y={y + 14} accent={accent} glow={glow} filter={eyeFilter} />
+      <LitEye x={x + 15} y={y + 14} accent={accent} glow={glow} />
+      <LitEye x={x + 30} y={y + 14} accent={accent} glow={glow} />
     </g>
   );
 }
@@ -136,7 +136,6 @@ export default function AgentRobot({ walking = false, stunt = null, sitting = fa
   const visor = `url(#${id}-visor)`;
   const glow = `url(#${id}-glow)`;
   const joint = `url(#${id}-joint)`;
-  const eyeFilter = `url(#${id}-eye-glow)`;
 
   const flame = partMotion(stunt, "flame", { opacity: 0 });
   const thrust = partMotion(stunt, "thrust", { scaleY: 1 });
@@ -147,7 +146,6 @@ export default function AgentRobot({ walking = false, stunt = null, sitting = fa
       <svg
         viewBox="0 0 64 100"
         className="relative w-full h-full overflow-visible"
-        filter={`url(#${id}-drop)`}
       >
         <RobotDefs id={id} />
 
@@ -180,7 +178,7 @@ export default function AgentRobot({ walking = false, stunt = null, sitting = fa
         />
 
         <Joint px={32} py={40} reach={50} motionProps={limbProps(stunt, false, sitting, "head")}>
-          <Head id={id} cx={32} cy={23} shell={shell} visor={visor} glow={glow} accent={accent} eyeFilter={eyeFilter} />
+          <Head id={id} cx={32} cy={23} shell={shell} visor={visor} glow={glow} accent={accent} />
         </Joint>
 
         <Joint px={11} py={44} motionProps={limbProps(stunt, walking, sitting, "leftArm", [0, -14, 0, 12, 0])}>

@@ -110,3 +110,42 @@ h6 {
     transition-duration: 0.001ms !important;
   }
 }
+
+/* Planet orbits (PlanetSystems.jsx). All three share a lap's duration and
+   delay: spin carries the body round, counter keeps it round and upright,
+   depth swaps it in front of / behind its planet each half lap. */
+@keyframes orbit-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes orbit-counter {
+  from { transform: rotate(0deg) scaleY(var(--unsquash)) rotate(var(--untilt)); }
+  to { transform: rotate(-360deg) scaleY(var(--unsquash)) rotate(var(--untilt)); }
+}
+
+@keyframes orbit-depth {
+  0% { z-index: 3; opacity: 0.85; }
+  25% { opacity: 1; }
+  49.99% { z-index: 3; }
+  50% { z-index: 1; opacity: 0.85; }
+  75% { opacity: 0.55; }
+  100% { z-index: 1; opacity: 0.85; }
+}
+
+.orbit-spin,
+.orbit-counter,
+.orbit-depth {
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+.orbit-spin { animation-name: orbit-spin; }
+.orbit-counter { animation-name: orbit-counter; }
+.orbit-depth { animation-name: orbit-depth; }
+
+@media (prefers-reduced-motion: reduce) {
+  .orbit-spin,
+  .orbit-counter,
+  .orbit-depth {
+    animation-play-state: paused;
+  }
+}

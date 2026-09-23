@@ -63,7 +63,7 @@ export default function MascotBubble({ phase, text, edge, below, beside, onClick
       {phase === "thinking" ? (
         <div className={`flex ${left ? "justify-start" : "justify-end"}`}>
           <div className="relative">
-            <div className="glass-panel bg-surface/90 border-border-bright rounded-full px-4 py-2.5 flex gap-1.5 shadow-lg shadow-black/40">
+            <div className="border bg-surface border-border-bright rounded-full px-4 py-2.5 flex gap-1.5 shadow-lg shadow-black/40">
               {[0, 1, 2].map((d) => (
                 <motion.span
                   key={d}
@@ -73,15 +73,15 @@ export default function MascotBubble({ phase, text, edge, below, beside, onClick
                 />
               ))}
             </div>
-            <span className={`absolute ${dotA} w-2.5 h-2.5 rounded-full glass-panel bg-surface/90 border-border-bright`} />
-            <span className={`absolute ${dotB} w-1.5 h-1.5 rounded-full glass-panel bg-surface/90 border-border-bright`} />
+            <span className={`absolute ${dotA} w-2.5 h-2.5 rounded-full border bg-surface border-border-bright`} />
+            <span className={`absolute ${dotB} w-1.5 h-1.5 rounded-full border bg-surface border-border-bright`} />
           </div>
         </div>
       ) : (
         <button
           type="button"
           onClick={onClick}
-          className="relative w-full text-left glass-panel bg-surface/95 border-border-bright rounded-2xl shadow-lg shadow-black/40"
+          className="relative w-full text-left border bg-surface border-border-bright rounded-2xl shadow-lg shadow-black/40"
         >
           <span className="relative block px-3.5 py-2.5 text-[13px] leading-snug text-text">
             <Typewriter text={text} />

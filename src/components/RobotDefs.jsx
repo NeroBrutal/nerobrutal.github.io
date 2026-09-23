@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 "use client";
 
-// Shared gradients and filters for the coded agent robot. Pass a React useId()
+// Shared gradients for the coded agent robot. Pass a React useId()
 // so multiple instances can mount without id collisions.
 export default function RobotDefs({ id }) {
   const accent = "rgb(var(--color-accent-rgb))";
@@ -42,18 +42,6 @@ export default function RobotDefs({ id }) {
         <stop offset="0%" stopColor="#4a5564" />
         <stop offset="100%" stopColor="#151920" />
       </linearGradient>
-
-      <filter id={`${id}-drop`} x="-30%" y="-30%" width="160%" height="160%">
-        <feDropShadow dx="0" dy="6" stdDeviation="5" floodColor="#000" floodOpacity="0.45" />
-      </filter>
-
-      <filter id={`${id}-eye-glow`} x="-80%" y="-80%" width="260%" height="260%">
-        <feGaussianBlur stdDeviation="2.2" result="blur" />
-        <feMerge>
-          <feMergeNode in="blur" />
-          <feMergeNode in="SourceGraphic" />
-        </feMerge>
-      </filter>
     </defs>
   );
 }
