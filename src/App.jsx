@@ -10,12 +10,14 @@ import LoadingOverlay from "./components/LoadingOverlay";
 import ScrollProgress from "./components/ScrollProgress";
 import CommandPalette from "./components/CommandPalette";
 import AgentBot from "./components/AgentBot";
+import SpaceshipFlyby from "./components/SpaceshipFlyby";
 
 function App() {
   return (
     <div className="relative">
       <LoadingOverlay />
       <CosmicBackground />
+      <SpaceshipFlyby />
       <ScrollProgress />
       <Navbar />
       <CommandPalette />

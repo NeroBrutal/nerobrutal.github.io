@@ -77,15 +77,27 @@ function Hand({ cx, y, shell, joint }) {
   );
 }
 
-function Flame({ cx, cy, accent }) {
+// Boot thruster: outer plume, white-hot core and a bloom, flickering.
+function Flame({ cx, cy, accent, glow }) {
   return (
     <motion.g
-      animate={{ scaleY: [1, 1.35, 0.9, 1.25, 1] }}
-      transition={{ duration: 0.18, repeat: Infinity }}
+      animate={{ scaleY: [1, 1.3, 0.92, 1.22, 1], opacity: [1, 0.85, 1, 0.9, 1] }}
+      transition={{ duration: 0.16, repeat: Infinity }}
     >
-      <circle cx={cx} cy={cy} r="14" fill="none" />
-      <path d={`M${cx - 5} ${cy - 4} Q${cx} ${cy + 20} ${cx + 5} ${cy - 4} Z`} fill="#fff7d6" opacity="0.9" />
-      <path d={`M${cx - 3.5} ${cy - 4} Q${cx} ${cy + 13} ${cx + 3.5} ${cy - 4} Z`} fill={accent} />
+      <circle cx={cx} cy={cy - 4} r="26" fill="none" />
+      <ellipse cx={cx} cy={cy + 6} rx="8" ry="14" fill={glow} opacity="0.8" />
+      <path d={`M${cx - 5.5} ${cy - 4} Q${cx} ${cy + 24} ${cx + 5.5} ${cy - 4} Z`} fill={accent} opacity="0.85" />
+      <path d={`M${cx - 3} ${cy - 4} Q${cx} ${cy + 14} ${cx + 3} ${cy - 4} Z`} fill="#ffffff" />
+    </motion.g>
+  );
+}
+
+function Repulsor({ cx, cy, accent, glow, motionProps }) {
+  return (
+    <motion.g {...motionProps}>
+      <circle cx={cx} cy={cy} r="10" fill={glow} />
+      <circle cx={cx} cy={cy} r="3.4" fill="#ffffff" />
+      <circle cx={cx} cy={cy} r="5.2" fill="none" stroke={accent} strokeWidth="1.2" />
     </motion.g>
   );
 }
@@ -106,6 +118,8 @@ export default function AgentRobot({ walking = false, stunt = null, className = 
   const eyeFilter = `url(#${id}-eye-glow)`;
 
   const flame = partMotion(stunt, "flame", { opacity: 0 });
+  const thrust = partMotion(stunt, "thrust", { scaleY: 1 });
+  const repulsor = partMotion(stunt, "repulsor", { opacity: 0 });
 
   return (
     <div className={className}>
@@ -117,8 +131,10 @@ export default function AgentRobot({ walking = false, stunt = null, className = 
         <RobotDefs id={id} />
 
         <motion.g {...flame}>
-          <Flame cx={24} cy={97} accent={accent} />
-          <Flame cx={40} cy={97} accent={accent} />
+          <Joint px={32} py={94} reach={60} motionProps={thrust}>
+            <Flame cx={24} cy={97} accent={accent} glow={glow} />
+            <Flame cx={40} cy={97} accent={accent} glow={glow} />
+          </Joint>
         </motion.g>
 
         <Joint px={24} py={69} motionProps={limbProps(stunt, walking, "leftLeg", [0, 18, 0, -18, 0])}>
@@ -149,11 +165,13 @@ export default function AgentRobot({ walking = false, stunt = null, className = 
         <Joint px={11} py={44} motionProps={limbProps(stunt, walking, "leftArm", [0, -14, 0, 12, 0])}>
           <rect x="6.5" y="42" width="9" height="22" rx="4.5" fill={shell} />
           <Hand cx={11} y={64} shell={shell} joint={joint} />
+          <Repulsor cx={11} cy={71} accent={accent} glow={glow} motionProps={repulsor} />
         </Joint>
 
         <Joint px={53} py={44} motionProps={limbProps(stunt, walking, "rightArm", [0, 12, 0, -14, 0])}>
           <rect x="48.5" y="42" width="9" height="22" rx="4.5" fill={shell} />
           <Hand cx={53} y={64} shell={shell} joint={joint} />
+          <Repulsor cx={53} cy={71} accent={accent} glow={glow} motionProps={repulsor} />
         </Joint>
       </svg>
     </div>

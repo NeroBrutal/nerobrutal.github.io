@@ -10,12 +10,16 @@ import {
   SECTION_ANCHORS,
 } from "../lib/mascotRoaming";
 import {
-  STUNTS,
+  buildFlight,
   partMotion,
   pickArrivalStunt,
   pickIdleStunt,
+  resolveStunt,
 } from "../lib/mascotStunts";
+import { nextFact, SPACESHIP_LINES } from "../lib/mascotFacts";
 import RobotMascot from "./RobotMascot";
+import MascotBubble from "./MascotBubble";
+import { FLYBY_EVENT } from "./SpaceshipFlyby";
 import data from "../data/data.json";
 
 // The model, system prompt and OpenRouter key live in the proxy (worker/).
@@ -31,8 +35,17 @@ const STARTER_PROMPTS = [
 const AIR_REST = { x: 0, y: 0, rotate: 0 };
 const SQUASH_REST = { scaleX: 1, scaleY: 1 };
 
+// Moves longer than this are flown Iron Man-style instead of walked.
+const FLY_DISTANCE = 260;
+const THINK_MS = 1000;
+const FIRST_GREETING_MS = 2500;
+
 function travelDurationMs(distance) {
   return Math.min(2200, Math.max(850, distance * 2.4));
+}
+
+function readingMs(text) {
+  return Math.min(7500, Math.max(3500, text.length * 60));
 }
 
 // Stunts end on a full turn (-360°); snapping back to 0 is visually identical,
@@ -44,7 +57,7 @@ function airMotion(stunt) {
 
 // The shadow stays on the ground but follows sideways travel (cartwheel, dance).
 function shadowMotion(stunt) {
-  const def = stunt && STUNTS[stunt];
+  const def = resolveStunt(stunt);
   if (!def) {
     return { animate: { scale: 1, opacity: 0.5, x: 0 }, transition: { duration: 0.25 } };
   }
@@ -66,33 +79,75 @@ export default function AgentBot() {
   const [walking, setWalking] = useState(false);
   const [stunt, setStunt] = useState(null);
   const [moveMs, setMoveMs] = useState(1200);
+  const [flightPath, setFlightPath] = useState(null);
+  const [bubble, setBubble] = useState(null);
   const listRef = useRef(null);
   const posRef = useRef(pos);
   const sectionRef = useRef(sectionId);
   const openRef = useRef(open);
   const walkingRef = useRef(walking);
   const stuntRef = useRef(stunt);
+  const flightRef = useRef(flightPath);
+  const bubbleRef = useRef(bubble);
   const pendingStuntRef = useRef(null);
+  const queuedSectionRef = useRef(null);
+  const announceRef = useRef(true);
+  const greetedRef = useRef(false);
+  const bubbleTimersRef = useRef([]);
 
   posRef.current = pos;
   sectionRef.current = sectionId;
   openRef.current = open;
   walkingRef.current = walking;
   stuntRef.current = stunt;
+  flightRef.current = flightPath;
+  bubbleRef.current = bubble;
+
+  const clearBubble = () => {
+    bubbleTimersRef.current.forEach(clearTimeout);
+    bubbleTimersRef.current = [];
+    setBubble(null);
+  };
+
+  // Think for a beat, then type the line out, then fade.
+  const speak = (text, { force = false } = {}) => {
+    if (!text || openRef.current) return;
+    if (!force && (walkingRef.current || stuntRef.current)) return;
+    clearBubble();
+    setBubble({ text, phase: "thinking" });
+    bubbleTimersRef.current = [
+      setTimeout(() => setBubble({ text, phase: "speaking" }), THINK_MS),
+      setTimeout(() => setBubble(null), THINK_MS + readingMs(text)),
+    ];
+  };
 
   const playStunt = (id) => {
     if (reduceMotion || !id || stuntRef.current) return;
+    if (id !== "wave") clearBubble();
     setStunt(id);
   };
 
   const goTo = (nextSection, nextPos, options = {}) => {
-    const dist = travelDistance(posRef.current, nextPos);
+    const from = posRef.current;
+    const dist = travelDistance(from, nextPos);
+    if (nextSection !== sectionRef.current) announceRef.current = true;
     setSectionId(nextSection);
     setEdge(nextPos.edge);
     if (dist < 1) return;
+    clearBubble();
+
+    if (!reduceMotion && dist > FLY_DISTANCE && options.stunt !== false) {
+      const { def, path } = buildFlight(from, nextPos, nextPos.edge === "left");
+      pendingStuntRef.current = null;
+      setStunt(def);
+      setFlightPath(path);
+      setPos({ x: nextPos.x, y: nextPos.y });
+      return;
+    }
+
     setStunt(null);
     pendingStuntRef.current =
-      options.stunt === false ? null : pickArrivalStunt(dist, nextPos.y);
+      options.stunt === false || reduceMotion ? null : pickArrivalStunt(dist, nextPos.y);
     setMoveMs(options.durationMs ?? travelDurationMs(dist));
     setWalking(true);
     setPos({ x: nextPos.x, y: nextPos.y });
@@ -107,10 +162,51 @@ export default function AgentBot() {
 
   useEffect(() => {
     if (!stunt) return;
-    const t = setTimeout(() => setStunt(null), STUNTS[stunt].duration * 1000 + 60);
+    const t = setTimeout(() => {
+      setStunt(null);
+      if (flightRef.current) {
+        setFlightPath(null);
+        const queued = queuedSectionRef.current;
+        queuedSectionRef.current = null;
+        if (queued && queued !== sectionRef.current) {
+          setTimeout(() => goTo(queued, getMascotPosition(queued)), 50);
+        }
+      }
+    }, resolveStunt(stunt).duration * 1000 + 60);
     return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stunt]);
 
+  // Say something about the section once he's settled after arriving.
+  useEffect(() => {
+    if (open || walking || stunt || !announceRef.current) return;
+    const t = setTimeout(
+      () => {
+        announceRef.current = false;
+        greetedRef.current = true;
+        speak(nextFact(sectionRef.current));
+      },
+      greetedRef.current ? 700 : FIRST_GREETING_MS,
+    );
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, walking, stunt, sectionId]);
+
+  // Wave at the spaceship when it passes.
+  useEffect(() => {
+    const onFlyby = () => {
+      if (openRef.current || flightRef.current) return;
+      if (!walkingRef.current) playStunt("wave");
+      speak(SPACESHIP_LINES[Math.floor(Math.random() * SPACESHIP_LINES.length)], {
+        force: true,
+      });
+    };
+    window.addEventListener(FLYBY_EVENT, onFlyby);
+    return () => window.removeEventListener(FLYBY_EVENT, onFlyby);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => () => bubbleTimersRef.current.forEach(clearTimeout), []);
   // Roam to whichever section is most visible while you scroll.
   useEffect(() => {
     const sections = Object.keys(SECTION_ANCHORS)
@@ -125,7 +221,12 @@ export default function AgentBot() {
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
         if (!mostVisible) return;
         const id = mostVisible.target.id;
-        if (!SECTION_ANCHORS[id] || id === sectionRef.current) return;
+        if (!SECTION_ANCHORS[id]) return;
+        if (flightRef.current) {
+          queuedSectionRef.current = id;
+          return;
+        }
+        if (id === sectionRef.current) return;
         goTo(id, getMascotPosition(id));
       },
       { rootMargin: "-45% 0px -45% 0px", threshold: [0, 0.25, 0.5, 0.75, 1] },
@@ -152,8 +253,17 @@ export default function AgentBot() {
     let timer;
     const tick = () => {
       timer = setTimeout(() => {
-        if (!openRef.current && !walkingRef.current && !stuntRef.current) {
-          if (Math.random() < 0.65) {
+        const busy =
+          openRef.current ||
+          walkingRef.current ||
+          stuntRef.current ||
+          bubbleRef.current ||
+          announceRef.current;
+        if (!busy) {
+          const roll = Math.random();
+          if (roll < 0.4) {
+            speak(nextFact(sectionRef.current));
+          } else if (roll < 0.8) {
             playStunt(pickIdleStunt(posRef.current.y));
           } else {
             goTo(sectionRef.current, patrolNudge(sectionRef.current), {
@@ -241,10 +351,43 @@ export default function AgentBot() {
       {!open && (
         <motion.div
           className="fixed left-0 top-0 z-50 pointer-events-none"
-          animate={{ x: pos.x, y: pos.y }}
-          transition={{ duration: moveMs / 1000, ease: "easeInOut" }}
+          animate={flightPath ? { x: flightPath.x, y: flightPath.y } : { x: pos.x, y: pos.y }}
+          transition={
+            flightPath
+              ? { duration: flightPath.duration, times: flightPath.times, ease: "easeInOut" }
+              : { duration: moveMs / 1000, ease: "easeInOut" }
+          }
           onAnimationComplete={finishMove}
         >
+          {flightPath &&
+            [-4, 4].map((dy) => (
+              <motion.span
+                key={dy}
+                className="absolute h-1.5 w-52 rounded-full bg-gradient-to-r from-white/90 via-accent/60 to-transparent blur-[1.5px]"
+                style={{
+                  left: flightPath.trailOrigin.x,
+                  top: flightPath.trailOrigin.y + dy,
+                  originX: 0,
+                  rotate: flightPath.trailAngle,
+                }}
+                initial={{ opacity: 0, scaleX: 0 }}
+                {...partMotion(stunt, "trail", { opacity: 0, scaleX: 0 })}
+              />
+            ))}
+
+          <AnimatePresence>
+            {bubble && !flightPath && (
+              <MascotBubble
+                key="bubble"
+                phase={bubble.phase}
+                text={bubble.text}
+                edge={edge}
+                below={pos.y < 140}
+                onClick={openChat}
+              />
+            )}
+          </AnimatePresence>
+
           <button
             onClick={openChat}
             onMouseEnter={() => {
