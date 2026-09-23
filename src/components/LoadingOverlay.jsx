@@ -31,13 +31,9 @@ export default function LoadingOverlay() {
               transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
             />
           </div>
-          <motion.p
-            className="mt-6 text-sm tracking-[0.3em] uppercase text-muted"
-            animate={{ opacity: [0.4, 1, 0.4] }}
-            transition={{ duration: 1.6, repeat: Infinity }}
-          >
+          <p className="mt-6 text-sm tracking-[0.3em] uppercase text-muted opacity-80">
             Entering orbit
-          </motion.p>
+          </p>
         </motion.div>
       )}
     </AnimatePresence>

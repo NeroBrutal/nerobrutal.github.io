@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { detectLiteGraphics } from "../lib/liteGraphics";
 
 // Fixed, full-viewport canvas starfield with drifting nebula glows and the
 // occasional shooting star. Pauses when the tab is hidden and respects
@@ -14,6 +15,7 @@ export default function CosmicBackground() {
     const reduceMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
+    const lite = detectLiteGraphics();
 
     let width = 0;
     let height = 0;
@@ -35,7 +37,9 @@ export default function CosmicBackground() {
       canvas.style.height = `${height}px`;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-      const count = Math.round((width * height) / 2800);
+      const count = lite
+        ? Math.round((width * height) / 5500)
+        : Math.round((width * height) / 2800);
       stars = Array.from({ length: count }, (_, i) => {
         const big = i % 14 === 0;
         return {
@@ -69,21 +73,17 @@ export default function CosmicBackground() {
         s.phase += s.speed;
         s.y += s.drift;
         if (s.y > height) s.y = 0;
-        const alpha = reduceMotion
-          ? 0.9
-          : 0.6 + 0.4 * Math.abs(Math.sin(s.phase));
+        const alpha =
+          reduceMotion || lite ? 0.85 : 0.72 + 0.18 * Math.abs(Math.sin(s.phase));
         ctx.beginPath();
         ctx.fillStyle = s.color;
         ctx.globalAlpha = alpha;
-        ctx.shadowBlur = s.glow ? 10 : 0;
-        ctx.shadowColor = s.color;
         ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
         ctx.fill();
       }
-      ctx.shadowBlur = 0;
       ctx.globalAlpha = 1;
 
-      if (!reduceMotion) {
+      if (!reduceMotion && !lite) {
         if (time - lastMeteorAt > 4200 + Math.random() * 3500) {
           spawnMeteor();
           lastMeteorAt = time;
@@ -114,6 +114,7 @@ export default function CosmicBackground() {
     };
 
     const handleVisibility = () => {
+      if (lite) return;
       if (document.hidden) {
         cancelAnimationFrame(frameId);
       } else {
@@ -122,13 +123,21 @@ export default function CosmicBackground() {
     };
 
     resize();
-    frameId = requestAnimationFrame(draw);
-    window.addEventListener("resize", resize);
+    if (lite) {
+      draw(0);
+    } else {
+      frameId = requestAnimationFrame(draw);
+    }
+    const onResize = () => {
+      resize();
+      if (lite) draw(0);
+    };
+    window.addEventListener("resize", onResize);
     document.addEventListener("visibilitychange", handleVisibility);
 
     return () => {
       cancelAnimationFrame(frameId);
-      window.removeEventListener("resize", resize);
+      window.removeEventListener("resize", onResize);
       document.removeEventListener("visibilitychange", handleVisibility);
     };
   }, []);
@@ -136,8 +145,20 @@ export default function CosmicBackground() {
   return (
     <div className="fixed inset-0 z-0 overflow-hidden bg-bg">
       {/* A single, restrained accent glow — not a rainbow of nebulae */}
-      <div className="absolute -top-40 -left-40 w-[36rem] h-[36rem] bg-accent/[0.06] rounded-full blur-[120px]" />
-      <div className="absolute bottom-0 right-0 w-[28rem] h-[28rem] bg-accent/[0.04] rounded-full blur-[120px]" />
+      <div
+        className="absolute -top-40 -left-40 w-[36rem] h-[36rem] rounded-full opacity-80"
+        style={{
+          background:
+            "radial-gradient(closest-side, rgb(var(--color-accent-rgb) / 0.07), transparent 70%)",
+        }}
+      />
+      <div
+        className="absolute bottom-0 right-0 w-[28rem] h-[28rem] rounded-full opacity-80"
+        style={{
+          background:
+            "radial-gradient(closest-side, rgb(var(--color-accent-rgb) / 0.05), transparent 70%)",
+        }}
+      />
 
       <canvas ref={canvasRef} className="absolute inset-0" />
     </div>

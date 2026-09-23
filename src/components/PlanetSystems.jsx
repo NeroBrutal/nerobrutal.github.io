@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
 "use client";
 
+import { useLiteGraphics } from "../lib/liteGraphics";
+
 // Background planets on tilted, elliptical orbits. Everything moves with pure
 // CSS transforms (see the `orbit-*` keyframes in index.css) so it runs on the
 // compositor and costs nothing per frame on the main thread.
@@ -132,6 +134,9 @@ const MOONS = [
 ];
 
 export default function PlanetSystems() {
+  const lite = useLiteGraphics();
+  if (lite) return null;
+
   return (
     <div aria-hidden className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
       {/* Gas giant with two moons, upper right. */}

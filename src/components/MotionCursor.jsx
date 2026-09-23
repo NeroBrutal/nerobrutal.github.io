@@ -28,11 +28,11 @@ export default function MotionCursor() {
 
   return (
     <motion.div
-      className="fixed top-0 left-0 z-[9999] pointer-events-none mix-blend-screen hidden md:block"
+      className="fixed top-0 left-0 z-[9999] pointer-events-none hidden md:block"
       style={{ x: springX, y: springY }}
     >
       <div
-        className="w-10 h-10 rounded-full opacity-60 blur-md"
+        className="w-10 h-10 rounded-full opacity-45"
         style={{
           background:
             "radial-gradient(circle, rgba(34,211,238,0.55) 0%, transparent 75%)",

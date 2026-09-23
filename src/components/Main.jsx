@@ -94,7 +94,13 @@ function Main() {
         style={{ y: profileY, scale: profileScale, opacity: profileOpacity }}
         className="relative w-52 h-52 sm:w-60 sm:h-60 mb-8"
       >
-        <div className="absolute -inset-6 rounded-full bg-accent/10 blur-2xl" />
+        <div
+          className="absolute -inset-6 rounded-full"
+          style={{
+            background:
+              "radial-gradient(circle, rgb(var(--color-accent-rgb) / 0.12), transparent 70%)",
+          }}
+        />
         <span className="absolute -inset-3 rounded-full border border-dashed border-border-bright animate-spin-slower" />
         <span className="absolute -inset-1 rounded-full border border-accent/30 animate-spin-slow" />
         <img
