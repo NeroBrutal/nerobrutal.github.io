@@ -4,11 +4,24 @@ import data from "../data/data.json";
 import TimelineItem from "./TimelineItem";
 import SplitChapter from "./SplitChapter";
 
+const SECTION_CHAPTERS = {
+  education: {
+    eyebrow: "Foundations",
+    line1: "MY",
+    line2: "EDUCATION",
+    subtitle: "School and university—the path into software and AI.",
+  },
+  work_experience: {
+    eyebrow: "Career",
+    line1: "WORK",
+    line2: "EXPERIENCE",
+    subtitle: "Teams, clients, and roles where I've shipped production systems.",
+  },
+};
+
 const Work = () => {
   const production = data.editorial?.production;
   const sections = data.sections;
-  const languages = data.programming_languages;
-
   const getLogo = (fileName) =>
     new URL(`../assets/${fileName}`, import.meta.url).href;
 
@@ -35,7 +48,7 @@ const Work = () => {
   };
 
   return (
-    <div id="work" className="relative max-w-screen-lg m-auto px-4 md:px-8 pb-24">
+    <div id="work" className="relative max-w-screen-lg m-auto px-4 md:px-8 pb-24 scroll-mt-24">
       <SplitChapter
         eyebrow="On the ground"
         line1="IN"
@@ -76,41 +89,14 @@ const Work = () => {
         </div>
       )}
 
-      {/* Scrolling Technology Icons */}
-      <div className="overflow-hidden py-14 relative [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
-        <motion.div
-          className="flex gap-6"
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{ ease: "linear", duration: 22, repeat: Infinity }}
-        >
-          {[...languages, ...languages].map((lang, index) => (
-            <div
-              key={index}
-              title={lang.name}
-              className="glass-pill flex items-center justify-center h-16 w-16 md:h-20 md:w-20 shrink-0 p-3 transition-transform hover:scale-110"
-            >
-              <img
-                src={lang.icon}
-                alt={lang.name}
-                className="h-full w-full object-contain"
-              />
-            </div>
-          ))}
-        </motion.div>
-      </div>
-
       {/* Dynamic Sections as a constellation timeline */}
       {Object.entries(sections).map(([key, section]) => (
-        <div key={key} id={key} className="mt-16 scroll-mt-20">
-          <motion.h3
-            className="text-2xl sm:text-3xl font-bold font-display text-center mb-12 text-gradient"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            {section.title}
-          </motion.h3>
+        <div key={key} id={key} className="mt-4 scroll-mt-24">
+          {SECTION_CHAPTERS[key] ? (
+            <SplitChapter {...SECTION_CHAPTERS[key]} />
+          ) : (
+            <h3 className="section-title mb-14">{section.title}</h3>
+          )}
 
           <div className="relative">
             {/* Center line */}

@@ -12,7 +12,7 @@ import {
   HiOutlineViewGrid,
   HiOutlineAcademicCap,
 } from "react-icons/hi";
-import { HiOutlineCommandLine } from "react-icons/hi2";
+import { HiOutlineCommandLine, HiOutlineRocketLaunch } from "react-icons/hi2";
 
 // EngineeringIcon / AppsIcon map to react-icons equivalents; the names come
 // straight from data.json's navbar entries.
@@ -24,6 +24,7 @@ const iconMap = {
   EngineeringIcon: AiOutlineHome,
   AppsIcon: HiOutlineViewGrid,
   AcademicCapIcon: HiOutlineAcademicCap,
+  ProductionIcon: HiOutlineRocketLaunch,
 };
 
 const isExternal = (href) => !href.startsWith("#");
@@ -66,13 +67,22 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    if (!nav) return undefined;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [nav]);
+
   return (
     <motion.header
       initial={{ y: -60, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`fixed top-0 inset-x-0 z-40 transition-colors duration-300 ${
-        scrolled
+      className={`fixed top-0 inset-x-0 z-40 w-full max-w-[100vw] overflow-x-hidden transition-colors duration-300 ${
+        scrolled || nav
           ? "bg-surface/80 backdrop-blur-xl border-b border-border"
           : "bg-transparent border-b border-transparent"
       }`}
@@ -115,21 +125,13 @@ const Navbar = () => {
         <div className="flex items-center gap-2">
           <button
             onClick={openPalette}
-            className="hidden sm:flex items-center gap-2 glass-pill pl-3 pr-2 py-1.5 text-xs text-muted hover:border-accent/40 hover:text-text transition-colors"
+            className="hidden md:flex items-center gap-2 glass-pill pl-3 pr-2 py-1.5 text-xs text-muted hover:border-accent/40 hover:text-text transition-colors"
           >
             <HiOutlineCommandLine size={14} />
             Search
             <kbd className="text-[10px] border border-border rounded px-1.5 py-0.5">
               ⌘K
             </kbd>
-          </button>
-
-          <button
-            onClick={openPalette}
-            aria-label="Open command palette"
-            className="sm:hidden glass-pill w-9 h-9 flex items-center justify-center text-muted"
-          >
-            <HiOutlineCommandLine size={16} />
           </button>
 
           <button
@@ -158,13 +160,13 @@ const Navbar = () => {
         {nav && (
           <motion.div
             key="mobile-nav"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="md:hidden overflow-hidden bg-surface/95 backdrop-blur-xl border-b border-border"
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.22, ease: "easeOut" }}
+            className="md:hidden w-full max-h-[calc(100dvh-4rem)] overflow-y-auto overscroll-contain bg-surface/95 backdrop-blur-xl border-b border-border pb-[max(0.75rem,env(safe-area-inset-bottom))]"
           >
-            <div className="px-4 py-3 flex flex-col gap-1">
+            <div className="px-4 py-3 flex flex-col gap-0.5 min-w-0">
               {navbarItems.map((item, index) => {
                 const Icon = iconMap[item.icon];
                 const active = activeHref === item.href;

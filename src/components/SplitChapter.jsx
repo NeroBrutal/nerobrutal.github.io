@@ -25,16 +25,10 @@ export default function SplitChapter({ line1, line2, subtitle, eyebrow, classNam
           </motion.p>
         )}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-4 w-full max-w-5xl">
-          <motion.h2
-            variants={line}
-            className="chapter-split text-text"
-          >
+          <motion.h2 variants={line} className="chapter-split text-text">
             {line1}
           </motion.h2>
-          <motion.h2
-            variants={line}
-            className="chapter-split text-gradient"
-          >
+          <motion.h2 variants={line} className="chapter-split text-gradient">
             {line2}
           </motion.h2>
         </div>

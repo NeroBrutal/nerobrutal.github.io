@@ -28,6 +28,17 @@ export default function RobotDefs({ id }) {
         <stop offset="100%" stopColor="#000000" />
       </linearGradient>
 
+      <linearGradient id={`${id}-faceplate`} x1="50%" y1="0%" x2="50%" y2="100%">
+        <stop offset="0%" stopColor="#ffffff" />
+        <stop offset="45%" stopColor="#e8edf3" />
+        <stop offset="100%" stopColor="#9aa8b6" />
+      </linearGradient>
+
+      <radialGradient id={`${id}-eye-well`} cx="50%" cy="40%" r="70%">
+        <stop offset="0%" stopColor="#1a2330" />
+        <stop offset="100%" stopColor="#000000" />
+      </radialGradient>
+
       <radialGradient id={`${id}-glow`} cx="50%" cy="50%" r="50%">
         <stop offset="0%" stopColor={accent} stopOpacity="0.95" />
         <stop offset="100%" stopColor={accent} stopOpacity="0" />

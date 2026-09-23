@@ -104,6 +104,48 @@ h6 {
   .section-title {
     @apply text-3xl sm:text-4xl md:text-5xl font-display font-bold text-center text-gradient;
   }
+
+  .workflow-node {
+    @apply relative flex items-center gap-3 rounded-xl border border-border bg-surface-2/95 px-3.5 py-2.5 min-h-[52px];
+    box-shadow: var(--shadow-panel);
+  }
+
+  .workflow-node--trigger {
+    border-left: 3px solid rgb(var(--color-success-rgb));
+  }
+
+  .workflow-node--orchestrator {
+    border-left: 3px solid #ff6d5a;
+  }
+
+  .workflow-node--router {
+    border-left: 3px solid rgb(var(--color-accent-rgb));
+  }
+
+  .workflow-node--provider {
+    @apply py-2 px-3 min-h-[48px];
+    border-left: 3px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .workflow-node-icon-placeholder {
+    @apply h-8 w-8 rounded-lg bg-surface shrink-0 border border-border;
+  }
+
+  .workflow-port {
+    @apply absolute w-2.5 h-2.5 rounded-full border-2 border-border-bright bg-bg z-10;
+  }
+
+  .workflow-port--in {
+    left: -5px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .workflow-port--out {
+    right: -5px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

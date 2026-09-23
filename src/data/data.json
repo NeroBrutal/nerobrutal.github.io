@@ -7,7 +7,7 @@
   "programming_languages": [
     {
       "name": "Python",
-      "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original-wordmark.svg"
+      "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original-wordmark.svg"
     },
     {
       "name": "AWS",
@@ -15,39 +15,39 @@
     },
     {
       "name": "C++",
-      "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg"
+      "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg"
     },
     {
       "name": "Java",
-      "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original-wordmark.svg"
+      "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original-wordmark.svg"
     },
     {
       "name": "JavaScript",
-      "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+      "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg"
     },
     {
       "name": "Linux",
-      "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg"
+      "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg"
     },
     {
       "name": "MySQL",
-      "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original-wordmark.svg"
+      "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original-wordmark.svg"
     },
     {
       "name": "NPM",
-      "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/npm/npm-original-wordmark.svg"
+      "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/npm/npm-original-wordmark.svg"
     },
     {
       "name": "PHP",
-      "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg"
+      "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg"
     },
     {
       "name": "React",
-      "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original-wordmark.svg"
+      "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original-wordmark.svg"
     },
     {
       "name": "Replicate",
-      "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgEIF8Eng3XFBtjvAcIA9NCwyg8GtrLYsNJg&s"
+      "icon": "https://cdn.simpleicons.org/replicate"
     },
     {
       "name": "Fal.Ai",
@@ -59,18 +59,22 @@
     },
     {
       "name": "CSS3",
-      "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg"
+      "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg"
     },
     {
       "name": ".NET Core",
-      "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dotnetcore/dotnetcore-original.svg"
+      "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/dotnetcore/dotnetcore-original.svg"
     },
     {
       "name": "Heroku",
-      "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/heroku/heroku-original-wordmark.svg"
+      "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/heroku/heroku-original-wordmark.svg"
     }
   ],
-  "hobbies": ["Reading", "Traveling", "Gaming"],
+  "hobbies": [
+    "Reading",
+    "Traveling",
+    "Gaming"
+  ],
   "roles": [
     "AI Engineer",
     "Python Backend Developer",
@@ -83,12 +87,27 @@
     "message": {
       "eyebrow": "Message from Mohamed",
       "parts": [
-        { "text": "Redefining ", "bold": true },
-        { "text": "how teams ship with AI—building " },
-        { "text": "agents, automation, and APIs", "bold": true },
-        { "text": " that run in production, not just in demos. Defining a " },
-        { "text": "legacy", "bold": true },
-        { "text": " in engineering on and off the keyboard." }
+        {
+          "text": "Redefining ",
+          "bold": true
+        },
+        {
+          "text": "how teams ship with AI—building "
+        },
+        {
+          "text": "agents, automation, and APIs",
+          "bold": true
+        },
+        {
+          "text": " that run in production, not just in demos. Defining a "
+        },
+        {
+          "text": "legacy",
+          "bold": true
+        },
+        {
+          "text": " in engineering on and off the keyboard."
+        }
       ],
       "quote": "It doesn't matter where you start—it's how you progress from there."
     },
@@ -120,6 +139,9 @@
           "description": "AI support desks, email agents, and n8n workflows that route tickets, draft responses, and keep ops in sync."
         }
       ]
+    },
+    "lab": {
+      "intro": "Each build is a case study—not a screenshot gallery. Open any card for the full story, stack, and what shipped to production."
     }
   },
   "socialLinks": {
@@ -136,6 +158,11 @@
       "href": "#main"
     },
     {
+      "name": "In Production",
+      "icon": "ProductionIcon",
+      "href": "#work"
+    },
+    {
       "name": "Education",
       "icon": "AcademicCapIcon",
       "href": "#education"
@@ -143,7 +170,7 @@
     {
       "name": "Work",
       "icon": "AppsIcon",
-      "href": "#work"
+      "href": "#work_experience"
     },
     {
       "name": "Technologies",
@@ -172,31 +199,116 @@
       "technologies": [
         {
           "name": "HTML",
-          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
+          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg"
         },
         {
           "name": "CSS",
-          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg"
+          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg"
         },
         {
           "name": "JavaScript",
-          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg"
         },
         {
           "name": "TypeScript",
-          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg"
+          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg"
         },
         {
           "name": "React",
-          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original-wordmark.svg"
+          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original-wordmark.svg"
         },
         {
           "name": "Bootstrap",
-          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg"
+          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bootstrap/bootstrap-original.svg"
         },
         {
           "name": "Tailwind",
-          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original-wordmark.svg"
+          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original-wordmark.svg"
+        }
+      ]
+    },
+    {
+      "category": "AI Providers",
+      "technologies": [
+        {
+          "name": "OpenAI",
+          "imageSrc": "https://cdn.simpleicons.org/openai"
+        },
+        {
+          "name": "Claude",
+          "imageSrc": "https://cdn.simpleicons.org/anthropic"
+        },
+        {
+          "name": "OpenRouter",
+          "imageSrc": "https://cdn.simpleicons.org/openrouter"
+        },
+        {
+          "name": "Gemini",
+          "imageSrc": "https://cdn.simpleicons.org/googlegemini"
+        },
+        {
+          "name": "Mistral",
+          "imageSrc": "https://cdn.simpleicons.org/mistralai"
+        },
+        {
+          "name": "Groq",
+          "imageSrc": "https://cdn.simpleicons.org/groq"
+        },
+        {
+          "name": "Cohere",
+          "imageSrc": "https://cdn.simpleicons.org/cohere"
+        },
+        {
+          "name": "Llama",
+          "imageSrc": "https://cdn.simpleicons.org/meta"
+        },
+        {
+          "name": "DeepSeek",
+          "imageSrc": "https://cdn.simpleicons.org/deepseek"
+        },
+        {
+          "name": "Perplexity",
+          "imageSrc": "https://cdn.simpleicons.org/perplexity"
+        },
+        {
+          "name": "xAI",
+          "imageSrc": "https://cdn.simpleicons.org/x"
+        },
+        {
+          "name": "Hugging Face",
+          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/huggingface/huggingface-original.svg"
+        },
+        {
+          "name": "Stability AI",
+          "imageSrc": "https://cdn.simpleicons.org/stabilityai"
+        },
+        {
+          "name": "Together AI",
+          "imageSrc": "https://cdn.simpleicons.org/togetherdotai"
+        },
+        {
+          "name": "Azure OpenAI",
+          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/azure/azure-original.svg"
+        },
+        {
+          "name": "AWS Bedrock",
+          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg"
+        },
+        {
+          "name": "LangChain",
+          "imageSrc": "https://cdn.simpleicons.org/langchain"
+        },
+        {
+          "name": "Ollama",
+          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/ollama/ollama-original.svg"
+        },
+        {
+          "name": "Replicate",
+          "imageSrc": "https://cdn.simpleicons.org/replicate"
+        },
+        {
+          "name": "Fal.Ai",
+          "imageSrc": "https://fal.ai/assets/fal-logo-512x512.png"
         }
       ]
     },
@@ -205,19 +317,19 @@
       "technologies": [
         {
           "name": "PHP",
-          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg"
+          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/php/php-original.svg"
         },
         {
           "name": "ASP.NET",
-          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dotnetcore/dotnetcore-original.svg"
+          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/dotnetcore/dotnetcore-original.svg"
         },
         {
           "name": "Node.js",
-          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"
+          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg"
         },
         {
           "name": "Express JS",
-          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg"
+          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/express/express-original.svg"
         },
         {
           "name": "FastAPI",
@@ -229,11 +341,11 @@
         },
         {
           "name": "Replicate",
-          "imageSrc": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgEIF8Eng3XFBtjvAcIA9NCwyg8GtrLYsNJg&s"
+          "imageSrc": "https://cdn.simpleicons.org/replicate"
         },
         {
           "name": "n8n",
-          "imageSrc": "data:image/png;base64,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"
+          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/n8n/n8n-original.svg"
         },
         {
           "name": "Fal.Ai",
@@ -250,19 +362,19 @@
         },
         {
           "name": "MongoDB",
-          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg"
+          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg"
         },
         {
           "name": "Firebase",
-          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-original.svg"
+          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/firebase/firebase-original.svg"
         },
         {
           "name": "PostgreSQL",
-          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
+          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg"
         },
         {
           "name": "Oracle",
-          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/oracle/oracle-original.svg"
+          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/oracle/oracle-original.svg"
         },
         {
           "name": "Supabase",
@@ -279,11 +391,11 @@
       "technologies": [
         {
           "name": "Github",
-          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg"
+          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg"
         },
         {
           "name": "GitLab",
-          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/gitlab/gitlab-original.svg"
+          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/gitlab/gitlab-original.svg"
         }
       ]
     },
@@ -292,11 +404,11 @@
       "technologies": [
         {
           "name": "Figma",
-          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg"
+          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg"
         },
         {
           "name": "Maya",
-          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/maya/maya-original.svg"
+          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/maya/maya-original.svg"
         }
       ]
     },
@@ -305,19 +417,19 @@
       "technologies": [
         {
           "name": "Java",
-          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original-wordmark.svg"
+          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original-wordmark.svg"
         },
         {
           "name": "C",
-          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg"
+          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-original.svg"
         },
         {
           "name": "C++",
-          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg"
+          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg"
         },
         {
           "name": "Python",
-          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original-wordmark.svg"
+          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original-wordmark.svg"
         }
       ]
     }
@@ -458,6 +570,9 @@
   "projects": [
     {
       "title": "ai.thekadee.com",
+      "status": "Live",
+      "url": "https://ai.thekadee.com",
+      "tagline": "Solo-built generative studio — image, video, audio, and agents on one credits stack.",
       "description": "Solo-founded and built ai.thekadee.com end to end — product, backend, and every AI integration — a generative AI creative studio: generate images, video, and audio across multiple frontier models (GPT Image 2, Nano Banana Pro, Seedance 2.5, Kling 3.0, FLUX.2), chat and build with AI agents, and create on an interactive AI canvas — all under a single credits system.",
       "technologies": [
         "Generative AI",
@@ -472,6 +587,8 @@
     },
     {
       "title": "Support Desk Automation",
+      "status": "Production",
+      "tagline": "AI support desk — email triage, auto-replies, and team routing.",
       "description": "Built a Frappe-styled customer support ticketing dashboard backed by an AI agent that reads every incoming email, understands the request, and can reply automatically — alongside team and channel routing and status tracking (Needs Input, Assigned, Closed) for high-volume order support.",
       "technologies": [
         "Astro",
@@ -485,6 +602,8 @@
     },
     {
       "title": "Odoo GPT",
+      "status": "Production",
+      "tagline": "ERP-native copilot — live data, reports, and configurable skills.",
       "description": "Built an AI assistant embedded directly into Odoo ERP that answers questions about live ERP data and generates Excel, PDF, and presentation reports on request, with configurable skills and field overrides.",
       "technologies": [
         "Odoo ERP",
@@ -496,6 +615,8 @@
     },
     {
       "title": "Araby.AI Backend",
+      "status": "Production",
+      "tagline": "FastAPI generative platform — multi-model image & video APIs at scale.",
       "description": "Developed the backend for Araby.AI, an AI-powered content generation platform. Utilized Python, FastAPI, and various AI models to create APIs for text-to-image and video generation. using replicate, openai, claude, stable diffusion models, higgsfield, fal and many more generative models.",
       "technologies": [
         "Python",
@@ -518,26 +639,48 @@
     },
     {
       "title": "Stand Alone Java App",
+      "status": "Academic",
       "description": "Developed a standalone Java application using NetBeans IDE and MySQL for database management. The application features a user-friendly interface and robust backend architecture.",
-      "technologies": ["Java", "NetBeans", "MySQL"],
+      "technologies": [
+        "Java",
+        "NetBeans",
+        "MySQL"
+      ],
       "image": "/assets/Loading.jpg"
     },
     {
       "title": "Android Fitness App",
+      "status": "Academic",
       "description": "Created a comprehensive Android fitness application using Android Studio and Java. The app includes workout tracking, exercise tutorials, and progress monitoring features.",
-      "technologies": ["Android Studio", "Java"],
+      "technologies": [
+        "Android Studio",
+        "Java"
+      ],
       "image": "/assets/EveryMove.jpg"
     },
     {
       "title": "E-commerce Website",
+      "status": "Academic",
       "description": "Built a full-stack e-commerce website using React for the frontend and Node.js with Express for the backend. Implemented secure payment processing and user authentication.",
-      "technologies": ["React", "Node.js", "Express", "MongoDB"],
+      "technologies": [
+        "React",
+        "Node.js",
+        "Express",
+        "MongoDB"
+      ],
       "image": "/assets/Dresses.jpg"
     },
     {
       "title": "Portfolio Website",
+      "status": "Live",
+      "tagline": "This portfolio — Astro, React islands, mascot agent, and cosmic UI.",
       "description": "This site — a space-themed personal portfolio built with Astro and React islands, featuring a canvas starfield, a command palette (⌘K), scroll-spy navigation, and a Frappe-inspired single-accent design system.",
-      "technologies": ["Astro", "React", "Tailwind CSS", "Framer Motion"],
+      "technologies": [
+        "Astro",
+        "React",
+        "Tailwind CSS",
+        "Framer Motion"
+      ],
       "image": "/assets/Portfolio.jpg"
     }
   ]
