@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { HiOutlineX, HiOutlinePaperAirplane } from "react-icons/hi";
-import { buildSystemPrompt } from "../lib/agentContext";
 import {
   getMascotPosition,
   patrolNudge,
@@ -19,11 +18,9 @@ import {
 import RobotMascot from "./RobotMascot";
 import data from "../data/data.json";
 
-// Swap this for a free-tier model (e.g. "meta-llama/llama-3.1-8b-instruct:free")
-// if you'd rather trade answer quality for zero per-token cost.
-const MODEL = "openai/gpt-4o-mini";
+// The model, system prompt and OpenRouter key live in the proxy (worker/).
 const MAX_MESSAGES_PER_SESSION = 24;
-const API_KEY = import.meta.env.PUBLIC_OPENROUTER_API_KEY;
+const AGENT_ENDPOINT = import.meta.env.PUBLIC_AGENT_ENDPOINT;
 
 const STARTER_PROMPTS = [
   "What does he do?",
@@ -199,13 +196,13 @@ export default function AgentBot() {
     setInput("");
     setLoading(true);
 
-    if (!API_KEY) {
+    if (!AGENT_ENDPOINT) {
       setMessages((m) => [
         ...m,
         {
           role: "assistant",
           content:
-            "I'm not wired up yet — my owner still needs to add an OpenRouter API key. Try the contact form in the meantime!",
+            "I'm not wired up yet — my owner still needs to connect my brain. Try the contact form in the meantime!",
         },
       ]);
       setLoading(false);
@@ -213,28 +210,16 @@ export default function AgentBot() {
     }
 
     try {
-      const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      const res = await fetch(AGENT_ENDPOINT, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${API_KEY}`,
-          "HTTP-Referer": "https://rashidh.com",
-          "X-Title": `${data.name} Portfolio Agent`,
-        },
-        body: JSON.stringify({
-          model: MODEL,
-          messages: [
-            { role: "system", content: buildSystemPrompt() },
-            ...nextMessages,
-          ],
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: nextMessages }),
       });
 
-      if (!res.ok) throw new Error(`OpenRouter error: ${res.status}`);
+      if (!res.ok) throw new Error(`Agent error: ${res.status}`);
       const data_ = await res.json();
       const reply =
-        data_.choices?.[0]?.message?.content?.trim() ||
-        "Sorry, I couldn't come up with an answer to that.";
+        data_.reply || "Sorry, I couldn't come up with an answer to that.";
       setMessages((m) => [...m, { role: "assistant", content: reply }]);
     } catch (err) {
       setMessages((m) => [

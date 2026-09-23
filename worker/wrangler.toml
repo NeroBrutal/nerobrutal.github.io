@@ -1,0 +1,9 @@
+name = "rashidh-agent-proxy"
+main = "agent-proxy.js"
+compatibility_date = "2026-09-01"
+
+[vars]
+ALLOWED_ORIGINS = "https://rashidh.com,https://www.rashidh.com,https://nerobrutal.github.io,http://localhost:4321"
+
+# The OpenRouter key is a secret, not a var — set it with:
+#   npx wrangler secret put OPENROUTER_API_KEY
