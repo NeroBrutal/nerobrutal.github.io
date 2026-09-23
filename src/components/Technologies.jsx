@@ -2,6 +2,32 @@
 import { motion } from "framer-motion";
 import data from "../data/data.json";
 
+const Row = ({ items, duration, reverse }) => (
+  <div className="relative w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+    <motion.div
+      className="flex gap-5"
+      animate={{ x: reverse ? ["-50%", "0%"] : ["0%", "-50%"] }}
+      transition={{ repeat: Infinity, repeatType: "loop", ease: "linear", duration }}
+    >
+      {[...items, ...items].map((tech, index) => (
+        <div
+          key={index}
+          className="glass-panel card-hover flex flex-col items-center justify-center min-w-[140px] p-4 shrink-0"
+        >
+          <img
+            src={tech.imageSrc}
+            alt={tech.name}
+            className="h-10 w-10 mb-2 object-contain"
+          />
+          <span className="text-xs text-center text-muted">
+            {tech.name}
+          </span>
+        </div>
+      ))}
+    </motion.div>
+  </div>
+);
+
 const Technologies = () => {
   const technologiesData = data.technologies.flatMap((cat) =>
     cat.technologies.map((tech) => ({
@@ -9,43 +35,21 @@ const Technologies = () => {
       imageSrc: tech.imageSrc,
     }))
   );
-  // Duplicate items to create an infinite seamless scroll
-  const scrollingItems = [...technologiesData, ...technologiesData];
+
+  const midpoint = Math.ceil(technologiesData.length / 2);
+  const rowOne = technologiesData.slice(0, midpoint);
+  const rowTwo = technologiesData.slice(midpoint);
 
   return (
-    <section
-      id="technologies"
-      className="py-20 bg-gray-900 text-white overflow-hidden"
-    >
-      <h1 className="text-4xl font-bold text-center text-blue-400 mb-12">
-        Technologies 🚀
-      </h1>
+    <section id="technologies" className="relative py-24 overflow-hidden">
+      <div className="text-center mb-14">
+        <span className="eyebrow">⚙️ My toolkit</span>
+        <h1 className="section-title">Technologies</h1>
+      </div>
 
-      <div className="relative w-full overflow-hidden">
-        <motion.div
-          className="flex gap-10"
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{
-            repeat: Infinity,
-            repeatType: "loop",
-            ease: "linear",
-            duration: 50, // adjust speed
-          }}
-        >
-          {scrollingItems.map((tech, index) => (
-            <div
-              key={index}
-              className="flex flex-col items-center justify-center min-w-[150px] rounded-lg p-4 bg-gray-800 hover:bg-gray-700 transition"
-            >
-              <img
-                src={tech.imageSrc}
-                alt={tech.name}
-                className="h-12 w-12 mb-2 object-contain"
-              />
-              <span className="text-sm text-center">{tech.name}</span>
-            </div>
-          ))}
-        </motion.div>
+      <div className="flex flex-col gap-6">
+        <Row items={rowOne} duration={40} />
+        <Row items={rowTwo} duration={46} reverse />
       </div>
     </section>
   );

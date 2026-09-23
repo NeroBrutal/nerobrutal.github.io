@@ -3,7 +3,7 @@
   "about_me": "Welcome to my portfolio! Here, I present my professional journey, technical expertise, and academic achievements in the fields of Artificial Intelligence and Software Engineering. With a strong foundation in Python backend development and hands-on experience in building AI-driven systems, I specialize in Generative AI, automation workflows, and scalable API solutions. My education at SLIIT City University strengthened my problem-solving, research, and software design capabilities, enabling me to bridge theory and real-world applications. Explore my projects to see how I apply modern technologies like LangChain, FastAPI, Docker, and n8n to deliver intelligent and automated solutions. Feel free to connect with me for collaborations or opportunities!",
   "projectExplanation": "Welcome to my Project Page! Here, I'm excited to showcase a collection of hands-on projects that encapsulate my journey in the world of Computer Science and Software Engineering. These projects reflect my passion for problem-solving, creativity, and innovation. Each endeavor represents a blend of technical skills, critical thinking, and the drive to create meaningful solutions. Explore these projects to get a glimpse of my journey and the impact I aspire to make in the realm of technology. 🌐💻",
   "age": 25,
-  "location": "Abu Dhabi, UAE",
+  "location": "Dubai, UAE",
   "programming_languages": [
     {
       "name": "Python",
@@ -91,9 +91,14 @@
       "href": "#main"
     },
     {
+      "name": "Education",
+      "icon": "AcademicCapIcon",
+      "href": "#education"
+    },
+    {
       "name": "Work",
       "icon": "AppsIcon",
-      "href": "#work"
+      "href": "#work_experience"
     },
     {
       "name": "Technologies",
@@ -331,9 +336,39 @@
       "title": "Work Experience",
       "items": [
         {
-          "year": "Aug 2024 - Present",
-          "startDate": "2024-08-01",
+          "year": "May 2026 - Present",
+          "startDate": "2026-05-21",
           "endDate": "Present",
+          "title": "AI and Automation Engineer",
+          "company": "Ghori Holdings",
+          "location": "Dubai, United Arab Emirates",
+          "summary": "Building AI-powered automation and intelligent assistants for Ghori Holdings, including Odoo GPT — an AI assistant embedded directly into the company's Odoo ERP.",
+          "details": [
+            "Developed Odoo GPT, an AI assistant embedded in Odoo ERP for live data queries and automated Excel/PDF/presentation report generation.",
+            "Designing and building AI-powered automation workflows across the organization's systems.",
+            "Working on process automation to improve operational efficiency across teams."
+          ]
+        },
+        {
+          "year": "2026 - Present",
+          "startDate": "2026-01-01",
+          "endDate": "Present",
+          "title": "Founder & Full-Stack / AI Developer",
+          "company": "ai.thekadee.com",
+          "location": "Remote",
+          "summary": "Solo-founded and built ai.thekadee.com end to end — every line of product, backend, and AI integration — a generative AI creative studio where anyone can create images, video, and audio across multiple frontier models, chat and build with AI agents, and create on an interactive AI canvas, all under one credits system.",
+          "details": [
+            "Designed and built the full product solo — frontend, backend, infrastructure, and every AI integration.",
+            "Integrated multiple frontier generative models for image, video, and audio creation (GPT Image 2, Nano Banana Pro, Seedance 2.5, Kling 3.0, FLUX.2, and more).",
+            "Built an AI agent and chat experience for conversational creation, alongside an interactive AI canvas.",
+            "Designed a unified credits system spanning every model and media type.",
+            "Shipped a public Showcase and Gallery of community creations to drive discovery and re-creation."
+          ]
+        },
+        {
+          "year": "Aug 2024 - May 2026",
+          "startDate": "2024-08-01",
+          "endDate": "2026-05-01",
           "title": "AI Engineer (Python Backend Engineer)",
           "company": "MVP Application & Game Design L.L.C.",
           "location": "Abu Dhabi, United Arab Emirates",
@@ -375,6 +410,44 @@
   },
   "projects": [
     {
+      "title": "ai.thekadee.com",
+      "description": "Solo-founded and built ai.thekadee.com end to end — product, backend, and every AI integration — a generative AI creative studio: generate images, video, and audio across multiple frontier models (GPT Image 2, Nano Banana Pro, Seedance 2.5, Kling 3.0, FLUX.2), chat and build with AI agents, and create on an interactive AI canvas — all under a single credits system.",
+      "technologies": [
+        "Generative AI",
+        "Multi-Model Orchestration",
+        "AI Agents",
+        "AI Canvas",
+        "Image Generation",
+        "Video Generation",
+        "Audio Generation"
+      ],
+      "image": "/assets/AiTheKadee.jpg"
+    },
+    {
+      "title": "Support Desk Automation",
+      "description": "Built a Frappe-styled customer support ticketing dashboard backed by an AI agent that reads every incoming email, understands the request, and can reply automatically — alongside team and channel routing and status tracking (Needs Input, Assigned, Closed) for high-volume order support.",
+      "technologies": [
+        "Astro",
+        "React",
+        "TypeScript",
+        "Tailwind CSS",
+        "FastAPI",
+        "AI Agents"
+      ],
+      "image": "/assets/SupportDesk.jpg"
+    },
+    {
+      "title": "Odoo GPT",
+      "description": "Built an AI assistant embedded directly into Odoo ERP that answers questions about live ERP data and generates Excel, PDF, and presentation reports on request, with configurable skills and field overrides.",
+      "technologies": [
+        "Odoo ERP",
+        "Python",
+        "LLM Integration",
+        "Data Analytics"
+      ],
+      "image": "/assets/OdooGPT.jpg"
+    },
+    {
       "title": "Araby.AI Backend",
       "description": "Developed the backend for Araby.AI, an AI-powered content generation platform. Utilized Python, FastAPI, and various AI models to create APIs for text-to-image and video generation. using replicate, openai, claude, stable diffusion models, higgsfield, fal and many more generative models.",
       "technologies": [
@@ -394,31 +467,31 @@
         "FFmpeg",
         "LangChain"
       ],
-      "image": "/assets/ArabyAI.png"
+      "image": "/assets/ArabyAI.jpg"
     },
     {
       "title": "Stand Alone Java App",
       "description": "Developed a standalone Java application using NetBeans IDE and MySQL for database management. The application features a user-friendly interface and robust backend architecture.",
       "technologies": ["Java", "NetBeans", "MySQL"],
-      "image": "/assets/Loading.png"
+      "image": "/assets/Loading.jpg"
     },
     {
       "title": "Android Fitness App",
       "description": "Created a comprehensive Android fitness application using Android Studio and Java. The app includes workout tracking, exercise tutorials, and progress monitoring features.",
       "technologies": ["Android Studio", "Java"],
-      "image": "/assets/EveryMove.png"
+      "image": "/assets/EveryMove.jpg"
     },
     {
       "title": "E-commerce Website",
       "description": "Built a full-stack e-commerce website using React for the frontend and Node.js with Express for the backend. Implemented secure payment processing and user authentication.",
       "technologies": ["React", "Node.js", "Express", "MongoDB"],
-      "image": "/assets/Dresses.png"
+      "image": "/assets/Dresses.jpg"
     },
     {
       "title": "Portfolio Website",
-      "description": "Designed and developed a personal portfolio website to showcase projects and skills. Utilized modern web technologies for a responsive and visually appealing design.",
-      "technologies": ["HTML", "CSS", "JavaScript"],
-      "image": "/assets/Portfolio.png"
+      "description": "This site — a space-themed personal portfolio built with Astro and React islands, featuring a canvas starfield, a command palette (⌘K), scroll-spy navigation, and a Frappe-inspired single-accent design system.",
+      "technologies": ["Astro", "React", "Tailwind CSS", "Framer Motion"],
+      "image": "/assets/Portfolio.jpg"
     }
   ]
 }

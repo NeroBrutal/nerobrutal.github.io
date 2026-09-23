@@ -8,102 +8,137 @@ import {
   FaLinkedin,
   FaGithub,
 } from "react-icons/fa";
-import Profile from "../assets/profile_new.png";
+import { HiOutlineLocationMarker } from "react-icons/hi";
+import { HiOutlineChevronDown } from "react-icons/hi2";
+import Profile from "../assets/profile.jpg";
+import RainGlass from "./RainGlass";
 import data from "../data/data.json";
-import MotionPath from "./MotionPath";
 
 const name = data.name;
 const location = data.location;
 const roles = data.roles;
 const socialLinks = data.socialLinks;
+const resumeHref = data.navbar.find((item) => item.name === "Resume")?.href;
+
+const socials = [
+  { Icon: FaGithub, href: socialLinks.github },
+  { Icon: FaLinkedin, href: socialLinks.linkedin },
+  { Icon: FaTwitter, href: socialLinks.twitter },
+  { Icon: FaInstagram, href: socialLinks.instagram },
+  { Icon: FaFacebookF, href: socialLinks.facebook },
+];
+
+const container = {
+  hidden: {},
+  show: {
+    transition: { staggerChildren: 0.12, delayChildren: 0.1 },
+  },
+};
+
+const item = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+};
 
 function Main() {
   return (
     <motion.div
       id="main"
-      className="relative flex flex-col items-center justify-center min-h-screen bg-blue-200 text-center"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 1 }}
+      className="relative isolate flex flex-col items-center justify-center min-h-screen text-center px-4 pt-28 pb-16"
+      variants={container}
+      initial="hidden"
+      animate="show"
     >
-      <motion.img
-        className="w-60 h-60 rounded-full object-cover mb-6"
-        src={Profile}
-        alt={name}
-        initial={{ opacity: 0, y: -30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, delay: 0.5 }}
-      />
+      <RainGlass />
+      {/* Location badge */}
+      <motion.div
+        variants={item}
+        className="glass-pill inline-flex items-center gap-2 px-4 py-1.5 text-xs sm:text-sm text-muted mb-8"
+      >
+        <HiOutlineLocationMarker className="text-accent" />
+        {location}
+        <span className="w-1.5 h-1.5 rounded-full bg-success animate-pulse-glow" />
+        Open to new missions
+      </motion.div>
+
+      {/* Profile with orbit ring */}
+      <motion.div
+        variants={item}
+        className="relative w-52 h-52 sm:w-60 sm:h-60 mb-8"
+      >
+        <div className="absolute -inset-6 rounded-full bg-accent/10 blur-2xl" />
+        <span className="absolute -inset-3 rounded-full border border-dashed border-border-bright animate-spin-slower" />
+        <span className="absolute -inset-1 rounded-full border border-accent/30 animate-spin-slow" />
+        <img
+          className="relative w-full h-full rounded-full object-cover border-2 border-border"
+          src={Profile.src}
+          alt={name}
+        />
+      </motion.div>
 
       <motion.h1
-        className="text-4xl sm:text-5xl font-bold text-gray-800 mb-2"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, delay: 1 }}
+        variants={item}
+        className="text-4xl sm:text-6xl font-display font-bold mb-3"
       >
-        {`Hi, I'm ${name}.`}
+        <span className="text-text">{`Hi, I'm `}</span>
+        <span className="text-gradient">{name}</span>
       </motion.h1>
 
       <motion.h2
-        className="text-2xl sm:text-3xl text-gray-700 mb-6 flex justify-center"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, delay: 1.5 }}
+        variants={item}
+        className="text-xl sm:text-2xl text-muted mb-10 flex flex-wrap justify-center gap-x-2 font-medium"
       >
-        I'm a&nbsp;
+        <span>I'm a</span>
         <TypeAnimation
-          sequence={[
-            `"${roles[0]}"`,
-            2000,
-            `"${roles[1]}"`,
-            2000,
-            `"${roles[2]}"`,
-            2000,
-          ]}
+          sequence={roles.flatMap((role) => [`"${role}"`, 2000])}
           wrapper="span"
           speed={50}
           repeat={Infinity}
-          className="font-semibold text-gray-900"
+          className="font-semibold text-gradient"
         />
       </motion.h2>
 
       <motion.div
-        className="flex justify-center gap-6 mt-4"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, delay: 2 }}
+        variants={item}
+        className="flex flex-wrap items-center justify-center gap-4 mb-10"
       >
-        <a href={socialLinks.twitter}>
-          <FaTwitter
-            size={22}
-            className="hover:text-blue-500 transition-colors duration-200"
-          />
+        <a href="#projects" className="btn-cosmic">
+          View My Work
         </a>
-        <a href={socialLinks.facebook}>
-          <FaFacebookF
-            size={22}
-            className="hover:text-blue-600 transition-colors duration-200"
-          />
-        </a>
-        <a href={socialLinks.instagram}>
-          <FaInstagram
-            size={22}
-            className="hover:text-pink-500 transition-colors duration-200"
-          />
-        </a>
-        <a href={socialLinks.linkedin}>
-          <FaLinkedin
-            size={22}
-            className="hover:text-blue-700 transition-colors duration-200"
-          />
-        </a>
-        <a href={socialLinks.github}>
-          <FaGithub
-            size={22}
-            className="hover:text-gray-700 transition-colors duration-200"
-          />
-        </a>
+        {resumeHref && (
+          <a
+            href={resumeHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-outline-cosmic"
+          >
+            Download Resume
+          </a>
+        )}
       </motion.div>
+
+      <motion.div variants={item} className="flex justify-center gap-5">
+        {socials.map(({ Icon, href }, i) => (
+          <a
+            key={i}
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="glass-pill w-11 h-11 flex items-center justify-center text-muted transition-all duration-300 hover:-translate-y-1 hover:text-accent"
+          >
+            <Icon size={18} />
+          </a>
+        ))}
+      </motion.div>
+
+      <motion.a
+        href="#work"
+        aria-label="Scroll to About Me"
+        className="absolute bottom-6 text-muted hover:text-accent transition-colors animate-bounce-slow"
+        variants={item}
+      >
+        <HiOutlineChevronDown size={28} />
+      </motion.a>
     </motion.div>
   );
 }

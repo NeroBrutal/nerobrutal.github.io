@@ -1,61 +1,43 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
 export default function LoadingOverlay() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate loading for 2 seconds (you can adjust)
-    const timer = setTimeout(() => setLoading(false), 2000);
+    const timer = setTimeout(() => setLoading(false), 1800);
     return () => clearTimeout(timer);
   }, []);
 
-  if (!loading) return null; // hide once loading completes
-
   return (
-    <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-white dark:bg-gray-900">
-      <ThreeDots />
-      <h2 className="mt-4 text-blue-500 font-semibold text-lg">
-        Loading your experience...
-      </h2>
-    </div>
-  );
-}
-
-/* ================= Animation ================= */
-function ThreeDots() {
-  const dotVariants = {
-    jump: {
-      y: -15,
-      transition: {
-        duration: 0.6,
-        repeat: Infinity,
-        repeatType: "mirror",
-        ease: "easeInOut",
-      },
-    },
-  };
-
-  return (
-    <motion.div
-      animate="jump"
-      transition={{ staggerChildren: 0.2 }}
-      className="flex gap-3"
-    >
-      <motion.div
-        className="w-4 h-4 bg-blue-500 rounded-full"
-        variants={dotVariants}
-      />
-      <motion.div
-        className="w-4 h-4 bg-pink-500 rounded-full"
-        variants={dotVariants}
-      />
-      <motion.div
-        className="w-4 h-4 bg-purple-500 rounded-full"
-        variants={dotVariants}
-      />
-    </motion.div>
+    <AnimatePresence>
+      {loading && (
+        <motion.div
+          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-bg"
+          initial={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.6, ease: "easeInOut" }}
+        >
+          <div className="relative w-24 h-24 flex items-center justify-center">
+            <span className="absolute inset-0 rounded-full border border-accent/30 animate-spin-slow" />
+            <span className="absolute inset-3 rounded-full border border-dashed border-border-bright animate-spin-slower" />
+            <motion.span
+              className="w-4 h-4 rounded-full bg-accent"
+              animate={{ scale: [1, 1.3, 1] }}
+              transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
+            />
+          </div>
+          <motion.p
+            className="mt-6 text-sm tracking-[0.3em] uppercase text-muted"
+            animate={{ opacity: [0.4, 1, 0.4] }}
+            transition={{ duration: 1.6, repeat: Infinity }}
+          >
+            Entering orbit
+          </motion.p>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }

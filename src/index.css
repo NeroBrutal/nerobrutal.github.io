@@ -2,6 +2,111 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  /* Frappe-style tokens: one accent color, hairline borders, dense
+     neutral surfaces — everything else in the app reads these, never a
+     hardcoded hex. Space-separated RGB (not a hex string) so Tailwind
+     can generate working opacity modifiers (bg-accent/10, etc). */
+  --color-bg-rgb: 5 6 10;
+  --color-surface-rgb: 12 14 22;
+  --color-surface-2-rgb: 18 21 31;
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-bright: rgba(255, 255, 255, 0.16);
+  --color-text-rgb: 230 232 236;
+  --color-muted-rgb: 138 143 156;
+  --color-accent-rgb: 34 211 238;
+  --color-accent-2-rgb: 103 232 249;
+  --color-success-rgb: 52 211 153;
+  --shadow-panel: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 12px 32px rgba(0, 0, 0, 0.4);
+  --selection-bg: rgba(34, 211, 238, 0.25);
+}
+
 * {
   scroll-behavior: smooth;
+}
+
+html {
+  /* Clears the fixed top navbar when jumping to an anchor. */
+  scroll-padding-top: 5rem;
+}
+
+html,
+body {
+  background-color: rgb(var(--color-bg-rgb));
+}
+
+body {
+  @apply font-sans text-text;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply font-display;
+}
+
+::selection {
+  background: var(--selection-bg);
+  color: #fff;
+}
+
+/* Slim, single-accent scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: rgb(var(--color-bg-rgb));
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--color-accent-rgb));
+  border-radius: 999px;
+  border: 2px solid rgb(var(--color-bg-rgb));
+}
+
+@layer components {
+  .glass-panel {
+    @apply bg-surface/70 backdrop-blur-xl border border-border rounded-2xl;
+    box-shadow: var(--shadow-panel);
+  }
+
+  .glass-pill {
+    @apply bg-surface/70 backdrop-blur-xl border border-border rounded-full;
+  }
+
+  .text-gradient {
+    @apply text-accent;
+  }
+
+  .eyebrow {
+    @apply inline-block text-xs sm:text-sm tracking-[0.3em] uppercase text-accent/80 font-semibold mb-3;
+  }
+
+  .btn-cosmic {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3 font-semibold text-bg bg-accent transition-all duration-200 hover:bg-accent-2 hover:-translate-y-0.5;
+  }
+
+  .btn-outline-cosmic {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3 font-semibold text-text border border-border-bright bg-surface/60 backdrop-blur-xl transition-all duration-200 hover:border-accent/60 hover:text-accent hover:-translate-y-0.5;
+  }
+
+  .card-hover {
+    @apply transition-all duration-200 hover:-translate-y-1 hover:border-accent/50;
+  }
+
+  .section-title {
+    @apply text-3xl sm:text-4xl md:text-5xl font-display font-bold text-center text-gradient;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }
