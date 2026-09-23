@@ -162,32 +162,30 @@ export default function SpaceshipFlyby() {
 
   if (!pass) return null;
 
-  const vw = window.innerWidth;
-  const start = pass.dir > 0 ? -pass.width - 200 : vw + 200;
-  const end = pass.dir > 0 ? vw + 200 : -pass.width - 200;
-
   return (
     <motion.div
       key={pass.id}
       aria-hidden
-      className="fixed left-0 z-0 pointer-events-none"
-      style={{ top: pass.top, width: pass.width }}
-      initial={{ x: start, y: 0, scale: 0.85 }}
-      animate={{ x: end, y: pass.drift, scale: 1.08 }}
+      className="fixed left-0 top-0 z-0 pointer-events-none"
+      style={{ width: pass.width }}
+      initial={{ x: pass.start.x, y: pass.start.y, scale: 0.6 }}
+      animate={{ x: pass.end.x, y: pass.end.y, scale: 1.25 }}
       transition={{ duration: PASS_SECONDS, ease: "linear" }}
       onAnimationComplete={() => {
         setPass(null);
         schedule(random(45000, 80000));
       }}
     >
-      <motion.div
-        style={{ scaleX: pass.dir }}
-        animate={{ y: [0, -6, 0], rotate: [0, -0.6, 0] }}
-        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-        className="drop-shadow-[0_20px_40px_rgba(0,0,0,0.6)]"
-      >
-        <Ship />
-      </motion.div>
+      <div style={{ transform: `rotate(${pass.rotate}deg)` }}>
+        <motion.div
+          style={{ scaleX: -1 }}
+          animate={{ y: [0, -6, 0], rotate: [0, -0.6, 0] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          className="drop-shadow-[0_20px_40px_rgba(0,0,0,0.6)]"
+        >
+          <Ship />
+        </motion.div>
+      </div>
     </motion.div>
   );
 }

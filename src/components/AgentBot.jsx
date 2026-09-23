@@ -17,6 +17,7 @@ import {
   resolveStunt,
 } from "../lib/mascotStunts";
 import { nextFact, SPACESHIP_LINES } from "../lib/mascotFacts";
+import { findPerch, perchInView, perchPosition } from "../lib/mascotPerches";
 import RobotMascot from "./RobotMascot";
 import MascotBubble from "./MascotBubble";
 import { FLYBY_EVENT } from "./SpaceshipFlyby";
@@ -37,6 +38,8 @@ const SQUASH_REST = { scaleX: 1, scaleY: 1 };
 
 // Moves longer than this are flown Iron Man-style instead of walked.
 const FLY_DISTANCE = 260;
+// Chance he picks something on the page to sit on when arriving at a section.
+const PERCH_CHANCE = 0.85;
 const THINK_MS = 1000;
 const FIRST_GREETING_MS = 2500;
 
@@ -81,7 +84,10 @@ export default function AgentBot() {
   const [moveMs, setMoveMs] = useState(1200);
   const [flightPath, setFlightPath] = useState(null);
   const [bubble, setBubble] = useState(null);
+  const [perch, setPerch] = useState(null);
   const listRef = useRef(null);
+  const perchRef = useRef(perch);
+  const pendingPerchRef = useRef(null);
   const posRef = useRef(pos);
   const sectionRef = useRef(sectionId);
   const openRef = useRef(open);
@@ -102,6 +108,7 @@ export default function AgentBot() {
   stuntRef.current = stunt;
   flightRef.current = flightPath;
   bubbleRef.current = bubble;
+  perchRef.current = perch;
 
   const clearBubble = () => {
     bubbleTimersRef.current.forEach(clearTimeout);
@@ -127,13 +134,20 @@ export default function AgentBot() {
     setStunt(id);
   };
 
+  // options.stunt === false → plain walk (no flight, no arrival stunt).
+  // options.perch → sit on that perch on arrival instead of an arrival stunt.
   const goTo = (nextSection, nextPos, options = {}) => {
     const from = posRef.current;
     const dist = travelDistance(from, nextPos);
     if (nextSection !== sectionRef.current) announceRef.current = true;
     setSectionId(nextSection);
     setEdge(nextPos.edge);
-    if (dist < 1) return;
+    setPerch(null);
+    pendingPerchRef.current = options.perch ?? null;
+    if (dist < 1) {
+      arrive();
+      return;
+    }
     clearBubble();
 
     if (!reduceMotion && dist > FLY_DISTANCE && options.stunt !== false) {
@@ -147,18 +161,76 @@ export default function AgentBot() {
 
     setStunt(null);
     pendingStuntRef.current =
-      options.stunt === false || reduceMotion ? null : pickArrivalStunt(dist, nextPos.y);
+      options.stunt === false || options.perch || reduceMotion
+        ? null
+        : pickArrivalStunt(dist, nextPos.y);
     setMoveMs(options.durationMs ?? travelDurationMs(dist));
     setWalking(true);
     setPos({ x: nextPos.x, y: nextPos.y });
   };
 
+  const goToAnchor = (section = sectionRef.current) =>
+    goTo(section, getMascotPosition(section));
+
+  const goToPerch = (section, target) => {
+    const spot = perchPosition(target);
+    goTo(section, spot, { perch: target });
+  };
+
+  // Landed somewhere. If he was heading for a perch, sit on it — hopping the
+  // last few px if the page scrolled while he was on his way.
+  const arrive = () => {
+    const target = pendingPerchRef.current;
+    pendingPerchRef.current = null;
+    if (!target) return;
+    const spot = perchPosition(target);
+    if (!target.el.isConnected || !perchInView(spot.rect)) {
+      goToAnchor();
+      return;
+    }
+    if (travelDistance(posRef.current, spot) > 6) {
+      goTo(sectionRef.current, spot, { perch: target, stunt: false, durationMs: 260 });
+      return;
+    }
+    setEdge(spot.edge);
+    setPos({ x: spot.x, y: spot.y });
+    setPerch(target);
+  };
+
   const finishMove = () => {
+    if (!walkingRef.current) return;
     setWalking(false);
     const pending = pendingStuntRef.current;
     pendingStuntRef.current = null;
     if (pending) playStunt(pending);
+    arrive();
   };
+
+  // Stay glued to the perch while the page scrolls; hop off if it leaves view.
+  useEffect(() => {
+    if (!perch) return;
+    let frame = null;
+    const update = () => {
+      frame = null;
+      const spot = perchPosition(perch);
+      if (!perch.el.isConnected || !perchInView(spot.rect)) {
+        goToAnchor();
+        return;
+      }
+      setPos({ x: spot.x, y: spot.y });
+    };
+    const onScroll = () => {
+      if (frame === null) frame = requestAnimationFrame(update);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (frame !== null) cancelAnimationFrame(frame);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [perch]);
 
   useEffect(() => {
     if (!stunt) return;
@@ -169,7 +241,10 @@ export default function AgentBot() {
         const queued = queuedSectionRef.current;
         queuedSectionRef.current = null;
         if (queued && queued !== sectionRef.current) {
-          setTimeout(() => goTo(queued, getMascotPosition(queued)), 50);
+          pendingPerchRef.current = null;
+          setTimeout(() => arriveAtSection(queued), 50);
+        } else {
+          arrive();
         }
       }
     }, resolveStunt(stunt).duration * 1000 + 60);
@@ -207,6 +282,13 @@ export default function AgentBot() {
   }, []);
 
   useEffect(() => () => bubbleTimersRef.current.forEach(clearTimeout), []);
+
+  const arriveAtSection = (id) => {
+    const target = !reduceMotion && Math.random() < PERCH_CHANCE && findPerch(id);
+    if (target) goToPerch(id, target);
+    else goToAnchor(id);
+  };
+
   // Roam to whichever section is most visible while you scroll.
   useEffect(() => {
     const sections = Object.keys(SECTION_ANCHORS)
@@ -227,7 +309,7 @@ export default function AgentBot() {
           return;
         }
         if (id === sectionRef.current) return;
-        goTo(id, getMascotPosition(id));
+        arriveAtSection(id);
       },
       { rootMargin: "-45% 0px -45% 0px", threshold: [0, 0.25, 0.5, 0.75, 1] },
     );
@@ -239,6 +321,7 @@ export default function AgentBot() {
   // Keep anchors aligned on resize.
   useEffect(() => {
     const onResize = () => {
+      if (perchRef.current || flightRef.current) return;
       const next = getMascotPosition(sectionRef.current);
       setPos({ x: next.x, y: next.y });
       setEdge(next.edge);
@@ -259,18 +342,23 @@ export default function AgentBot() {
           stuntRef.current ||
           bubbleRef.current ||
           announceRef.current;
-        if (!busy) {
-          const roll = Math.random();
-          if (roll < 0.4) {
-            speak(nextFact(sectionRef.current));
-          } else if (roll < 0.8) {
-            playStunt(pickIdleStunt(posRef.current.y));
-          } else {
-            goTo(sectionRef.current, patrolNudge(sectionRef.current), {
-              durationMs: 900,
-              stunt: false,
-            });
-          }
+        const section = sectionRef.current;
+        const roll = Math.random();
+        if (busy) {
+          // wait for the next tick
+        } else if (perchRef.current) {
+          // Sitting: chat, shuffle to another spot, or hop down.
+          const other = roll >= 0.45 && roll < 0.75 && findPerch(section, perchRef.current.el);
+          if (roll < 0.45) speak(nextFact(section));
+          else if (other) goToPerch(section, other);
+          else if (roll >= 0.88) goToAnchor(section);
+        } else {
+          // On the floor: mostly look for something to climb onto.
+          const target = roll < 0.45 && findPerch(section);
+          if (target) goToPerch(section, target);
+          else if (roll < 0.65) speak(nextFact(section));
+          else if (roll < 0.85) playStunt(pickIdleStunt(posRef.current.y));
+          else goTo(section, patrolNudge(section, posRef.current.x), { durationMs: 1200, stunt: false });
         }
         tick();
       }, 6000 + Math.random() * 6000);
@@ -345,6 +433,7 @@ export default function AgentBot() {
     }
   };
 
+  const sitting = !!perch && !walking && !flightPath;
   return (
     <>
       {/* Roaming mascot — scroll anchors + idle patrol stunts */}
@@ -355,7 +444,9 @@ export default function AgentBot() {
           transition={
             flightPath
               ? { duration: flightPath.duration, times: flightPath.times, ease: "easeInOut" }
-              : { duration: moveMs / 1000, ease: "easeInOut" }
+              : perch
+                ? { duration: 0 }
+                : { duration: moveMs / 1000, ease: "easeInOut" }
           }
           onAnimationComplete={finishMove}
         >
@@ -383,6 +474,7 @@ export default function AgentBot() {
                 text={bubble.text}
                 edge={edge}
                 below={pos.y < 140}
+                beside={!!perch}
                 onClick={openChat}
               />
             )}
@@ -394,15 +486,20 @@ export default function AgentBot() {
               if (!walkingRef.current) playStunt("wave");
             }}
             aria-label="Open AI assistant"
-            className="relative w-14 h-[88px] pointer-events-auto"
+            className={`relative w-14 h-[88px] ${sitting ? "pointer-events-none" : "pointer-events-auto"}`}
           >
+            {/* While sitting, only his upper body is clickable so his dangling
+                legs don't block the button/card he's perched on. */}
+            {sitting && <span className="absolute inset-x-0 top-0 h-[64%] pointer-events-auto" />}
             <div
               className="relative w-full h-full"
               style={{ transform: edge === "left" ? "scaleX(-1)" : undefined }}
             >
               <motion.span
                 className="absolute left-1/2 -bottom-1 -ml-5 h-2.5 w-10 rounded-full bg-black/70 blur-[3px]"
-                {...shadowMotion(stunt)}
+                {...(sitting
+                  ? { animate: { opacity: 0 }, transition: { duration: 0.2 } }
+                  : shadowMotion(stunt))}
               />
               <motion.span
                 className="absolute left-1/2 -bottom-1 -ml-7 h-4 w-14 rounded-full border-2 border-accent/50 blur-[1px]"
@@ -412,14 +509,14 @@ export default function AgentBot() {
               <motion.div
                 className="relative w-full h-full"
                 animate={
-                  stunt
+                  stunt || sitting
                     ? { y: 0 }
                     : walking
                       ? { y: [0, -4, 0, -4, 0] }
                       : { y: [0, -6, 0] }
                 }
                 transition={
-                  stunt
+                  stunt || sitting
                     ? { duration: 0.2 }
                     : walking
                       ? { duration: 0.5, repeat: Infinity, ease: "easeInOut" }
@@ -433,7 +530,7 @@ export default function AgentBot() {
                     {...partMotion(stunt, "squash", SQUASH_REST)}
                   >
                     <span className="absolute inset-x-0 -inset-y-2 rounded-full bg-accent/20 blur-xl" />
-                    <RobotMascot walking={walking} stunt={stunt} />
+                    <RobotMascot walking={walking} stunt={stunt} sitting={sitting} />
                   </motion.div>
                 </motion.div>
               </motion.div>

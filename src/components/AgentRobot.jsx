@@ -4,7 +4,7 @@
 import { useId } from "react";
 import { motion } from "framer-motion";
 import RobotDefs from "./RobotDefs";
-import { partMotion } from "../lib/mascotStunts";
+import { partMotion, resolveStunt } from "../lib/mascotStunts";
 
 const walkCycle = { duration: 0.5, repeat: Infinity, ease: "easeInOut" };
 const eyePulse = { duration: 2.2, repeat: Infinity, ease: "easeInOut" };
@@ -102,13 +102,34 @@ function Repulsor({ cx, cy, accent, glow, motionProps }) {
   );
 }
 
-function limbProps(stunt, walking, part, walkFrames) {
+// Perched on an edge: hands resting beside him, legs dangling over the front
+// and kicking slowly, head tilting as he looks around.
+const SIT_POSE = {
+  leftArm: { animate: { rotate: 22, y: 0 }, transition: { duration: 0.35 } },
+  rightArm: { animate: { rotate: -22, y: 0 }, transition: { duration: 0.35 } },
+  leftLeg: {
+    animate: { rotate: [14, -6, 14], y: 0 },
+    transition: { duration: 1.8, repeat: Infinity, ease: "easeInOut" },
+  },
+  rightLeg: {
+    animate: { rotate: [-6, 14, -6], y: 0 },
+    transition: { duration: 1.8, repeat: Infinity, ease: "easeInOut" },
+  },
+  head: {
+    animate: { rotate: [0, 7, 0, -7, 0], y: 0 },
+    transition: { duration: 6, repeat: Infinity, ease: "easeInOut" },
+  },
+};
+
+function limbProps(stunt, walking, sitting, part, walkFrames) {
+  if (stunt && resolveStunt(stunt)?.[part]) return partMotion(stunt, part, { rotate: 0, y: 0 });
+  if (sitting && SIT_POSE[part]) return SIT_POSE[part];
   if (stunt) return partMotion(stunt, part, { rotate: 0, y: 0 });
-  if (walking) return { animate: { rotate: walkFrames, y: 0 }, transition: walkCycle };
+  if (walking && walkFrames) return { animate: { rotate: walkFrames, y: 0 }, transition: walkCycle };
   return { animate: { rotate: 0, y: 0 }, transition: { duration: 0.3 } };
 }
 
-export default function AgentRobot({ walking = false, stunt = null, className = "" }) {
+export default function AgentRobot({ walking = false, stunt = null, sitting = false, className = "" }) {
   const id = useId().replace(/:/g, "");
   const accent = "rgb(var(--color-accent-rgb))";
   const shell = `url(#${id}-shell)`;
@@ -137,12 +158,12 @@ export default function AgentRobot({ walking = false, stunt = null, className = 
           </Joint>
         </motion.g>
 
-        <Joint px={24} py={69} motionProps={limbProps(stunt, walking, "leftLeg", [0, 18, 0, -18, 0])}>
+        <Joint px={24} py={69} motionProps={limbProps(stunt, walking, sitting, "leftLeg", [0, 18, 0, -18, 0])}>
           <rect x="19" y="66" width="10" height="26" rx="5" fill={shell} />
           <ellipse cx="24" cy="93" rx="7" ry="3.2" fill={joint} />
         </Joint>
 
-        <Joint px={40} py={69} motionProps={limbProps(stunt, walking, "rightLeg", [0, -18, 0, 18, 0])}>
+        <Joint px={40} py={69} motionProps={limbProps(stunt, walking, sitting, "rightLeg", [0, -18, 0, 18, 0])}>
           <rect x="35" y="66" width="10" height="26" rx="5" fill={shell} />
           <ellipse cx="40" cy="93" rx="7" ry="3.2" fill={joint} />
         </Joint>
@@ -158,17 +179,17 @@ export default function AgentRobot({ walking = false, stunt = null, className = 
           transition={eyePulse}
         />
 
-        <Joint px={32} py={40} reach={50} motionProps={limbProps(stunt, false, "head")}>
+        <Joint px={32} py={40} reach={50} motionProps={limbProps(stunt, false, sitting, "head")}>
           <Head id={id} cx={32} cy={23} shell={shell} visor={visor} glow={glow} accent={accent} eyeFilter={eyeFilter} />
         </Joint>
 
-        <Joint px={11} py={44} motionProps={limbProps(stunt, walking, "leftArm", [0, -14, 0, 12, 0])}>
+        <Joint px={11} py={44} motionProps={limbProps(stunt, walking, sitting, "leftArm", [0, -14, 0, 12, 0])}>
           <rect x="6.5" y="42" width="9" height="22" rx="4.5" fill={shell} />
           <Hand cx={11} y={64} shell={shell} joint={joint} />
           <Repulsor cx={11} cy={71} accent={accent} glow={glow} motionProps={repulsor} />
         </Joint>
 
-        <Joint px={53} py={44} motionProps={limbProps(stunt, walking, "rightArm", [0, 12, 0, -14, 0])}>
+        <Joint px={53} py={44} motionProps={limbProps(stunt, walking, sitting, "rightArm", [0, 12, 0, -14, 0])}>
           <rect x="48.5" y="42" width="9" height="22" rx="4.5" fill={shell} />
           <Hand cx={53} y={64} shell={shell} joint={joint} />
           <Repulsor cx={53} cy={71} accent={accent} glow={glow} motionProps={repulsor} />

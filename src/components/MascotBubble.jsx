@@ -37,22 +37,31 @@ function Typewriter({ text }) {
 
 // Thought cloud ("thinking…") that turns into a speech bubble typing a fact.
 // `edge` is the screen edge the robot stands on — the bubble opens inward.
-export default function MascotBubble({ phase, text, edge, below, onClick }) {
-  const side = edge === "left" ? "left-0" : "right-0";
-  const tailSide = edge === "left" ? "left-5" : "right-5";
-  const vertical = below ? "top-full mt-3" : "bottom-full mb-3";
+// `beside` puts it level with his head so it doesn't cover what he's sitting on.
+export default function MascotBubble({ phase, text, edge, below, beside, onClick }) {
+  const left = edge === "left";
+  const tailSide = left ? "left-5" : "right-5";
+  const placement = beside
+    ? `top-0 ${left ? "left-full ml-3" : "right-full mr-3"}`
+    : `${below ? "top-full mt-3" : "bottom-full mb-3"} ${left ? "left-0" : "right-0"}`;
+  const dotA = beside ? `top-3 ${left ? "-left-2" : "-right-2"}` : `${below ? "-top-2" : "-bottom-2"} ${tailSide}`;
+  const dotB = beside ? `top-4 ${left ? "-left-4" : "-right-4"}` : `${below ? "-top-4" : "-bottom-4"} ${left ? "left-3" : "right-3"}`;
+  const tail = beside
+    ? `top-4 ${left ? "-left-1.5 border-l border-b" : "-right-1.5 border-r border-t"}`
+    : `${below ? "-top-1.5 border-l border-t" : "-bottom-1.5 border-r border-b"} ${tailSide}`;
+  const enterOffset = beside ? { x: left ? -8 : 8 } : { y: below ? -8 : 8 };
 
   return (
     <motion.div
-      className={`absolute ${vertical} ${side} w-56 pointer-events-auto`}
-      initial={{ opacity: 0, scale: 0.6, y: below ? -8 : 8 }}
-      animate={{ opacity: 1, scale: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.7, y: below ? -6 : 6 }}
+      className={`absolute ${placement} w-56 pointer-events-auto`}
+      initial={{ opacity: 0, scale: 0.6, ...enterOffset }}
+      animate={{ opacity: 1, scale: 1, x: 0, y: 0 }}
+      exit={{ opacity: 0, scale: 0.7, ...enterOffset }}
       transition={{ type: "spring", stiffness: 380, damping: 24 }}
-      style={{ originX: edge === "left" ? 0 : 1, originY: below ? 0 : 1 }}
+      style={{ originX: left ? 0 : 1, originY: beside || below ? 0 : 1 }}
     >
       {phase === "thinking" ? (
-        <div className={`flex ${edge === "left" ? "justify-start" : "justify-end"}`}>
+        <div className={`flex ${left ? "justify-start" : "justify-end"}`}>
           <div className="relative">
             <div className="glass-panel bg-surface/90 border-border-bright rounded-full px-4 py-2.5 flex gap-1.5 shadow-lg shadow-black/40">
               {[0, 1, 2].map((d) => (
@@ -64,8 +73,8 @@ export default function MascotBubble({ phase, text, edge, below, onClick }) {
                 />
               ))}
             </div>
-            <span className={`absolute ${below ? "-top-2" : "-bottom-2"} ${tailSide} w-2.5 h-2.5 rounded-full glass-panel bg-surface/90 border-border-bright`} />
-            <span className={`absolute ${below ? "-top-4" : "-bottom-4"} ${edge === "left" ? "left-3" : "right-3"} w-1.5 h-1.5 rounded-full glass-panel bg-surface/90 border-border-bright`} />
+            <span className={`absolute ${dotA} w-2.5 h-2.5 rounded-full glass-panel bg-surface/90 border-border-bright`} />
+            <span className={`absolute ${dotB} w-1.5 h-1.5 rounded-full glass-panel bg-surface/90 border-border-bright`} />
           </div>
         </div>
       ) : (
@@ -78,7 +87,7 @@ export default function MascotBubble({ phase, text, edge, below, onClick }) {
             <Typewriter text={text} />
           </span>
           <span
-            className={`absolute ${below ? "-top-1.5 border-l border-t" : "-bottom-1.5 border-r border-b"} ${tailSide} w-3 h-3 rotate-45 bg-surface border-border-bright`}
+            className={`absolute ${tail} w-3 h-3 rotate-45 bg-surface border-border-bright`}
           />
         </button>
       )}

@@ -49,6 +49,7 @@ function Projects() {
         {projects.map((project, i) => (
           <motion.div
             key={i}
+            data-perch
             className={`relative rounded-[29px] p-[1px] bg-gradient-to-br from-white/20 via-white/5 to-transparent cursor-pointer group ${
               i === 0 ? "md:col-span-2 md:row-span-2" : ""
             }`}
