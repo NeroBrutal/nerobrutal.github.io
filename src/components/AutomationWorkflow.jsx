@@ -1,10 +1,8 @@
 /* eslint-disable react/prop-types */
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
 import data from "../data/data.json";
-import { fadeUp, viewportOnce } from "../lib/motionPresets";
-import { resolveTechIconSrc } from "../lib/techIcons";
+import { getTechIconDisplayStyle, resolveTechIconSrc } from "../lib/techIcons";
 
 function Connector({ vertical = false }) {
   return (
@@ -34,6 +32,7 @@ function Connector({ vertical = false }) {
 }
 
 function FlowNode({ title, detail, iconSrc, variant, ports = "both" }) {
+  const iconStyle = iconSrc ? getTechIconDisplayStyle(title, iconSrc) : "brand";
   const variantClass = {
     trigger: "workflow-node--trigger",
     orchestrator: "workflow-node--orchestrator",
@@ -50,13 +49,27 @@ function FlowNode({ title, detail, iconSrc, variant, ports = "both" }) {
         <span className="workflow-port workflow-port--out" />
       )}
       {iconSrc ? (
-        <img
-          src={iconSrc}
-          alt=""
-          className="h-8 w-8 object-contain shrink-0"
-          loading="lazy"
-          draggable={false}
-        />
+        <span
+          className={
+            iconStyle === "mono" || iconStyle === "django"
+              ? "workflow-node-icon shrink-0"
+              : "workflow-node-icon workflow-node-icon--brand shrink-0"
+          }
+        >
+          <img
+            src={iconSrc}
+            alt=""
+            className={
+              iconStyle === "mono"
+                ? "workflow-node-icon-img"
+                : iconStyle === "django"
+                  ? "workflow-node-icon-img--django"
+                  : "workflow-node-icon-img--brand"
+            }
+            loading="lazy"
+            draggable={false}
+          />
+        </span>
       ) : (
         <span className="workflow-node-icon-placeholder" aria-hidden />
       )}
@@ -72,7 +85,6 @@ function FlowNode({ title, detail, iconSrc, variant, ports = "both" }) {
 
 export default function AutomationWorkflow() {
   const categories = data.technologies ?? [];
-  const reduce = useReducedMotion();
 
   const flatTech = categories.flatMap((cat) => cat.technologies);
   const iconByName = (...names) => {
@@ -90,19 +102,10 @@ export default function AutomationWorkflow() {
   if (categories.length === 0) return null;
 
   return (
-    <motion.div
-      className="max-w-6xl mx-auto px-4 sm:px-6"
-      initial="hidden"
-      whileInView="show"
-      viewport={viewportOnce}
-      variants={{ hidden: {}, show: { transition: { staggerChildren: 0.06 } } }}
-    >
-      <motion.div
-        variants={fadeUp}
-        className="relative p-4 sm:p-6 md:p-8 overflow-hidden"
-      >
+    <div className="max-w-6xl mx-auto px-4 sm:px-6">
+      <div className="relative p-4 sm:p-6 md:p-8">
         <div
-          className="pointer-events-none absolute inset-0 opacity-[0.35]"
+          className="pointer-events-none absolute inset-0 opacity-[0.35] overflow-hidden rounded-2xl"
           style={{
             backgroundImage:
               "radial-gradient(circle at 1px 1px, rgba(255,255,255,0.06) 1px, transparent 0)",
@@ -154,15 +157,8 @@ export default function AutomationWorkflow() {
                   className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3"
                   aria-label={cat.category}
                 >
-                  {cat.technologies.map((tech, i) => (
-                    <motion.div
-                      key={tech.name}
-                      initial={reduce ? false : { opacity: 0, y: 10 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, amount: 0.2 }}
-                      transition={{ duration: 0.35, delay: i * 0.02 }}
-                      className="relative"
-                    >
+                  {cat.technologies.map((tech) => (
+                    <div key={tech.name} className="relative">
                       <span
                         className="hidden md:block absolute left-1/2 -top-4 -translate-x-1/2 w-px h-3 bg-accent/20"
                         aria-hidden
@@ -173,14 +169,14 @@ export default function AutomationWorkflow() {
                         iconSrc={resolveTechIconSrc(tech.name, tech.imageSrc)}
                         ports="in"
                       />
-                    </motion.div>
+                    </div>
                   ))}
                 </div>
               </div>
             ))}
           </div>
         </div>
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   );
 }

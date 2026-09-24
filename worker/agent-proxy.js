@@ -77,6 +77,10 @@ export default {
       return json({ error: "Invalid messages" }, 400, origin);
     }
 
+    if (!env.OPENROUTER_API_KEY) {
+      return json({ error: "Agent not configured" }, 503, origin);
+    }
+
     const upstream = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
       headers: {

@@ -69,5 +69,35 @@ export function resolveTechIconSrc(name, fallback) {
     }
   }
 
+  if (name === "Django") return deviconUrl("django", "plain");
+  if (name === "Express JS" || name === "Express") {
+    return deviconUrl("express", "original");
+  }
+
   return fallback;
+}
+
+/** @returns {"mono" | "django" | "brand"} */
+export function getTechIconDisplayStyle(name, src) {
+  if (name === "Express JS" || name === "Express") return "mono";
+  if (name === "Django") return "django";
+  if (isMonochromeTechIcon(src, name)) return "mono";
+  return "brand";
+}
+
+/** True for white/currentColor marks that need a light tile + black render. */
+export function isMonochromeTechIcon(src, name) {
+  if (name === "Express JS" || name === "Express") return true;
+  if (!src) return false;
+  if (src.includes("devicons/devicon")) return false;
+  if (src.includes("api.iconify.design/logos/")) return false;
+  if (src.includes("fal.ai/") || src.endsWith(".png") || src.endsWith(".jpg")) return false;
+  if (
+    src.includes("lobehub/lobe-icons") ||
+    src.includes("api.iconify.design/simple-icons/") ||
+    src.includes("cdn.simpleicons.org")
+  ) {
+    return true;
+  }
+  return false;
 }

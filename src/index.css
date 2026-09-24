@@ -127,8 +127,30 @@ h6 {
     border-left: 3px solid rgba(255, 255, 255, 0.12);
   }
 
+  .workflow-node-icon {
+    @apply flex items-center justify-center h-9 w-9 rounded-lg bg-white border border-white/20 shadow-sm;
+  }
+
+  .workflow-node-icon--brand {
+    @apply h-8 w-9 bg-transparent border-0 shadow-none p-0;
+  }
+
+  /* Monochrome SVGs (Lobe / Simple Icons) → black on a light tile */
+  .workflow-node-icon-img {
+    @apply h-6 w-6 object-contain;
+    filter: brightness(0);
+  }
+
+  .workflow-node-icon-img--brand {
+    @apply h-8 w-8 object-contain;
+  }
+
+  .workflow-node-icon-img--django {
+    @apply h-6 w-6 object-contain;
+  }
+
   .workflow-node-icon-placeholder {
-    @apply h-8 w-8 rounded-lg bg-surface shrink-0 border border-border;
+    @apply h-9 w-9 rounded-lg bg-white shrink-0 border border-white/20;
   }
 
   .workflow-port {
