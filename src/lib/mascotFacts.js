@@ -45,6 +45,7 @@ const FACTS = {
       .slice(-1)
       .map((e) => `At ${e.title}, he ${lcFirst(firstSentence(e.summary))}`),
   ],
+  systems: data.agentic_systems.map((s) => `${s.title} — ${lcFirst(firstSentence(s.description))}`),
   technologies: [
     `His go-to languages: ${listOf(data.programming_languages.map((l) => l.name), 5)}.`,
     ...data.technologies.map(

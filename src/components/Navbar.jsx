@@ -12,7 +12,7 @@ import {
   HiOutlineViewGrid,
   HiOutlineAcademicCap,
 } from "react-icons/hi";
-import { HiOutlineCommandLine } from "react-icons/hi2";
+import { HiOutlineCommandLine, HiOutlineSparkles } from "react-icons/hi2";
 
 // EngineeringIcon / AppsIcon map to react-icons equivalents; the names come
 // straight from data.json's navbar entries.
@@ -24,6 +24,7 @@ const iconMap = {
   EngineeringIcon: AiOutlineHome,
   AppsIcon: HiOutlineViewGrid,
   AcademicCapIcon: HiOutlineAcademicCap,
+  HiOutlineSparkles,
 };
 
 const isExternal = (href) => !href.startsWith("#");

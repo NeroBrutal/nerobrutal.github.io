@@ -1,6 +1,8 @@
 import Navbar from "./components/Navbar";
 import Main from "./components/Main";
+import ImpactStats from "./components/ImpactStats";
 import Work from "./components/Work";
+import AgenticSystems from "./components/AgenticSystems";
 import Projects from "./components/Projects";
 import Contact from "./components/Contact";
 import Technologies from "./components/Technologies";
@@ -24,7 +26,9 @@ function App() {
       <Navbar />
       <CommandPalette />
       <Main />
+      <ImpactStats />
       <Work />
+      <AgenticSystems />
       <Technologies />
       <MotionCursor />
       <Projects />

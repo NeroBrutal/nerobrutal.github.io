@@ -5,7 +5,8 @@ import { motion, useReducedMotion } from "framer-motion";
 
 export const FLYBY_EVENT = "spaceship:flyby";
 
-const FIRST_PASS_MS = 12000;
+// Rare enough to be a reward for lingering, not a distraction on a first skim.
+const FIRST_PASS_MS = 30000;
 const PASS_SECONDS = 13;
 const random = (min, max) => min + Math.random() * (max - min);
 
@@ -190,7 +191,7 @@ export default function SpaceshipFlyby() {
       transition={{ duration: PASS_SECONDS, ease: "linear" }}
       onAnimationComplete={() => {
         setPass(null);
-        schedule(random(45000, 80000));
+        schedule(random(100000, 160000));
       }}
     >
       <div style={{ transform: `rotate(${pass.rotate}deg)` }}>

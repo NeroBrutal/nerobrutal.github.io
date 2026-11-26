@@ -445,7 +445,9 @@ export default function AgentBot() {
           else goTo(section, patrolNudge(section, posRef.current.x), { durationMs: 1200, stunt: false });
         }
         tick();
-      }, 6000 + Math.random() * 6000);
+        // Paced so he's a signature, not an interruption — a reviewer skimming
+        // the page in under a minute should barely notice him move.
+      }, 16000 + Math.random() * 14000);
     };
     tick();
     return () => clearTimeout(timer);

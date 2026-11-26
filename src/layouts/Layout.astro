@@ -7,9 +7,12 @@ interface Props {
 }
 
 const {
-  title = "Mohamed Rashidh | AI Engineer",
-  description = "Mohamed Rashidh — AI Engineer specializing in Generative AI, automation, and scalable Python backend systems.",
+  title = "Mohamed Rashidh | Forward Deployed AI Engineer",
+  description = "Mohamed Rashidh — AI engineer taking LLM agents from prototype to production: multi-LLM orchestration, RAG, MCP tool-calling, real-time voice agents and ERP integration.",
 } = Astro.props;
+
+const siteUrl = "https://rashidh.com";
+const ogImage = `${siteUrl}/assets/Title.png`;
 ---
 
 <!DOCTYPE html>
@@ -20,6 +23,19 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#05060f" />
     <meta name="description" content={description} />
+    <link rel="canonical" href={siteUrl} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={siteUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link

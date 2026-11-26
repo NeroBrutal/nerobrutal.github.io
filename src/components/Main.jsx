@@ -10,7 +10,7 @@ import {
   FaGithub,
 } from "react-icons/fa";
 import { HiOutlineLocationMarker } from "react-icons/hi";
-import { HiOutlineChevronDown } from "react-icons/hi2";
+import { HiOutlineChevronDown, HiOutlineBuildingLibrary } from "react-icons/hi2";
 import Profile from "../assets/profile.jpg";
 import RainGlass from "./RainGlass";
 import MagneticButton from "./MagneticButton";
@@ -77,15 +77,21 @@ function Main() {
       animate="show"
     >
       <RainGlass />
-      {/* Location badge */}
+      {/* Location + credibility badges */}
       <motion.div
         variants={item}
-        className="glass-pill inline-flex items-center gap-2 px-4 py-1.5 text-xs sm:text-sm text-muted mb-8"
+        className="flex flex-wrap items-center justify-center gap-3 mb-8"
       >
-        <HiOutlineLocationMarker className="text-accent" />
-        {location}
-        <span className="w-1.5 h-1.5 rounded-full bg-success animate-pulse-glow" />
-        Open to new missions
+        <div className="glass-pill inline-flex items-center gap-2 px-4 py-1.5 text-xs sm:text-sm text-muted">
+          <HiOutlineLocationMarker className="text-accent" />
+          {location}
+          <span className="w-1.5 h-1.5 rounded-full bg-success animate-pulse-glow" />
+          Open to new missions
+        </div>
+        <div className="glass-pill inline-flex items-center gap-2 px-4 py-1.5 text-xs sm:text-sm text-muted">
+          <HiOutlineBuildingLibrary className="text-accent" />
+          Production AI for government &amp; enterprise
+        </div>
       </motion.div>
 
       {/* Profile with orbit ring — drifts and fades with scroll */}

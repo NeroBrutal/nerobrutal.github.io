@@ -1,8 +1,50 @@
+/* eslint-disable react/prop-types */
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import { HiOutlineX } from "react-icons/hi";
+import {
+  HiOutlineSquares2X2,
+  HiOutlineMicrophone,
+  HiOutlineChartBar,
+  HiOutlineBuildingLibrary,
+  HiOutlineCpuChip,
+  HiOutlineBolt,
+  HiOutlineHeart,
+} from "react-icons/hi2";
 import data from "../data/data.json";
 import TiltCard from "./TiltCard";
+
+const glyphIconMap = {
+  HiOutlineSquares2X2,
+  HiOutlineMicrophone,
+  HiOutlineChartBar,
+  HiOutlineBuildingLibrary,
+  HiOutlineCpuChip,
+  HiOutlineBolt,
+  HiOutlineHeart,
+};
+
+// Confidential/system-level projects don't get a fabricated screenshot — an
+// abstract gradient tile with a glyph stands in for one instead.
+function ProjectVisual({ visual, alt, large }) {
+  if (visual.type === "image") {
+    return (
+      <motion.img
+        src={visual.src}
+        alt={alt}
+        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+      />
+    );
+  }
+  const Icon = glyphIconMap[visual.icon];
+  return (
+    <div className="w-full h-full bg-gradient-to-br from-accent/20 via-surface-2 to-bg flex items-center justify-center transition-transform duration-700 group-hover:scale-105">
+      {Icon && (
+        <Icon className="text-accent/60" size={large ? 88 : 56} />
+      )}
+    </div>
+  );
+}
 
 function Projects() {
   const projects = data.projects;
@@ -61,11 +103,7 @@ function Projects() {
             onClick={(e) => handleCardClick(e, project)}
           >
             <TiltCard className="relative w-full h-full rounded-[28px] overflow-hidden">
-              <motion.img
-                src={project.image.replace("../assets/", "/src/assets/")}
-                alt={project.title}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
+              <ProjectVisual visual={project.visual} alt={project.title} large={i === 0} />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent" />
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-accent/10" />
               <div className="absolute bottom-6 left-6 right-6 text-white">
@@ -79,6 +117,18 @@ function Projects() {
                 >
                   {project.title}
                 </h2>
+                {i === 0 && (
+                  <div className="flex flex-wrap gap-1.5 mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    {project.technologies.map((tech) => (
+                      <span
+                        key={tech}
+                        className="bg-white/10 backdrop-blur-sm border border-white/10 text-[11px] px-2 py-0.5 rounded-full"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </div>
             </TiltCard>
           </motion.div>
@@ -126,11 +176,9 @@ function Projects() {
                 >
                   <HiOutlineX size={18} />
                 </button>
-                <motion.img
-                  src={selectedProject.image.replace("../assets/", "/src/assets/")}
-                  alt={selectedProject.title}
-                  className="w-full h-72 object-cover"
-                />
+                <div className="w-full h-72 overflow-hidden">
+                  <ProjectVisual visual={selectedProject.visual} alt={selectedProject.title} large />
+                </div>
                 <div className="p-8">
                   <h2 className="text-2xl sm:text-3xl font-display font-bold mb-3 text-gradient">
                     {selectedProject.title}

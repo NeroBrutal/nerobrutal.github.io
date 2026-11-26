@@ -29,16 +29,7 @@ const Row = ({ items, duration, reverse }) => (
 );
 
 const Technologies = () => {
-  const technologiesData = data.technologies.flatMap((cat) =>
-    cat.technologies.map((tech) => ({
-      name: tech.name,
-      imageSrc: tech.imageSrc,
-    }))
-  );
-
-  const midpoint = Math.ceil(technologiesData.length / 2);
-  const rowOne = technologiesData.slice(0, midpoint);
-  const rowTwo = technologiesData.slice(midpoint);
+  const categories = data.technologies;
 
   return (
     <section id="technologies" className="relative py-24 overflow-hidden">
@@ -47,9 +38,19 @@ const Technologies = () => {
         <h1 className="section-title">Technologies</h1>
       </div>
 
-      <div className="flex flex-col gap-6">
-        <Row items={rowOne} duration={40} />
-        <Row items={rowTwo} duration={46} reverse />
+      <div className="flex flex-col gap-10">
+        {categories.map((cat, i) => (
+          <div key={cat.category}>
+            <p className="text-center text-xs uppercase tracking-[0.2em] text-muted mb-4">
+              {cat.category}
+            </p>
+            <Row
+              items={cat.technologies}
+              duration={32 + cat.technologies.length * 2}
+              reverse={i % 2 === 1}
+            />
+          </div>
+        ))}
       </div>
     </section>
   );

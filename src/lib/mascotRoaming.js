@@ -6,9 +6,10 @@ export const MASCOT_MARGIN = 24;
 export const SECTION_ANCHORS = {
   main: { edge: "right" },
   work: { edge: "left" },
-  technologies: { edge: "right" },
-  projects: { edge: "left" },
-  contact: { edge: "right" },
+  systems: { edge: "right" },
+  technologies: { edge: "left" },
+  projects: { edge: "right" },
+  contact: { edge: "left" },
 };
 
 // When he isn't perched he stands on the bottom of the screen, never mid-air.
