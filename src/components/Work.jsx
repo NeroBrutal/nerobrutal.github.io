@@ -6,7 +6,6 @@ import TimelineItem from "./TimelineItem";
 const Work = () => {
   const aboutMe = data.about_me;
   const sections = data.sections;
-  const languages = data.programming_languages;
 
   const getLogo = (fileName) =>
     new URL(`../assets/${fileName}`, import.meta.url).href;
@@ -43,7 +42,7 @@ const Work = () => {
         transition={{ duration: 0.6 }}
         className="text-center mb-6"
       >
-        <span className="eyebrow">🛰️ The journey so far</span>
+        <span className="eyebrow">The journey so far</span>
         <h1 className="section-title">About Me</h1>
       </motion.div>
 
@@ -53,35 +52,12 @@ const Work = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="glass-panel p-6 sm:p-8 max-w-3xl mx-auto mt-8"
+        className="glass-panel p-6 sm:p-8 max-w-3xl mx-auto mt-8 mb-16"
       >
         <p className="text-center text-muted leading-relaxed">{aboutMe}</p>
       </motion.div>
 
-      {/* Scrolling Technology Icons */}
-      <div className="overflow-hidden py-14 relative [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
-        <motion.div
-          className="flex gap-6"
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{ ease: "linear", duration: 22, repeat: Infinity }}
-        >
-          {[...languages, ...languages].map((lang, index) => (
-            <div
-              key={index}
-              title={lang.name}
-              className="glass-pill flex items-center justify-center h-16 w-16 md:h-20 md:w-20 shrink-0 p-3 transition-transform hover:scale-110"
-            >
-              <img
-                src={lang.icon}
-                alt={lang.name}
-                className="h-full w-full object-contain"
-              />
-            </div>
-          ))}
-        </motion.div>
-      </div>
-
-      {/* Dynamic Sections as a constellation timeline */}
+      {/* Dynamic Sections as a timeline */}
       {Object.entries(sections).map(([key, section]) => (
         <div key={key} id={key} className="mt-16 scroll-mt-20">
           <motion.h3

@@ -1,71 +1,18 @@
 {
   "name": "Mohamed Rashidh",
-  "about_me": "I own AI systems end to end, from architecture to production: I've designed and deployed two production AI agents for an Abu Dhabi government entity, and I architect the multi-LLM orchestration, RAG and ERP-integration layers that management, finance and customer-support teams rely on daily. I take a business problem, decide the architecture, build it, integrate it with the systems the organization already runs — ERP, commerce, telephony, email — and keep it reliable in production. First-class B.Sc. (Hons) in Computer Science & Software Engineering, University of Bedfordshire.",
-  "projectExplanation": "A selection of the AI agents, backend systems and products I've taken from idea to production — for an Abu Dhabi government entity, for the business I work inside today, and for myself.",
+  "about_me": "I own AI systems and the platforms behind them, end to end, from architecture to production. I've designed and deployed two production AI agents for an Abu Dhabi government entity, architected the multi-tenant commerce and ERP backend a group of companies runs on, and built the fast, search-ready websites in front of it. I take a business problem, decide the architecture, build it, integrate it with the systems the organization already runs (ERP, commerce, telephony, email) and keep it reliable in production. First-class B.Sc. (Hons) in Computer Science & Software Engineering, University of Bedfordshire.",
   "age": 25,
   "location": "Dubai, UAE",
-  "programming_languages": [
-    {
-      "name": "Python",
-      "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original-wordmark.svg"
-    },
-    {
-      "name": "FastAPI",
-      "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/fastapi/fastapi-original.svg"
-    },
-    {
-      "name": "LangChain",
-      "icon": "https://cdn.simpleicons.org/langchain"
-    },
-    {
-      "name": "Anthropic Claude",
-      "icon": "https://cdn.simpleicons.org/anthropic"
-    },
-    {
-      "name": "Google Gemini",
-      "icon": "https://cdn.simpleicons.org/googlegemini"
-    },
-    {
-      "name": "HuggingFace",
-      "icon": "https://cdn.simpleicons.org/huggingface"
-    },
-    {
-      "name": "TypeScript",
-      "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg"
-    },
-    {
-      "name": "Astro",
-      "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/astro/astro-original.svg"
-    },
-    {
-      "name": "AWS",
-      "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg"
-    },
-    {
-      "name": "Docker",
-      "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
-    },
-    {
-      "name": "PostgreSQL",
-      "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
-    },
-    {
-      "name": "Redis",
-      "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/redis/redis-original.svg"
-    },
-    {
-      "name": "n8n",
-      "icon": "https://cdn.simpleicons.org/n8n"
-    },
-    {
-      "name": "Odoo ERP",
-      "icon": "https://cdn.simpleicons.org/odoo"
-    }
+  "hobbies": [
+    "Reading",
+    "Traveling",
+    "Gaming"
   ],
-  "hobbies": ["Reading", "Traveling", "Gaming"],
   "roles": [
     "Forward Deployed AI Engineer",
     "AI Agent & RAG Systems",
+    "Backend Engineer (NestJS)",
+    "DevOps & Infrastructure Engineer",
     "Multi-LLM Orchestration",
     "Enterprise AI Integration"
   ],
@@ -83,34 +30,29 @@
       "href": "#main"
     },
     {
-      "name": "Education",
-      "icon": "AcademicCapIcon",
-      "href": "#education"
-    },
-    {
       "name": "Work",
       "icon": "AppsIcon",
       "href": "#work_experience"
     },
     {
-      "name": "AI Systems",
+      "name": "Case Studies",
       "icon": "HiOutlineSparkles",
-      "href": "#systems"
+      "href": "#case-studies"
     },
     {
-      "name": "Technologies",
+      "name": "Skills",
       "icon": "BiCodeAlt",
-      "href": "#technologies"
+      "href": "#skills"
     },
     {
-      "name": "Projects",
-      "icon": "AiOutlineProject",
-      "href": "#projects"
+      "name": "Education",
+      "icon": "AcademicCapIcon",
+      "href": "#education"
     },
     {
       "name": "Resume",
       "icon": "BsPerson",
-      "href": "https://drive.google.com/file/d/1ICeWmGs8nhtOjz-drA2D-GLzwz6ajZVc/view?usp=sharing"
+      "href": "https://drive.google.com/file/d/1PgGIhegiMTFab6Wul8kwFWtz2vcaZDEg/view?usp=sharing"
     },
     {
       "name": "Contact",
@@ -119,152 +61,307 @@
     }
   ],
   "impact": [
-    { "value": "2", "label": "Production AI agents delivered for an Abu Dhabi government entity" },
-    { "value": "3", "label": "Stores unified under one merchant admin" },
-    { "value": "10+", "label": "Custom Odoo ERP addons shipped" },
-    { "value": "4+", "label": "LLM providers orchestrated behind one API" }
+    {
+      "value": "2",
+      "label": "Production AI agents delivered for an Abu Dhabi government entity"
+    },
+    {
+      "value": "590+",
+      "label": "API operations in the multi-company commerce backend I architected"
+    },
+    {
+      "value": "5",
+      "label": "Live websites shipped on Astro and Cloudflare"
+    },
+    {
+      "value": "100",
+      "label": "Lighthouse SEO on every Emirati Tasjeel page; accessibility 100 on Purone and Floradyle"
+    }
   ],
-  "agentic_systems": [
+  "principles": [
     {
-      "icon": "HiOutlineCpuChip",
-      "title": "Multi-LLM Orchestration",
-      "description": "One API in front of OpenAI, Anthropic, Google Gemini and more — with model switching, fallback handling, centralised tool execution and message compaction that kills context-overflow errors and cuts token costs.",
-      "stack": ["OpenAI", "Anthropic", "Gemini", "LangGraph"]
+      "title": "Own the architecture, not just the ticket",
+      "detail": "I decide how a system is built, not just implement someone else's spec — from the government agents' failover design to the commerce platform's ERP backbone."
     },
     {
-      "icon": "HiOutlineCircleStack",
-      "title": "RAG & Knowledge Bases",
-      "description": "Retrieval-augmented knowledge bases that re-index updated documents automatically, so production agents stay current on live data without a redeploy.",
-      "stack": ["ChromaDB", "Pinecone", "FAISS", "LangChain"]
+      "title": "Ground every answer in real data",
+      "detail": "The AI agent on this page answers strictly from my real profile — the same discipline I build into every production agent: no invented facts."
     },
     {
-      "icon": "HiOutlinePuzzlePiece",
-      "title": "MCP Servers & Tool Calling",
-      "description": "MCP servers and function-calling layers that let admin users make real changes — to a store, an ERP, a database — through plain natural-language instructions.",
-      "stack": ["MCP", "Tool Calling", "FastAPI", "Odoo ERP"]
+      "title": "Design for provider failure, not just success",
+      "detail": "Multi-provider failover and reliability engineering aren't an afterthought — a government-facing agent can't go down because one model API had an outage."
     },
     {
-      "icon": "HiOutlineMicrophone",
-      "title": "Real-Time Voice Agents",
-      "description": "Voice agents that answer inbound calls live — speech-to-text, real-time response streaming and WebSocket delivery — cutting wait times on busy support desks.",
-      "stack": ["Speech-to-Text", "WebSockets", "Redis Pub/Sub"]
+      "title": "Integrate with what already exists",
+      "detail": "ERP, commerce, telephony, email — I build AI that plugs into the systems an organization already runs, not a parallel system nobody adopts."
+    }
+  ],
+  "testimonials": [],
+  "case_studies": [
+    {
+      "slug": "government-ai-agents",
+      "title": "Production AI Agents for an Abu Dhabi Government Entity",
+      "org": "Araby.ai",
+      "timeframe": "Aug 2024 – May 2026",
+      "problem": "A government entity needed two AI agents that could answer from its own, frequently-updated documents and stay available even when a model provider had an outage — downtime wasn't an option for a government-facing service.",
+      "approach": [
+        "Each agent runs on a RAG knowledge base that re-indexes updated source documents automatically, so answers stay current without a manual redeploy or someone re-uploading files by hand.",
+        "Behind both agents sits a multi-LLM orchestration layer I architected — one API in front of OpenAI, Anthropic, Google Gemini and other providers, with model switching, fallback handling, centralised tool execution and message compaction.",
+        "Real-time response streaming runs over Redis pub/sub with caching, so duplicate model calls don't pile up and response latency stays flat under concurrent load."
+      ],
+      "decisions": [
+        {
+          "title": "Multi-provider failover over a single vendor",
+          "detail": "A government service can't go down because one model provider has an outage. Routing through an orchestration layer with automatic fallback kept the agents answering even when a single upstream provider didn't."
+        },
+        {
+          "title": "Auto re-indexing over manual updates",
+          "detail": "Government documents change on their own schedule, not the engineering team's. Automatic re-indexing meant accuracy didn't depend on someone remembering to update the knowledge base."
+        },
+        {
+          "title": "Message compaction over a bigger context window",
+          "detail": "Rather than leaning on ever-larger context windows, compacting conversation history removed context-overflow errors outright and lowered token costs per conversation."
+        }
+      ],
+      "outcome": "Two agents in production, serving a government entity continuously, with RAG knowledge bases that update themselves and a provider-failure story that doesn't require paging anyone.",
+      "diagram": "orchestration",
+      "images": [
+        {
+          "src": "/assets/work/araby.webp",
+          "alt": "Araby.ai generative content platform home screen",
+          "caption": "Araby.ai's platform, where I also shipped the generative content tools: script, voiceover, image and video. The government agents themselves stay private."
+        }
+      ]
     },
     {
-      "icon": "HiOutlineShieldCheck",
-      "title": "Reliability Engineering",
-      "description": "Multi-provider failover, LangSmith tracing, and token/context optimisation keep agents available and affordable under real production load.",
-      "stack": ["LangSmith", "Failover", "Caching", "Batching"]
+      "slug": "multi-company-commerce-backend",
+      "title": "One Backend for a Group of Companies",
+      "org": "Ghori Trading",
+      "timeframe": "Sep 2026 – Present",
+      "problem": "The group runs several companies, each with its own website, products, prices, payment methods, couriers and company in Odoo ERP. They needed one platform all of them could share, without any company ever being able to see another's data.",
+      "approach": [
+        "I designed and built a multi-tenant backend in NestJS 11 and TypeScript. Each company is a store, isolated in the database itself with PostgreSQL 17 Row-Level Security. 40 domain modules (catalog, inventory, orders, payments, invoicing, loyalty, reviews, SEO, reporting and more) expose 590+ documented API operations over 155 tables.",
+        "Staff sign in through Keycloak with per-store roles and permissions. A separate worker runs BullMQ jobs, and a transactional outbox writes every event in the same database transaction as the change it describes, so nothing is lost between a sale and the systems that need to hear about it.",
+        "Payments, couriers and messaging sit behind contracts with swappable providers: Stripe, Tabby, Tamara, Razorpay, Moyasar and cash on delivery; SMSA, Shipa, Delhivery and 17TRACK; email, SMS and WhatsApp. Confirmed orders route to the right Odoo company on their own, and an Odoo add-on I wrote sends deliveries, tracking numbers and invoices back as signed webhooks.",
+        "Around it I built an Astro and React staff dashboard: a server-side BFF that holds the login, so tokens never reach the browser."
+      ],
+      "decisions": [
+        {
+          "title": "Isolation in the database, not only in code",
+          "detail": "Row-Level Security and separate Postgres roles for the app, background jobs and migrations (never the superuser) mean a missing filter in application code still can't leak one company's data to another."
+        },
+        {
+          "title": "An outbox, not fire-and-forget events",
+          "detail": "Events are written in the business transaction and relayed by a worker, so a crash between saving an order and notifying the ERP can't drop the update."
+        },
+        {
+          "title": "Protect the ERP from the shop",
+          "detail": "Pushes to Odoo are idempotent jobs: one at a time per database, rate-capped, with cached lookups so an order costs about four calls, and a circuit breaker. A shopper's order is never blocked because the ERP is down."
+        }
+      ],
+      "outcome": "One codebase built to serve every company in the group, guarded by 320 test files and released through development, staging and production stages. I'm its main author, with 460+ commits in the backend since September 2026, and I wrote the standard every company website follows when it reads from it.",
+      "diagram": "platform"
     },
     {
-      "icon": "HiOutlineServerStack",
-      "title": "Enterprise & ERP Integration",
-      "description": "Custom Odoo ERP addons and sync pipelines that connect AI tools and dashboards to the systems a business already runs — securely, without disrupting daily operations.",
-      "stack": ["Odoo ERP", "PostgreSQL", "Webhooks", "n8n"]
+      "slug": "running-production",
+      "title": "Running Production: Docker, Caddy and Cloudflare",
+      "org": "Ghori Trading",
+      "timeframe": "Sep 2026 – Present",
+      "problem": "A backend, a staff dashboard and six company websites had to run reliably for real customers and real payments, released often, by a small team, without a release ever taking a site down or a server holding secrets it didn't need.",
+      "approach": [
+        "Two identical environments, staging and production, each split into a data server (PostgreSQL 17, Redis 7) and an apps server. They share only a private network. The data server's firewall, set in Docker's own DOCKER-USER chain, accepts database traffic from its apps server alone; from the internet it is reachable over SSH only.",
+        "Production's apps server runs 13 Docker services from one Compose file: Caddy, Keycloak, database migrations, the API and its worker, Gotenberg for PDF invoices, the staff dashboard and six websites. Caddy issues and renews HTTPS certificates for every domain, compresses responses and adds security headers, with Cloudflare in front for DNS and caching.",
+        "Each release builds a multi-stage Docker image that runs as a non-root user, scans it for vulnerabilities with Trivy, publishes it to GitHub Container Registry and deploys it over SSH. Migrations run first; if the new version isn't healthy within two minutes, the previous one starts again on its own.",
+        "Every night the databases are dumped, encrypted with age and copied off-site to Cloudflare R2 (7 daily and 4 weekly copies). Every Sunday a script restores the latest dump into a throwaway Postgres, counts stores, orders and customers, and reports the result to Telegram."
+      ],
+      "decisions": [
+        {
+          "title": "A deploy key that can do one thing",
+          "detail": "The CI key's forced command on the server can only run the deploy script, and the registry login uses the run's own short-lived token, so no long-lived registry password is ever stored on a server."
+        },
+        {
+          "title": "Roll back without a person",
+          "detail": "A health check after every deploy means a bad release undoes itself within two minutes, rather than waiting for someone to notice and act."
+        },
+        {
+          "title": "A backup only counts once it's been restored",
+          "detail": "The servers hold only the public encryption key, so they can lock a backup but never open one. The weekly restore test turns \"we have backups\" into something checked, and a quiet week with no ✅ message means something is broken."
+        }
+      ],
+      "outcome": "Staging and production run the same way from one infrastructure repository I wrote and maintain: 13 services in production behind automatic HTTPS, releases that roll themselves back, and backups that are encrypted, off-site and tested every week.",
+      "diagram": "infra"
+    },
+    {
+      "slug": "commerce-ai-platform",
+      "title": "AI Inside a Commerce Operation",
+      "org": "Ghori Trading (Purone)",
+      "timeframe": "May 2026 – Present",
+      "problem": "Every new AI idea in the business (a helpdesk, a voice line, an ERP assistant) needed someone to take it from idea to something staff and customers actually use, connected to the real order and ERP data.",
+      "approach": [
+        "OdooGPT lets management query sales, stock and finance data in Odoo ERP and complete tasks in plain language, and an AI analyst web app answers management and finance questions across sales and operations data.",
+        "An MCP server lets admins make store changes by describing them, and an AI chat assistant and helpdesk handle customer-facing support.",
+        "A real-time phone voice agent answers inbound customer-service calls: a Python bridge streams call audio between Telnyx and ElevenLabs Conversational AI, with telephony providers and agents as plugins. An Odoo add-on syncs confirmed website orders to the agent every 15 minutes, so it can answer questions about a caller's order, delivery and payment.",
+        "An LLM email pipeline classifies incoming mail, drafts replies and routes requests to the right team."
+      ],
+      "decisions": [
+        {
+          "title": "An MCP server over a bigger admin UI",
+          "detail": "Instead of building a settings screen for every new store need, exposing store actions through an MCP server lets admins describe the change they want. The interface grows with what people ask for, not with engineering time."
+        },
+        {
+          "title": "Ground the voice agent in real orders",
+          "detail": "A voice agent that can't see the caller's order just transfers them. Syncing confirmed orders from Odoo lets it answer the questions people actually call about."
+        },
+        {
+          "title": "Providers as plugins",
+          "detail": "The call bridge doesn't care which phone carrier or voice-AI vendor sits on either side, so switching one is a new plugin, not a rewrite."
+        }
+      ],
+      "outcome": "AI that staff and customers use every day: a live voice agent on the help desk, an ERP assistant management relies on, and email and chat support that absorb the repetitive share of requests, all reading from the same ERP as the rest of the business.",
+      "diagram": "commerce",
+      "images": [
+        {
+          "src": "/assets/work/odoogpt.webp",
+          "alt": "OdooGPT chat inside Odoo ERP",
+          "caption": "OdooGPT inside Odoo: ask about live data, or have it build an Excel, PDF or slide deck."
+        },
+        {
+          "src": "/assets/work/supportdesk.webp",
+          "alt": "AI support desk ticket inbox",
+          "caption": "The AI helpdesk: tickets from email, chat and calls in one inbox, shown here during testing."
+        }
+      ]
+    },
+    {
+      "slug": "fast-findable-websites",
+      "title": "Fast, Findable Websites on Astro and Cloudflare",
+      "org": "Ghori Trading & freelance",
+      "timeframe": "Oct 2026 – Present",
+      "problem": "Each brand needed a website that loads fast on a phone, ranks in search and AI answers, and lets staff change any word or picture without waiting for a developer.",
+      "approach": [
+        "I wrote the website standard every company site follows, then built the sites in Astro 7: server-rendered pages, React only where something is interactive, and page copy read on the server from the backend's content store. The same words stay in the code as defaults, so a page is never empty, and staff can edit any text in place from the admin.",
+        "Everything is served through Cloudflare. Static assets are cached long-term, and store reads use a stale-while-revalidate cache with a 24-hour stale window, while reads that drive a purchase (product page, bag, checkout) always fetch fresh data. Images ship as AVIF or WebP, and the hero banner loads first instead of after the scripts.",
+        "Search and AI search are built in: structured data, sitemaps, robots.txt, llms.txt for AI crawlers, titles sized to Google's limits and Google Shopping product data, plus an accessibility pass on contrast, tap targets and labels.",
+        "For a freelance client, Emirati Tasjeel, the whole site runs on Cloudflare's free plan as one Worker: static pages, a D1 database for bookings, Turnstile spam protection, and an admin behind Cloudflare Access."
+      ],
+      "decisions": [
+        {
+          "title": "Stale-while-revalidate, but never at checkout",
+          "detail": "A visitor after a quiet spell gets the last good page at once while it refreshes in the background. Prices and stock on the way to a purchase are always read fresh."
+        },
+        {
+          "title": "Measure, then fix the actual cause",
+          "detail": "On Emirati Tasjeel, the AVIF hero took 0.7 s of phone CPU to decode. Serving it as WebP took the home page's mobile performance from 82 to 100."
+        },
+        {
+          "title": "Content in the admin, layout in code",
+          "detail": "Fixed content keys mean staff can change every word and picture without a release, and the design can't be broken from the admin."
+        }
+      ],
+      "outcome": "Five live sites. Recorded mobile Lighthouse results: Emirati Tasjeel scores 100 for SEO and best practices on every page and 100 for performance on its home page; Purone and Floradyle score 100 for accessibility.",
+      "diagram": "web",
+      "links": [
+        {
+          "label": "purone.com",
+          "href": "https://purone.com"
+        },
+        {
+          "label": "greenwealth.com",
+          "href": "https://greenwealth.com"
+        },
+        {
+          "label": "floradyle.com",
+          "href": "https://floradyle.com"
+        },
+        {
+          "label": "sayyel.com",
+          "href": "https://sayyel.com"
+        },
+        {
+          "label": "emiratitasjeelinspection.com",
+          "href": "https://emiratitasjeelinspection.com"
+        }
+      ]
     }
   ],
   "technologies": [
     {
       "category": "Agentic AI & LLMs",
-      "technologies": [
-        {
-          "name": "LangChain",
-          "imageSrc": "https://cdn.simpleicons.org/langchain"
-        },
-        {
-          "name": "Anthropic Claude",
-          "imageSrc": "https://cdn.simpleicons.org/anthropic"
-        },
-        {
-          "name": "Google Gemini",
-          "imageSrc": "https://cdn.simpleicons.org/googlegemini"
-        },
-        {
-          "name": "HuggingFace",
-          "imageSrc": "https://cdn.simpleicons.org/huggingface"
-        }
+      "skills": [
+        "LangChain",
+        "LangGraph",
+        "OpenAI",
+        "Anthropic Claude",
+        "Google Gemini",
+        "HuggingFace",
+        "MCP",
+        "ElevenLabs"
       ]
     },
     {
-      "category": "Integration & Backend",
-      "technologies": [
-        {
-          "name": "Python",
-          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original-wordmark.svg"
-        },
-        {
-          "name": "FastAPI",
-          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/fastapi/fastapi-original.svg"
-        },
-        {
-          "name": "NestJS",
-          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nestjs/nestjs-original.svg"
-        },
-        {
-          "name": "Node.js",
-          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"
-        },
-        {
-          "name": "Redis",
-          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/redis/redis-original.svg"
-        }
+      "category": "RAG & Knowledge Bases",
+      "skills": [
+        "ChromaDB",
+        "Pinecone",
+        "FAISS",
+        "pgvector",
+        "LangSmith"
       ]
     },
     {
-      "category": "Frontend",
-      "technologies": [
-        {
-          "name": "TypeScript",
-          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg"
-        },
-        {
-          "name": "JavaScript",
-          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
-        },
-        {
-          "name": "React",
-          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original-wordmark.svg"
-        },
-        {
-          "name": "Astro",
-          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/astro/astro-original.svg"
-        },
-        {
-          "name": "Tailwind CSS",
-          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original-wordmark.svg"
-        }
+      "category": "Backend & Integration",
+      "skills": [
+        "NestJS",
+        "Node.js",
+        "TypeScript",
+        "Python",
+        "FastAPI",
+        "Flask",
+        "Drizzle ORM",
+        "BullMQ",
+        "Socket.IO",
+        "Keycloak (OAuth2 / OIDC)",
+        "WebSockets",
+        "Odoo ERP",
+        "Telnyx"
       ]
     },
     {
-      "category": "Cloud, Data & Automation",
-      "technologies": [
-        {
-          "name": "AWS",
-          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg"
-        },
-        {
-          "name": "Docker",
-          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
-        },
-        {
-          "name": "GitHub Actions",
-          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/githubactions/githubactions-original.svg"
-        },
-        {
-          "name": "PostgreSQL",
-          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
-        },
-        {
-          "name": "MongoDB",
-          "imageSrc": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg"
-        },
-        {
-          "name": "n8n",
-          "imageSrc": "https://cdn.simpleicons.org/n8n"
-        },
-        {
-          "name": "Odoo ERP",
-          "imageSrc": "https://cdn.simpleicons.org/odoo"
-        }
+      "category": "Infrastructure & DevOps",
+      "skills": [
+        "Docker & Compose",
+        "Caddy",
+        "Cloudflare (DNS, CDN, Workers, D1, R2, Access, Turnstile)",
+        "GitHub Actions",
+        "GitHub Container Registry",
+        "Trivy",
+        "Linux servers & firewalls",
+        "Nginx",
+        "Elestio",
+        "AWS"
+      ]
+    },
+    {
+      "category": "Data & Automation",
+      "skills": [
+        "PostgreSQL (Row-Level Security)",
+        "Redis",
+        "MongoDB",
+        "MySQL",
+        "n8n",
+        "Webhooks",
+        "LLM email pipelines"
+      ]
+    },
+    {
+      "category": "Frontend & Web",
+      "skills": [
+        "React",
+        "Astro",
+        "Tailwind CSS",
+        "JavaScript",
+        "SEO & structured data",
+        "Lighthouse"
       ]
     }
   ],
@@ -333,16 +430,17 @@
           "title": "AI & Automation Executive",
           "company": "Ghori Trading (Purone)",
           "location": "Dubai, United Arab Emirates",
-          "summary": "Own AI and automation for the business end to end — architecture, build and production ownership of commerce, ERP, voice and AI tooling that management, finance and support teams depend on daily.",
+          "summary": "Own AI, platform and automation for the group end to end: architecture, build and production ownership of the commerce backend, company websites, ERP, voice and AI tooling that management, finance and support teams depend on daily.",
           "details": [
-            "Built a multi-store commerce platform (NestJS, Astro) with a Shopify-style merchant dashboard, now running 3 stores from a single admin across products, inventory, orders, fulfilment and delivery.",
-            "Added an AI layer to the platform: an AI chat assistant and AI helpdesk for customers, plus an MCP server that lets admin users make any store change through natural-language instructions.",
+            "Architected and built the group's multi-tenant commerce and ERP backend (NestJS 11, PostgreSQL 17 with Row-Level Security, Redis and BullMQ, Keycloak): 40 domain modules, 590+ API operations and 320 test files, with a Shopify-style merchant dashboard running 3 stores from a single admin.",
+            "Built the company websites (Purone, Green Wealth, Floradyle, Sayyel) on Astro 7 and Cloudflare, and wrote the standard they all follow: page content editable from the admin without a release, server-side caching, and SEO and AI-search readiness built in.",
+            "Integrated payments (Stripe, Tabby, Tamara and more), Amazon fulfilment and multiple delivery partners, and built the logistics that take every order from checkout to the customer's door.",
+            "Added an AI layer to the platform: an AI chat assistant and AI helpdesk for customers, plus an MCP server that lets admin users make store changes through natural-language instructions.",
             "Delivered OdooGPT, an AI agent inside Odoo ERP that lets the management team query sales, stock and finance data and complete tasks in plain language.",
-            "Deployed a real-time AI voice agent for the customer help desk that answers inbound calls, understands requests and responds live, reducing wait times and load on support staff.",
-            "Integrated Amazon fulfilment and multiple delivery partners, and built the delivery logistics that takes every order from checkout to the customer's door.",
-            "Integrated Odoo ERP as the platform's operational backbone, with 10+ custom addons that securely sync ERP data to external systems, and added self-hosted Rybbit analytics and Raven team messaging, deployed and operated on Elestio.",
-            "Built a full-stack AI analyst web app (Astro) that answers management and finance questions on sales, finance and operations data.",
-            "Automated email handling with an LLM pipeline that classifies incoming mail, drafts replies and routes requests to the right team."
+            "Deployed a real-time AI voice agent (Telnyx and ElevenLabs) for the customer help desk that answers inbound calls with live order data, reducing wait times and load on support staff.",
+            "Integrated Odoo ERP as the operational backbone, with 10+ custom addons that securely sync ERP data to external systems, including signed webhooks that send deliveries, tracking and invoices back to the platform.",
+            "Built and run the platform's infrastructure: staging and production environments with separate data and app servers on a private network, 13 production Docker services behind Caddy (automatic HTTPS) and Cloudflare, CI/CD that builds, Trivy-scans and deploys images with automatic rollback, and nightly encrypted off-site backups to Cloudflare R2 with a weekly restore test.",
+            "Built a full-stack AI analyst web app (Astro) that answers management and finance questions on sales, finance and operations data, and automated email handling with an LLM pipeline that classifies mail, drafts replies and routes requests."
           ]
         },
         {
@@ -397,70 +495,124 @@
   },
   "projects": [
     {
-      "title": "Multi-Store Commerce Platform",
-      "description": "A Shopify-style multi-store commerce platform (NestJS, Astro) now running 3 stores from a single merchant admin — products, inventory, orders, fulfilment and delivery — with Amazon fulfilment, multiple delivery partners and Odoo ERP wired in as the operational backbone.",
-      "technologies": ["NestJS", "Astro", "Odoo ERP", "Amazon Fulfilment", "Delivery APIs", "Elestio"],
-      "visual": { "type": "glyph", "icon": "HiOutlineSquares2X2" }
-    },
-    {
-      "title": "OdooGPT",
-      "description": "An AI agent embedded directly in Odoo ERP that answers questions about live sales, stock and finance data and generates Excel, PDF and presentation reports on request, with configurable skills and field overrides.",
-      "technologies": ["Odoo ERP", "Python", "LLM Integration", "Data Analytics"],
-      "visual": { "type": "image", "src": "/assets/OdooGPT.jpg" }
-    },
-    {
-      "title": "AI Helpdesk & Support Automation",
-      "description": "An AI chat assistant and customer helpdesk layered onto the commerce platform, plus an LLM email pipeline that classifies incoming mail, drafts replies and routes requests to the right team.",
-      "technologies": ["AI Agents", "FastAPI", "LLM Integration", "Email Automation"],
-      "visual": { "type": "image", "src": "/assets/SupportDesk.jpg" }
-    },
-    {
-      "title": "Real-Time AI Voice Agent",
-      "description": "A real-time voice agent for the customer help desk that answers inbound calls, understands requests with live speech-to-text, and responds in real time — cutting wait times and load on support staff.",
-      "technologies": ["Voice AI", "Speech-to-Text", "WebSockets", "Real-Time Streaming"],
-      "visual": { "type": "glyph", "icon": "HiOutlineMicrophone" }
-    },
-    {
-      "title": "AI Business Analyst",
-      "description": "A full-stack analytics web app (Astro) with an AI analyst that answers management and finance questions on sales, finance and operations data in plain language.",
-      "technologies": ["Astro", "AI Agents", "Business Intelligence", "Data Analytics"],
-      "visual": { "type": "glyph", "icon": "HiOutlineChartBar" }
-    },
-    {
-      "title": "Production AI Agents for a Government Entity",
-      "description": "Two production AI agents built for an Abu Dhabi government entity, each backed by a RAG knowledge base that re-indexes updated documents automatically, with multi-provider failover to stay available through model or API outages.",
-      "technologies": ["RAG", "ChromaDB", "Multi-Provider Failover", "LangChain", "FastAPI"],
-      "visual": { "type": "glyph", "icon": "HiOutlineBuildingLibrary" }
-    },
-    {
-      "title": "Multi-LLM Orchestration Layer",
-      "description": "A unified orchestration layer connecting OpenAI, Anthropic, Google Gemini and other providers behind one API — model switching, fallback handling, centralised tool execution and message compaction that removed context-overflow errors and lowered token costs.",
-      "technologies": ["OpenAI", "Anthropic", "Google Gemini", "Tool Calling", "Redis"],
-      "visual": { "type": "glyph", "icon": "HiOutlineCpuChip" }
-    },
-    {
-      "title": "Generative Content Suite",
-      "description": "Generative content tools — script, voiceover, image and video — for a subscription-based UGC platform, built on Replicate, HuggingFace, OpenAI, StabilityAI (SDXL) and Fal.ai, with FFmpeg pipelines for processing output.",
-      "technologies": ["Replicate", "HuggingFace", "StabilityAI", "Fal.ai", "FFmpeg"],
-      "visual": { "type": "image", "src": "/assets/ArabyAI.jpg" }
-    },
-    {
       "title": "HelioMind — Multi-Agent Energy Optimisation",
       "description": "A multi-agent system where specialised agents handle forecasting, sensor validation, anomaly detection and decision orchestration, cross-checking predictions against live weather and sensor data before triggering actions and alerts.",
-      "technologies": ["Multi-Agent Systems", "FastAPI", "Tool Calling", "Model Switching"],
-      "visual": { "type": "glyph", "icon": "HiOutlineBolt" }
+      "technologies": [
+        "Multi-Agent Systems",
+        "FastAPI",
+        "Tool Calling",
+        "Model Switching"
+      ]
     },
     {
       "title": "CryCare — AI-Powered IoT Baby Monitor",
       "description": "A Raspberry Pi device that streams live video and audio to a mobile app over WebSockets and lets parents control music, lighting and cradle movement remotely, with a deep learning model trained to detect crying, discomfort, happiness and sleepiness and trigger calming actions automatically.",
-      "technologies": ["Raspberry Pi", "WebSockets", "Deep Learning", "AWS"],
-      "visual": { "type": "glyph", "icon": "HiOutlineHeart" }
+      "technologies": [
+        "Raspberry Pi",
+        "WebSockets",
+        "Deep Learning",
+        "AWS"
+      ]
+    },
+    {
+      "title": "Emirati Tasjeel — Car Inspection Bookings",
+      "description": "A bilingual (English and Arabic) site for a UAE pre-purchase car inspection service, built for a freelance client and run entirely on Cloudflare's free plan: static pages, bookings saved to D1 behind a Turnstile check, and an admin protected by Cloudflare Access. Lighthouse SEO and best practices 100 on every page.",
+      "technologies": [
+        "Astro",
+        "Cloudflare Workers",
+        "D1",
+        "Turnstile",
+        "Cloudflare Access"
+      ],
+      "href": "https://emiratitasjeelinspection.com"
     },
     {
       "title": "Portfolio Website",
-      "description": "This site — a space-themed personal portfolio built with Astro and React islands, featuring a canvas starfield, a roaming AI mascot, a command palette (⌘K), scroll-spy navigation, and a Frappe-inspired single-accent design system.",
-      "technologies": ["Astro", "React", "Tailwind CSS", "Framer Motion"],
-      "visual": { "type": "image", "src": "/assets/Portfolio.jpg" }
+      "description": "This site — a dense, case-study-driven portfolio built with Astro and React islands, a command palette (⌘K), a grounded AI agent you can ask directly, and a quiet, single-accent design system.",
+      "technologies": [
+        "Astro",
+        "React",
+        "Tailwind CSS",
+        "Framer Motion"
+      ]
+    }
+  ],
+  "capabilities": [
+    {
+      "title": "AI systems",
+      "detail": "Production agents, RAG, multi-LLM orchestration, voice agents and MCP servers.",
+      "tags": [
+        "LangChain",
+        "RAG",
+        "MCP",
+        "ElevenLabs"
+      ],
+      "href": "#government-ai-agents"
+    },
+    {
+      "title": "Backend platforms",
+      "detail": "Multi-tenant APIs with database-level isolation, queues, auth and real integrations.",
+      "tags": [
+        "NestJS",
+        "PostgreSQL",
+        "Redis",
+        "Keycloak"
+      ],
+      "href": "#multi-company-commerce-backend"
+    },
+    {
+      "title": "Infrastructure & DevOps",
+      "detail": "Docker services, Caddy HTTPS, Cloudflare, CI/CD with automatic rollback, encrypted backups.",
+      "tags": [
+        "Docker",
+        "Caddy",
+        "Cloudflare",
+        "GitHub Actions"
+      ],
+      "href": "#running-production"
+    },
+    {
+      "title": "Websites, speed & SEO",
+      "detail": "Server-rendered Astro sites with edge caching, structured data and Lighthouse 100 results.",
+      "tags": [
+        "Astro",
+        "Cloudflare",
+        "SEO",
+        "Lighthouse"
+      ],
+      "href": "#fast-findable-websites"
+    }
+  ],
+  "live_work": [
+    {
+      "name": "Purone",
+      "kind": "Skincare & wellness store",
+      "href": "https://purone.com",
+      "image": "/assets/work/purone.webp"
+    },
+    {
+      "name": "Green Wealth",
+      "kind": "Hair-care store, English & Arabic",
+      "href": "https://greenwealth.com",
+      "image": "/assets/work/greenwealth.webp"
+    },
+    {
+      "name": "Floradyle",
+      "kind": "Supplements store",
+      "href": "https://floradyle.com",
+      "image": "/assets/work/floradyle.webp"
+    },
+    {
+      "name": "Emirati Tasjeel",
+      "kind": "Car inspection bookings (freelance)",
+      "href": "https://emiratitasjeelinspection.com",
+      "image": "/assets/work/emiratitasjeelinspection.webp"
+    },
+    {
+      "name": "Sayyel",
+      "kind": "Perfume brand, launch page",
+      "href": "https://sayyel.com",
+      "image": "/assets/work/sayyel.webp"
     }
   ]
 }

@@ -12,7 +12,6 @@ import {
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { HiOutlineChevronDown, HiOutlineBuildingLibrary } from "react-icons/hi2";
 import Profile from "../assets/profile.jpg";
-import RainGlass from "./RainGlass";
 import MagneticButton from "./MagneticButton";
 import data from "../data/data.json";
 
@@ -76,7 +75,6 @@ function Main() {
       initial="hidden"
       animate="show"
     >
-      <RainGlass />
       {/* Location + credibility badges */}
       <motion.div
         variants={item}
@@ -86,7 +84,7 @@ function Main() {
           <HiOutlineLocationMarker className="text-accent" />
           {location}
           <span className="w-1.5 h-1.5 rounded-full bg-success animate-pulse-glow" />
-          Open to new missions
+          Open to new roles
         </div>
         <div className="glass-pill inline-flex items-center gap-2 px-4 py-1.5 text-xs sm:text-sm text-muted">
           <HiOutlineBuildingLibrary className="text-accent" />
@@ -94,21 +92,19 @@ function Main() {
         </div>
       </motion.div>
 
-      {/* Profile with orbit ring — drifts and fades with scroll */}
+      {/* Profile photo — fades gently with scroll, no spinning chrome */}
       <motion.div
         variants={item}
         style={{ y: profileY, scale: profileScale, opacity: profileOpacity }}
-        className="relative w-52 h-52 sm:w-60 sm:h-60 mb-8"
+        className="relative w-44 h-44 sm:w-48 sm:h-48 mb-8"
       >
         <div
-          className="absolute -inset-6 rounded-full"
+          className="absolute -inset-4 rounded-full"
           style={{
             background:
-              "radial-gradient(circle, rgb(var(--color-accent-rgb) / 0.12), transparent 70%)",
+              "radial-gradient(circle, rgb(var(--color-accent-rgb) / 0.1), transparent 70%)",
           }}
         />
-        <span className="absolute -inset-3 rounded-full border border-dashed border-border-bright animate-spin-slower" />
-        <span className="absolute -inset-1 rounded-full border border-accent/30 animate-spin-slow" />
         <img
           className="relative w-full h-full rounded-full object-cover border-2 border-border"
           src={Profile.src}
@@ -162,8 +158,13 @@ function Main() {
         className="flex flex-wrap items-center justify-center gap-4 mb-10"
       >
         <MagneticButton>
-          <a href="#projects" className="btn-cosmic">
-            View My Work
+          <a href="#case-studies" className="btn-cosmic">
+            View Case Studies
+          </a>
+        </MagneticButton>
+        <MagneticButton>
+          <a href="#ask-ai" className="btn-outline-cosmic">
+            Ask My AI Agent
           </a>
         </MagneticButton>
         {resumeHref && (

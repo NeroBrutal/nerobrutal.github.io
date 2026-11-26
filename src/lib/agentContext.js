@@ -6,7 +6,7 @@ export function buildSystemPrompt() {
   const work = data.sections.work_experience.items
     .map(
       (job) =>
-        `- ${job.title} at ${job.company} (${job.year}, ${job.location}): ${job.summary}`,
+        `- ${job.title} at ${job.company} (${job.year}, ${job.location}): ${job.summary}${(job.details || []).map((d) => `\n  • ${d}`).join("")}`,
     )
     .join("\n");
 
@@ -19,11 +19,19 @@ export function buildSystemPrompt() {
     .join("\n");
 
   const skills = data.technologies
+    .map((cat) => `${cat.category}: ${cat.skills.join(", ")}`)
+    .join("\n");
+
+  const caseStudies = data.case_studies
     .map(
-      (cat) =>
-        `${cat.category}: ${cat.technologies.map((t) => t.name).join(", ")}`,
+      (cs) =>
+        `- ${cs.title} (${cs.org}, ${cs.timeframe})\n  Problem: ${cs.problem}\n  Approach: ${cs.approach.join(" ")}\n  Key decisions: ${cs.decisions
+          .map((d) => `${d.title}: ${d.detail}`)
+          .join(" ")}\n  Outcome: ${cs.outcome}`,
     )
     .join("\n");
+
+  const impact = data.impact.map((s) => `- ${s.value}: ${s.label}`).join("\n");
 
   return `You are the AI assistant embedded on ${data.name}'s personal portfolio site (${data.location}). You answer visitors' questions about ${data.name} — his work, skills, projects, and background — in a friendly, concise way (2-4 sentences unless asked for more detail).
 
@@ -33,6 +41,12 @@ ABOUT
 ${data.about_me}
 
 CURRENT ROLES: ${data.roles.join(", ")}
+
+IMPACT
+${impact}
+
+CASE STUDIES
+${caseStudies}
 
 WORK EXPERIENCE
 ${work}

@@ -25,7 +25,7 @@ const Contact = () => {
   return (
     <div id="contact" className="relative max-w-5xl mx-auto px-4 py-24">
       <div className="text-center mb-14">
-        <span className="eyebrow">📡 Send a transmission</span>
+        <span className="eyebrow">Get in touch</span>
         <h1 className="section-title">Get In Touch</h1>
       </div>
 

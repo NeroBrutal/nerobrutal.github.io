@@ -42,17 +42,17 @@ const StatTile = ({ value, label, index }) => {
   return (
     <motion.div
       ref={countRef}
-      initial={{ opacity: 0, y: 16 }}
+      initial={{ opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.08 }}
-      className="glass-panel px-4 py-6 text-center"
+      className="px-4 py-2 text-center sm:text-left"
     >
-      <p className="text-3xl sm:text-4xl font-display font-bold text-gradient">
+      <p className="text-2xl sm:text-3xl font-display font-semibold text-text">
         {count}
         {suffix}
       </p>
-      <p className="mt-2 text-xs sm:text-sm text-muted leading-snug">{label}</p>
+      <p className="mt-1 text-xs sm:text-sm text-muted leading-snug">{label}</p>
     </motion.div>
   );
 };
@@ -62,7 +62,7 @@ const ImpactStats = () => {
 
   return (
     <div className="relative max-w-screen-lg mx-auto px-4 md:px-8 pb-16">
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-border border-y border-border">
         {impact.map((item, i) => (
           <StatTile key={item.label} value={item.value} label={item.label} index={i} />
         ))}

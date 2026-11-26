@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import data from "../data/data.json";
 
-import { AiOutlineMail, AiOutlineProject, AiOutlineHome } from "react-icons/ai";
+import { AiOutlineMail, AiOutlineHome } from "react-icons/ai";
 import { BsPerson } from "react-icons/bs";
 import { BiCodeAlt } from "react-icons/bi";
 import {
@@ -13,12 +13,12 @@ import {
   HiOutlineAcademicCap,
 } from "react-icons/hi";
 import { HiOutlineCommandLine, HiOutlineSparkles } from "react-icons/hi2";
+import ThemeToggle from "./ThemeToggle";
 
 // EngineeringIcon / AppsIcon map to react-icons equivalents; the names come
 // straight from data.json's navbar entries.
 const iconMap = {
   AiOutlineMail,
-  AiOutlineProject,
   BsPerson,
   BiCodeAlt,
   EngineeringIcon: AiOutlineHome,
@@ -133,6 +133,8 @@ const Navbar = () => {
             <HiOutlineCommandLine size={16} />
           </button>
 
+          <ThemeToggle />
+
           <button
             aria-label={nav ? "Close menu" : "Open menu"}
             className="md:hidden glass-pill w-9 h-9 flex items-center justify-center text-text"
@@ -181,7 +183,7 @@ const Navbar = () => {
                     className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
                       active
                         ? "bg-accent/10 text-accent"
-                        : "text-muted hover:bg-white/[0.04] hover:text-text"
+                        : "text-muted hover:bg-text/[0.05] hover:text-text"
                     }`}
                   >
                     {Icon && <Icon size={18} />}

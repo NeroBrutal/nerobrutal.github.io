@@ -1,39 +1,37 @@
 import Navbar from "./components/Navbar";
 import Main from "./components/Main";
 import ImpactStats from "./components/ImpactStats";
+import Capabilities from "./components/Capabilities";
+import LiveWork from "./components/LiveWork";
+import Principles from "./components/Principles";
+import CaseStudies from "./components/CaseStudies";
+import Testimonials from "./components/Testimonials";
 import Work from "./components/Work";
-import AgenticSystems from "./components/AgenticSystems";
-import Projects from "./components/Projects";
+import Skills from "./components/Skills";
+import OtherWork from "./components/OtherWork";
+import AskAI from "./components/AskAI";
 import Contact from "./components/Contact";
-import Technologies from "./components/Technologies";
-import MotionCursor from "./components/MotionCursor";
-import CosmicBackground from "./components/CosmicBackground";
-import LoadingOverlay from "./components/LoadingOverlay";
 import ScrollProgress from "./components/ScrollProgress";
 import CommandPalette from "./components/CommandPalette";
-import AgentBot from "./components/AgentBot";
-import SpaceshipFlyby from "./components/SpaceshipFlyby";
-import PlanetSystems from "./components/PlanetSystems";
 
 function App() {
   return (
     <div className="relative">
-      <LoadingOverlay />
-      <CosmicBackground />
-      <PlanetSystems />
-      <SpaceshipFlyby />
       <ScrollProgress />
       <Navbar />
       <CommandPalette />
       <Main />
       <ImpactStats />
+      <Capabilities />
+      <LiveWork />
+      <Principles />
+      <CaseStudies />
+      <Testimonials />
       <Work />
-      <AgenticSystems />
-      <Technologies />
-      <MotionCursor />
-      <Projects />
+      <Skills />
+      <OtherWork />
+      <AskAI />
       <Contact />
-      <AgentBot />
     </div>
   );
 }

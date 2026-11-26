@@ -19,6 +19,26 @@
   --color-success-rgb: 52 211 153;
   --shadow-panel: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 12px 32px rgba(0, 0, 0, 0.4);
   --selection-bg: rgba(34, 211, 238, 0.25);
+  --selection-text: #fff;
+  color-scheme: dark;
+}
+
+/* Accent is a darker cyan here so small accent text stays above 4.5:1 on white. */
+:root[data-theme="light"] {
+  --color-bg-rgb: 247 248 250;
+  --color-surface-rgb: 255 255 255;
+  --color-surface-2-rgb: 240 242 245;
+  --color-border: rgba(15, 23, 42, 0.1);
+  --color-border-bright: rgba(15, 23, 42, 0.18);
+  --color-text-rgb: 17 24 39;
+  --color-muted-rgb: 75 85 99;
+  --color-accent-rgb: 14 116 144;
+  --color-accent-2-rgb: 8 145 178;
+  --color-success-rgb: 4 120 87;
+  --shadow-panel: 0 1px 2px rgba(15, 23, 42, 0.05), 0 12px 32px rgba(15, 23, 42, 0.08);
+  --selection-bg: rgba(14, 116, 144, 0.18);
+  --selection-text: rgb(17 24 39);
+  color-scheme: light;
 }
 
 * {
@@ -33,6 +53,7 @@ html {
 html,
 body {
   background-color: rgb(var(--color-bg-rgb));
+  transition: background-color 0.25s ease;
 }
 
 body {
@@ -50,7 +71,7 @@ h6 {
 
 ::selection {
   background: var(--selection-bg);
-  color: #fff;
+  color: var(--selection-text);
 }
 
 /* Slim, single-accent scrollbar */
@@ -81,7 +102,7 @@ h6 {
   }
 
   .eyebrow {
-    @apply inline-block text-xs sm:text-sm tracking-[0.3em] uppercase text-accent/80 font-semibold mb-3;
+    @apply inline-block font-mono text-xs sm:text-sm tracking-[0.3em] uppercase text-accent/80 font-semibold mb-3;
   }
 
   .btn-cosmic {
@@ -108,47 +129,5 @@ h6 {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
-  }
-}
-
-/* Planet orbits (PlanetSystems.jsx). All three share a lap's duration and
-   delay: spin carries the body round, counter keeps it round and upright,
-   depth swaps it in front of / behind its planet each half lap. */
-@keyframes orbit-spin {
-  to { transform: rotate(360deg); }
-}
-
-@keyframes orbit-counter {
-  from { transform: rotate(0deg) scaleY(var(--unsquash)) rotate(var(--untilt)); }
-  to { transform: rotate(-360deg) scaleY(var(--unsquash)) rotate(var(--untilt)); }
-}
-
-/* Opacity is fixed — pulsing it full-screen can flicker on some displays (PWM/HDR). */
-@keyframes orbit-depth {
-  0%,
-  49.99% {
-    z-index: 3;
-  }
-  50%,
-  100% {
-    z-index: 1;
-  }
-}
-
-.orbit-spin,
-.orbit-counter,
-.orbit-depth {
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
-.orbit-spin { animation-name: orbit-spin; }
-.orbit-counter { animation-name: orbit-counter; }
-.orbit-depth { animation-name: orbit-depth; }
-
-@media (prefers-reduced-motion: reduce) {
-  .orbit-spin,
-  .orbit-counter,
-  .orbit-depth {
-    animation-play-state: paused;
   }
 }

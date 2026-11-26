@@ -21,7 +21,22 @@ const ogImage = `${siteUrl}/assets/Title.png`;
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/assets/Title.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#05060f" />
+    <meta name="theme-color" content="#05060a" />
+    <script is:inline>
+      (() => {
+        let theme = null;
+        try {
+          theme = localStorage.getItem("theme");
+        } catch {}
+        if (theme !== "light" && theme !== "dark") {
+          theme = matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+        }
+        document.documentElement.dataset.theme = theme;
+        document
+          .querySelector('meta[name="theme-color"]')
+          .setAttribute("content", theme === "light" ? "#f7f8fa" : "#05060a");
+      })();
+    </script>
     <meta name="description" content={description} />
     <link rel="canonical" href={siteUrl} />
 

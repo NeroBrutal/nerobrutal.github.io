@@ -29,9 +29,17 @@ function buildItems() {
     action: () => go(item.href),
   }));
 
+  const caseStudies = data.case_studies.map((study) => ({
+    id: `case-study-${study.slug}`,
+    group: "Case Studies",
+    label: study.title,
+    hint: study.org,
+    action: () => go("#case-studies"),
+  }));
+
   const projects = data.projects.map((project) => ({
     id: `project-${project.title}`,
-    group: "Projects",
+    group: "Other Work",
     label: project.title,
     hint: project.technologies.slice(0, 2).join(" · "),
     action: () => go("#projects"),
@@ -46,7 +54,7 @@ function buildItems() {
     action: () => go(url),
   }));
 
-  return [...navigate, ...projects, ...connect];
+  return [...navigate, ...caseStudies, ...projects, ...connect];
 }
 
 export default function CommandPalette() {
@@ -177,7 +185,7 @@ export default function CommandPalette() {
                       className={`w-full flex items-center justify-between gap-3 px-4 py-2.5 text-left border-l-2 transition-colors ${
                         idx === activeIndex
                           ? "border-accent bg-accent/5 text-text"
-                          : "border-transparent text-text/90 hover:bg-white/[0.03]"
+                          : "border-transparent text-text/90 hover:bg-text/[0.04]"
                       }`}
                     >
                       <span className="flex flex-col min-w-0">
